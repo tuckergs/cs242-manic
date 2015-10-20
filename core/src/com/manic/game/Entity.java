@@ -9,15 +9,14 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-
 public class Entity {
-	/*
 	private SpriteBatch spriteBatchHandle;
 	private Texture texture;
 	private float xCoord = 0;
 	private float yCoord = 0;
 	
-	texture.
+	//private float height = 0;
+	//private float width = 0;
 	
 	/* Description: To exist, you must be initialized with a sprite and location */
 	//TODO implement with SpriteHandler
@@ -30,13 +29,20 @@ public class Entity {
 		yCoord = y;
 	}
 	
-	/* Description: To exist, you must be initialize with a sprite and location. */
-	public void render()
+	// Draw the entity
+	protected void render()
+	{
+		spriteBatchHandle.draw(texture, xCoord, yCoord);
+	}
+	
+	// Kill the entity
+	protected void dispose()
 	{
 		spriteBatchHandle.draw(texture, xCoord, yCoord);
 	}
 	
 	//#### Getters ####
+	  //Location coordinates
 	public float getXCoordinate()
 	{
 		return xCoord;
@@ -49,20 +55,15 @@ public class Entity {
 	
 	//#### Setters ####
 	  //Location coordinates
-	public void setXCoordinate(float x)
+	protected void setXCoordinate(float x)
 	{
 		xCoord = x;
 	}
 	
-	public void setYCoordinate(float y)
+	protected void setYCoordinate(float y)
 	{
 		yCoord = y;
 	}
 	
-	  //Texure Data
-	public void setTexture(String path)
-	{
-		
-	}
 }
 
