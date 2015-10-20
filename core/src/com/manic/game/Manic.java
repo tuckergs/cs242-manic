@@ -1,33 +1,39 @@
-/*
- * Description: Runs the game, handles no game logic
- */
-
 package com.manic.game;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-public class Manic extends ApplicationAdapter {
+public class Manic extends ApplicationAdapter
+{
 	SpriteBatch batch;
 	Texture img;
+	GameObject object;
 	
 	@Override
-	public void create () {
+	public void create ()
+	{
 		batch = new SpriteBatch();
-		//Settings.load();
-		//Assets.load();
-		img = new Texture("badlogic.jpg");
+		img = new Texture("stage-demo.jpg");
+		
+		object = new GameObject("shaq.png", batch, 0, 0);
 	}
 
 	@Override
-	public void render () {
+	public void render ()
+	{
+		Gdx.graphics.setDisplayMode(1080, 824, false);
 		Gdx.gl.glClearColor(1, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		batch.begin();
-		batch.draw(img, 0, 0);
+		batch.draw(img, -75, -30);
+		object.updatePosition();
+		object.draw();
+		
 		batch.end();
 	}
+	
 }
