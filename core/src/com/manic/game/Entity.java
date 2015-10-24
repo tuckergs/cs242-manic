@@ -11,27 +11,27 @@ public class Entity {
 	protected float yCoordinate = 0;
 	protected float height = 0;
 	protected float width = 0;
-	
+
 	/* Description: To exist, you must be initialized with a sprite, dimension, and location */
 	//TODO implement with SpriteHandler
 	public Entity(String texturePath, SpriteBatch batch, float x, float y, float h, float w)
 	{
 		spriteBatchHandle = batch;
 		texture = new Texture(texturePath);
-		
-		xCoordinate = x;
-		yCoordinate = y;
-		
-		height = h;
-		width = w;
+
+		setCoordinateX(x);
+		setCoordinateY(y);
+
+		setHeight(h);
+		setWidth(w);
 	}
-	
+
 	// Draw the entity
 	protected void draw()
 	{
 		spriteBatchHandle.draw(texture, xCoordinate, yCoordinate);
 	}
-	
+
 	// Kill the entity
 	protected void dispose()
 	{
@@ -41,63 +41,74 @@ public class Entity {
 		height = 0;
 		width = 0;
 	}
-	
+
 	//#### Getters ####
-	  //Location coordinates
+	//Location coordinates
 	public float getCoordinateX()
 	{
 		return xCoordinate;
 	}
-	
+
 	public float getCoordinateY()
 	{
 		return yCoordinate;
 	}
-	
+
 	public float getHeight()
 	{
 		return height;
 	}
-	
+
 	public float getWidth()
 	{
 		return width;
 	}
-	
+
 	//#### Setters ####
-	  //Location coordinates
+	//Location coordinates
 	protected void setCoordinateX(float x)
 	{
 		if (x > -1) {
 			xCoordinate = x;
 		}
-	}
-	
-	protected void setCoordinateY(float y)
-  	{
-		if (y > -1) {
-  			yCoordinate = y;
+		else {
+			xCoordinate = 0;
 		}
-  	}
-	
-  	  //dimensions
-  	protected void setHeight(float h)
-	{
-  		if (h > 0) {
-			height = h;
-  		}
 	}
-  	
-  	protected void setWidth(float w)
+
+	protected void setCoordinateY(float y)
+	{
+		if (y > -1) {
+			yCoordinate = y;
+		}
+		else {
+			yCoordinate = 0;
+		}
+	}
+
+	//dimensions
+	protected void setHeight(float h)
+	{
+		if (h > 0) {
+			height = h;
+		}
+		else {
+			height = 1;
+		}
+	}
+
+	protected void setWidth(float w)
 	{
 		if (w > 0) {
 			width = w;
 		}
+		else {
+			width = 1;
+		}
 	}
-	
+
 	//misc
 	public String toString() {
-		return "Simplest possible object within the game universe";
+		return "Root class of all visible object. Contains a sprite, dimension, and location";
 	}
 }
-
