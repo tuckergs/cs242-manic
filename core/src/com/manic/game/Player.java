@@ -10,18 +10,16 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class Player extends Entity implements Hitbox, Controllable { //extends Entity
 	
-	private String playerName, characterName;
-	private float totalHealth = 0;
 	private float currentHealth = 0;
 	private float damageModifier = 0; //damage done, increases future damage done
 	private float movementSpeed = 5;
+	private Character fighter;
 	
-	public Player(String player, String character, String texturePath, SpriteBatch batch, float x, float y, float h, float w)
+	public Player(Character character, String texturePath, SpriteBatch batch, float x, float y, float h, float w)
 	{
 		super(texturePath, batch, x, y, h, w);
 		
-		playerName = player;
-		characterName = character;		
+		fighter = character;
 	}
 	
 	public boolean isControllable(int frame)
@@ -35,7 +33,7 @@ public class Player extends Entity implements Hitbox, Controllable { //extends E
 		{
 			if (xCoordinate > 0)
 			{
-				xCoordinate -= movementSpeed;
+				xCoordinate -= fighter.getMovementSpeed();
 			}
 		}
 		
@@ -43,7 +41,7 @@ public class Player extends Entity implements Hitbox, Controllable { //extends E
 		{
 			if (xCoordinate < 500)
 			{
-				xCoordinate += movementSpeed;
+				xCoordinate += fighter.getMovementSpeed();
 			}
 		}
 		
@@ -51,7 +49,7 @@ public class Player extends Entity implements Hitbox, Controllable { //extends E
 		{
 			if (yCoordinate > 230)
 			{
-				yCoordinate += movementSpeed;
+				yCoordinate += fighter.getMovementSpeed();
 			}
 		}
 		
@@ -59,7 +57,7 @@ public class Player extends Entity implements Hitbox, Controllable { //extends E
 		{
 			if (yCoordinate < 0)
 			{
-				yCoordinate -= movementSpeed;
+				yCoordinate -= fighter.getMovementSpeed();
 			}
 		}
 	}

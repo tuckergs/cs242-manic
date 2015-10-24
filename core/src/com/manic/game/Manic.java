@@ -19,7 +19,8 @@ public class Manic extends ApplicationAdapter
 		batch = new SpriteBatch();
 		img = new Texture("stage-demo.jpg");
 		
-		playerOne = new Player("Stephen", "Shaq", "shaq.png", batch, 0, 0, 16, 16);
+		Character shaq = new Character("Shaq", 5);
+		playerOne = new Player(shaq, "shaq.png", batch, 0, 0, 16, 16);
 	}
 
 	@Override

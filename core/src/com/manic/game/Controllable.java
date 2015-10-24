@@ -8,5 +8,7 @@ public interface Controllable {
 	//useful for determing if they are stunned or mid-air
 	abstract boolean isControllable(int frame);
 	
+	//abstract boolean isJumping(boolean onGround)
+	
 	
 }
