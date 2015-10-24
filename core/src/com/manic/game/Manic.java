@@ -11,7 +11,7 @@ public class Manic extends ApplicationAdapter
 {
 	SpriteBatch batch;
 	Texture img;
-	GameObject object;
+	Player playerOne;
 	
 	@Override
 	public void create ()
@@ -19,7 +19,7 @@ public class Manic extends ApplicationAdapter
 		batch = new SpriteBatch();
 		img = new Texture("stage-demo.jpg");
 		
-		object = new GameObject("shaq.png", batch, 0, 0);
+		playerOne = new Player("Stephen", "Shaq", "shaq.png", batch, 0, 0, 16, 16);
 	}
 
 	@Override
@@ -30,8 +30,8 @@ public class Manic extends ApplicationAdapter
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		batch.begin();
 		batch.draw(img, -75, -30);
-		object.updatePosition();
-		object.draw();
+		playerOne.updatePosition();
+		playerOne.draw();
 		
 		batch.end();
 	}
