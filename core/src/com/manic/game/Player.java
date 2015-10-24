@@ -63,4 +63,9 @@ public class Player extends Entity implements Hitbox, Controllable { //extends E
 			}
 		}
 	}
+	
+	//misc
+	public String toString() {
+		return "Extends Entity, implements Controllable and Hitbox";
+	}
 }
