@@ -8,27 +8,40 @@ public class InputProcessor extends InputAdapter
 	
 	public boolean keyDown(int key)
 	{
-		if (key == Keys.Z) {
+		if (key == Keys.SPACE) {
 			
-			InputHandler.setKey(InputHandler.BUTTON1, true);
+			InputHandler.setKey(InputHandler.KEY_SPACE, true);
 		}
-		else if (key == Keys.X) {
+		
+		if (key == Keys.A) {
 			
-			InputHandler.setKey(InputHandler.BUTTON2, true); 
+			InputHandler.setKey(InputHandler.KEY_A, true); 
 		}
+		
+		if (key == Keys.D) {
+			
+			InputHandler.setKey(InputHandler.KEY_D, true); 
+		}
+		
 		
 		return true;
 	}
 	
 	public boolean keyUp(int key)
 	{
-		if (key == Keys.Z) {
+		if (key == Keys.SPACE) {
 			
-			InputHandler.setKey(InputHandler.BUTTON1, false);
+			InputHandler.setKey(InputHandler.KEY_SPACE, false);
 		}
-		else if (key == Keys.X) {
+		
+		if (key == Keys.A) {
 			
-			InputHandler.setKey(InputHandler.BUTTON2, false); 
+			InputHandler.setKey(InputHandler.KEY_A, false); 
+		}
+		
+		if (key == Keys.D) {
+		
+			InputHandler.setKey(InputHandler.KEY_D, false); 
 		}
 		
 		return true;

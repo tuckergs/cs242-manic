@@ -23,14 +23,15 @@ public class Start extends GameState {
 	private final float Y_GRAVITY = -2.81f;
 	private Box2DDebugRenderer debugRenderer;
 	private OrthographicCamera box2DCamera;
-	
+	private MyContactListener contactListener;
 	private Body playerBody;
 	
 	public Start(GameStateManager gsm) {
 		super(gsm);
 		
 		world = new World(new Vector2(X_GRAVITY, Y_GRAVITY), true);
-		world.setContactListener(new MyContactListener());
+		contactListener = new MyContactListener();
+		world.setContactListener(contactListener);
 		
 		debugRenderer = new Box2DDebugRenderer();
 		BodyDef bodyDef= new BodyDef();
@@ -46,22 +47,13 @@ public class Start extends GameState {
 
 		fixtureDef.shape = box;
 		fixtureDef.filter.categoryBits = Settings.BIT_PLATFORM;
-		fixtureDef.filter.maskBits = Settings.BIT_PLAYER | Settings.BIT_BALL; //it can colide with both the player and ball
-		body.createFixture(fixtureDef).setUserData("Platform");
+		fixtureDef.filter.maskBits = Settings.BIT_PLAYER | Settings.BIT_BALL; //it can collide with both the player and ball
+		body.createFixture(fixtureDef).setUserData("platform");
 		
-		//create box guy
-		bodyDef.position.set(160/PPM, 200/PPM);
-		bodyDef.type = BodyType.DynamicBody;
-		body = world.createBody(bodyDef);
-		
-		box.setAsBox(5/PPM, 5/PPM); //10x10
-		fixtureDef.shape = box;
-		fixtureDef.filter.categoryBits = Settings.BIT_PLAYER;
-		fixtureDef.filter.maskBits = Settings.BIT_PLATFORM;
-		body.createFixture(fixtureDef).setUserData("Player");;
 		
 		//create ball guy
 		bodyDef.position.set(153/PPM, 220/PPM);
+		bodyDef.type = BodyType.DynamicBody;
 		body = world.createBody(bodyDef);
 		
 		CircleShape circle = new CircleShape();
@@ -69,8 +61,27 @@ public class Start extends GameState {
 		fixtureDef.shape = circle;
 		fixtureDef.restitution = 1.0f;
 		fixtureDef.filter.categoryBits = Settings.BIT_BALL; //it is a type ball
-		fixtureDef.filter.maskBits = Settings.BIT_PLATFORM; //can collide with ground
-		body.createFixture(fixtureDef).setUserData("Ball");;
+		fixtureDef.filter.maskBits = Settings.BIT_PLATFORM | Settings.BIT_PLAYER; //can collide with ground
+		body.createFixture(fixtureDef).setUserData("ball");
+		
+		//create player
+		bodyDef.position.set(168/PPM, 200/PPM);
+		playerBody = world.createBody(bodyDef);
+		
+		box.setAsBox(5/PPM, 5/PPM); //10x10
+		fixtureDef.shape = box;
+		fixtureDef.restitution = 0.0f;
+		fixtureDef.filter.categoryBits = Settings.BIT_PLAYER;
+		fixtureDef.filter.maskBits = Settings.BIT_PLATFORM | Settings.BIT_BALL;
+		playerBody.createFixture(fixtureDef).setUserData("player");
+		
+		//create foot sensor
+		box.setAsBox(2/PPM, 2/PPM, new Vector2(0, -5/PPM), 0); //TODO GET RID OF MAGIC NUMBERS
+		fixtureDef.shape = box;
+		fixtureDef.filter.categoryBits = Settings.BIT_PLAYER;
+		fixtureDef.filter.maskBits = Settings.BIT_PLATFORM;
+		fixtureDef.isSensor = true;
+		playerBody.createFixture(fixtureDef).setUserData("player foot");
 		
 		//setup box2DCamera
 		box2DCamera = new OrthographicCamera();
@@ -79,11 +90,13 @@ public class Start extends GameState {
 	
 	public void handleInput()
 	{
-		if (InputHandler.isPressed(InputHandler.BUTTON1)) {
-			System.out.println("Pressed!");
-		}
-		else if (InputHandler.isDown(InputHandler.BUTTON2)) {
-			System.out.println("Is down!");
+		//player can jump
+		if (InputHandler.isPressed(InputHandler.KEY_SPACE))
+		{
+			if (contactListener.isOnGround()) {
+				//in newtons. player weighs 1kg, -9.78 gravity
+				playerBody.applyForceToCenter(0, 125, true);
+			}
 		}
 	}
 	
