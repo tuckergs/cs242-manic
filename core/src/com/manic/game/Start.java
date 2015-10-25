@@ -24,6 +24,8 @@ public class Start extends GameState {
 	private Box2DDebugRenderer debugRenderer;
 	private OrthographicCamera box2DCamera;
 	
+	private Body playerBody;
+	
 	public Start(GameStateManager gsm) {
 		super(gsm);
 		
@@ -75,10 +77,20 @@ public class Start extends GameState {
 		box2DCamera.setToOrtho(false, Manic.V_WIDTH/PPM, Manic.V_HEIGHT/PPM);
 	}
 	
-	public void handleInput() {}
+	public void handleInput()
+	{
+		if (InputHandler.isPressed(InputHandler.BUTTON1)) {
+			System.out.println("Pressed!");
+		}
+		else if (InputHandler.isDown(InputHandler.BUTTON2)) {
+			System.out.println("Is down!");
+		}
+	}
 	
 	public void update(float dt)
 	{
+		handleInput();
+		
 		world.step(dt, 6, 2);
 	}
 	public void render() {

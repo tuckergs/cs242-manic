@@ -44,6 +44,8 @@ public class Manic implements ApplicationListener
 	@Override
 	public void create ()
 	{
+		Gdx.input.setInputProcessor(new InputProcessor());
+		
 		batch = new SpriteBatch();
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false, V_WIDTH, V_HEIGHT);
@@ -61,6 +63,7 @@ public class Manic implements ApplicationListener
 			accum -= STEP;
 			gsm.update(STEP);
 			gsm.render();
+			InputHandler.update();
 		}
 	}
 	
