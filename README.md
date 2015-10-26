@@ -4,4 +4,7 @@
 Visit the wiki's ![Getting Started](https://github.com/Lorenzsj/manic/wiki) page if you are unsure about how to integrate our project in eclipse.
 
 # Using the Demo
-Press **space** in the demo application to make the polygon jump.
+Press **space** in the demo application to make Shaq jump, **A** and **D** to make him dribble side to side.
+![](http://i.imgur.com/B2WU5pF.png)
+
+
