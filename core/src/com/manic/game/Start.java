@@ -107,7 +107,7 @@ public class Start extends GameState {
 		fixtureDef.shape = circle;
 		fixtureDef.restitution = 1.0f; //max bounce
 		fixtureDef.filter.categoryBits = Settings.BIT_BALL; //it is a type ball
-		fixtureDef.filter.maskBits = Settings.BIT_PLATFORM | Settings.BIT_PLAYER; //can collide with ground
+		fixtureDef.filter.maskBits = Settings.BIT_PLATFORM | Settings.BIT_PLAYER | Settings.BIT_BALL; //can collide with ground
 		bodyDef.position.set(153/PPM, 220/PPM);
 		bodyDef.type = BodyType.DynamicBody;
 		body = world.createBody(bodyDef);
