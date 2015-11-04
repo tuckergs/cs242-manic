@@ -23,6 +23,10 @@ public class InputProcessor extends InputAdapter
 			InputHandler.setKey(InputHandler.KEY_D, true); 
 		}
 		
+		if (key == Keys.S) {
+			
+			InputHandler.setKey(InputHandler.KEY_S, true); 
+		}
 		
 		return true;
 	}
@@ -42,6 +46,11 @@ public class InputProcessor extends InputAdapter
 		if (key == Keys.D) {
 		
 			InputHandler.setKey(InputHandler.KEY_D, false); 
+		}
+		
+		if (key == Keys.S) {
+			
+			InputHandler.setKey(InputHandler.KEY_S, false); 
 		}
 		
 		return true;
