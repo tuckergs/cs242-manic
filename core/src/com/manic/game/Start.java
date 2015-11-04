@@ -24,6 +24,7 @@ public class Start extends GameState {
 	private final float GRAVITY_Y = -2.81f;
 	//private final float JUMP_FORCE_NEWTONS = 125;
 	private final float JUMP_FORCE_NEWTONS = 180;
+	private final float MOVEMENT_SPEED_NEWTONS = 3f;
 	private Box2DDebugRenderer debugRenderer;
 	private OrthographicCamera box2DCamera;
 	private MyContactListener contactListener;
@@ -55,6 +56,7 @@ public class Start extends GameState {
 		
 		////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		//test platforms
+		//USES DIMENSIONS OF V_WIDTH, V_HEIGHT
 		//bottom plat
 		bodyDef.position.set(0/PPM, 0/PPM);
 		body = world.createBody(bodyDef);
@@ -105,6 +107,7 @@ public class Start extends GameState {
 		CircleShape circle = new CircleShape();
 		circle.setRadius(5/PPM);
 		fixtureDef.shape = circle;
+		//fixtureDef.density = 75.0f;
 		fixtureDef.restitution = 1.0f; //max bounce
 		fixtureDef.filter.categoryBits = Settings.BIT_BALL; //it is a type ball
 		fixtureDef.filter.maskBits = Settings.BIT_PLATFORM | Settings.BIT_PLAYER | Settings.BIT_BALL; //can collide with ground
@@ -113,6 +116,7 @@ public class Start extends GameState {
 		body = world.createBody(bodyDef);
 		bodyDef.position.set(10/PPM, 100/PPM);
 		
+		System.out.println("0.5f" + body.getMass());
 		body = world.createBody(bodyDef);
 		body.createFixture(fixtureDef).setUserData("ball");
 		
@@ -150,6 +154,8 @@ public class Start extends GameState {
 		
 		box.setAsBox(5/PPM, 5/PPM); //10x10
 		fixtureDef.shape = box;
+		//fixtureDef.density = 75.0f;
+		System.out.println("1.0f" + playerBody.getMass());
 		fixtureDef.restitution = 0.2f;
 		fixtureDef.filter.categoryBits = Settings.BIT_PLAYER;
 		fixtureDef.filter.maskBits = Settings.BIT_PLATFORM | Settings.BIT_BALL;
@@ -159,7 +165,7 @@ public class Start extends GameState {
 		box.setAsBox(5/PPM, 2/PPM, new Vector2(0, -5/PPM), 0); //TODO GET RID OF MAGIC NUMBERS
 		fixtureDef.shape = box;
 		fixtureDef.filter.categoryBits = Settings.BIT_PLAYER;
-		fixtureDef.filter.maskBits = Settings.BIT_PLATFORM;
+		fixtureDef.filter.maskBits = Settings.BIT_PLATFORM | Settings.BIT_BALL;
 		fixtureDef.isSensor = true;
 		playerBody.createFixture(fixtureDef).setUserData("player foot");
 		
@@ -175,18 +181,28 @@ public class Start extends GameState {
 		{
 			if (contactListener.isOnGround()) {
 				//in newtons. player weighs 1kg, -9.78 gravity
+				//apply upward force when on the ground
 				playerBody.applyForceToCenter(0, JUMP_FORCE_NEWTONS, true);
+			}
+		}
+		
+		if (InputHandler.isPressed(InputHandler.KEY_S))
+		{
+			if (!contactListener.isOnGround()) {
+				//apply downward force when airborne
+				playerBody.applyForceToCenter(0, -JUMP_FORCE_NEWTONS, true);
 			}
 		}
 		
 		if (InputHandler.isDown(InputHandler.KEY_D))
 		{
-			playerBody.applyForce(new Vector2(3f, 0), playerBody.getPosition(), true);
+			//playerBody.applyForce(new Vector2(3f, 0), playerBody.getPosition(), true);
+			playerBody.applyForceToCenter(MOVEMENT_SPEED_NEWTONS, 0, true);
 		}
 		
 		if (InputHandler.isDown(InputHandler.KEY_A))
 		{
-			playerBody.applyForce(new Vector2(-3f, 0), playerBody.getPosition(), true);
+			playerBody.applyForceToCenter(-MOVEMENT_SPEED_NEWTONS, 0, true);
 		}
 	}
 	
