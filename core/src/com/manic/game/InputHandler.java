@@ -6,11 +6,10 @@ public class InputHandler
 	public static boolean pressedDown;
 	public static boolean[] keys;
 	public static boolean[] pressedKeys;
-	private static final int NUM_KEYS = 4;
+	private static final int NUM_KEYS = 3;
 	public static final int KEY_SPACE = 0;
 	public static final int KEY_A = 1;
 	public static final int KEY_D = 2;
-	public static final int KEY_S = 3;
 	static
 	{
 		keys = new boolean[NUM_KEYS];
