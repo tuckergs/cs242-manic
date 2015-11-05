@@ -107,7 +107,7 @@ public class Start extends GameState {
 		CircleShape circle = new CircleShape();
 		circle.setRadius(5/PPM);
 		fixtureDef.shape = circle;
-		//fixtureDef.density = 75.0f;
+		fixtureDef.density = 75.0f;
 		fixtureDef.restitution = 1.0f; //max bounce
 		fixtureDef.filter.categoryBits = Settings.BIT_BALL; //it is a type ball
 		fixtureDef.filter.maskBits = Settings.BIT_PLATFORM | Settings.BIT_PLAYER | Settings.BIT_BALL; //can collide with ground
@@ -154,7 +154,7 @@ public class Start extends GameState {
 		
 		box.setAsBox(5/PPM, 5/PPM); //10x10
 		fixtureDef.shape = box;
-		//fixtureDef.density = 75.0f;
+		fixtureDef.density = 75.0f;
 		System.out.println("1.0f" + playerBody.getMass());
 		fixtureDef.restitution = 0.2f;
 		fixtureDef.filter.categoryBits = Settings.BIT_PLAYER;
