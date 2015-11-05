@@ -1,3 +1,7 @@
+/*
+ * 
+ */
+
 package com.manic.game.desktop;
 
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
