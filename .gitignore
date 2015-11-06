@@ -4,6 +4,9 @@
 *.war
 *.ear
 hs_err_pid*
+## doxygen
+html/
+latex/
 
 ## GWT
 war/
