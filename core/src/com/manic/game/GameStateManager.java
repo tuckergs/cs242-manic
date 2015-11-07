@@ -27,7 +27,7 @@ public class GameStateManager {
 	{
  		if (state == States.PLAY)
  		{
- 			return new Start(this);
+ 			return new Test(this);
  		}
  		else
  		{

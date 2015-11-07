@@ -28,6 +28,30 @@ public class InputProcessor extends InputAdapter
 			InputHandler.setKey(InputHandler.KEY_S, true); 
 		}
 		
+		
+		
+		if (key == Keys.UP) {
+			
+			InputHandler.setKey(InputHandler.KEY_UP, true);
+		}
+		
+		if (key == Keys.LEFT) {
+			
+			InputHandler.setKey(InputHandler.KEY_LEFT, true); 
+		}
+		
+		if (key == Keys.RIGHT) {
+			
+			InputHandler.setKey(InputHandler.KEY_RIGHT, true); 
+		}
+		
+		if (key == Keys.DOWN) {
+			
+			InputHandler.setKey(InputHandler.KEY_DOWN, true); 
+		}
+		
+		
+		
 		return true;
 	}
 	
@@ -52,6 +76,29 @@ public class InputProcessor extends InputAdapter
 			
 			InputHandler.setKey(InputHandler.KEY_S, false); 
 		}
+		
+		
+		if (key == Keys.UP) {
+			
+			InputHandler.setKey(InputHandler.KEY_UP, false);
+		}
+		
+		if (key == Keys.LEFT) {
+			
+			InputHandler.setKey(InputHandler.KEY_LEFT, false); 
+		}
+		
+		if (key == Keys.RIGHT) {
+			
+			InputHandler.setKey(InputHandler.KEY_RIGHT, false); 
+		}
+		
+		if (key == Keys.DOWN) {
+			
+			InputHandler.setKey(InputHandler.KEY_DOWN, false); 
+		}
+		
+		
 		
 		return true;
 	}

@@ -17,6 +17,8 @@ import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 //pixels per meter
 import static com.manic.game.Settings.PPM;
 
+import java.awt.Color;
+
 public class Start extends GameState {
 	private World world;
 	
@@ -29,6 +31,7 @@ public class Start extends GameState {
 	private OrthographicCamera box2DCamera;
 	private MyContactListener contactListener;
 	private Body playerBody;
+	private RayHandler handler;
 	
 	public Start(GameStateManager gsm) {
 		super(gsm);
@@ -172,6 +175,12 @@ public class Start extends GameState {
 		//setup box2DCamera
 		box2DCamera = new OrthographicCamera();
 		box2DCamera.setToOrtho(false, Manic.V_WIDTH/PPM, Manic.V_HEIGHT/PPM);
+		
+		handler = new RayHandler(world);
+		handler.setCombinedMatrix(camera.combined);
+		
+		new PointLight(handler, 5000, Color.CYAN, 100, 150, 190);
+		
 	}
 	
 	public void handleInput()
@@ -218,6 +227,7 @@ public class Start extends GameState {
 		
 		//draw
 		debugRenderer.render(world, box2DCamera.combined);
+		handler.updateAndRender();
 	}
 	
 	public void dispose() {}

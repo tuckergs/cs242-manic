@@ -2,9 +2,16 @@ package com.manic.game;
 
 //doxygen example
 
+import static com.manic.game.Settings.PPM;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
+import com.badlogic.gdx.physics.box2d.FixtureDef;
+import com.badlogic.gdx.physics.box2d.PolygonShape;
 
 //class documenation example
 /**
@@ -24,12 +31,16 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
  * @date 11/4/15
  */
 
-public class Player extends Entity implements Hitbox, Controllable { //extends Entity
+public class Player { //extends Entity
 	
 	private float currentHealth = 0;
 	private float damageModifier = 0; //damage done, increases future damage done
 	private float movementSpeed = 5;
 	private Character fighter;
+	BodyDef bodyDef;
+	FixtureDef fixtureDef;
+	FixtureDef sensDef;
+	PolygonShape box; 
 	
 	/**
 	 * @brief Brief description.
@@ -45,11 +56,50 @@ public class Player extends Entity implements Hitbox, Controllable { //extends E
 	 * @param w etc
 	 */
 	
-	public Player(Character character, String texturePath, SpriteBatch batch, float x, float y, float h, float w)
+	public Player(int loc1, int loc2)
 	{
-		super(texturePath, batch, x, y, h, w);
+		box = new PolygonShape();
 		
-		fighter = character;
+		bodyDef = new BodyDef();
+		fixtureDef = new FixtureDef();
+		sensDef = new FixtureDef();
+		
+		
+		bodyDef.position.set(loc1/PPM, loc2/PPM);
+		bodyDef.type = BodyType.DynamicBody;
+		
+		
+		box.setAsBox(5/PPM, 5/PPM); //10x10
+		fixtureDef.shape = box;
+		fixtureDef.density = 75.0f;
+		fixtureDef.restitution = 0.2f;
+		fixtureDef.filter.categoryBits = Settings.BIT_PLAYER;
+		fixtureDef.filter.maskBits = Settings.BIT_PLATFORM | Settings.BIT_BALL | Settings.BIT_PLAYER;
+
+	}
+	
+	public FixtureDef getFix()
+	{
+		return fixtureDef;
+	}
+	
+	public BodyDef getBod()
+	{
+		return bodyDef;
+	}
+	
+	public FixtureDef getSens()
+	{
+		
+		box.setAsBox(5/PPM, 2/PPM, new Vector2(0, -5/PPM), 0); //TODO GET RID OF MAGIC NUMBERS
+		sensDef.shape = box;
+		sensDef.filter.categoryBits = Settings.BIT_PLAYER;
+		sensDef.filter.maskBits = Settings.BIT_PLATFORM | Settings.BIT_BALL;
+		sensDef.isSensor = true;
+		
+		
+		return sensDef;
+		
 	}
 	
 	//example function documentation
@@ -67,47 +117,7 @@ public class Player extends Entity implements Hitbox, Controllable { //extends E
 	{
 		return true;
 	}
-	
-	/**
-	 * @brief Brief description.
-	 * 
-	 * A longer description goes here.
-	 */
-	public void updatePosition()
-	{	
-		if (Gdx.input.isKeyPressed(Input.Keys.A)) 
-		{
-			if (xCoordinate > 0)
-			{
-				xCoordinate -= fighter.getMovementSpeed();
-			}
-		}
-		
-		else if ( Gdx.input.isKeyPressed(Input.Keys.D) ) 
-		{
-			if (xCoordinate < 500)
-			{
-				xCoordinate += fighter.getMovementSpeed();
-			}
-		}
-		
-		else if (Gdx.input.isKeyPressed(Input.Keys.W)) 
-		{
-			if (yCoordinate > 230)
-			{
-				yCoordinate += fighter.getMovementSpeed();
-			}
-		}
-		
-		else if (Gdx.input.isKeyPressed(Input.Keys.S)) 
-		{
-			if (yCoordinate < 0)
-			{
-				yCoordinate -= fighter.getMovementSpeed();
-			}
-		}
-	}
-	
+
 	//misc
 	public String toString() {
 		return "Extends Entity, implements Controllable and Hitbox";
