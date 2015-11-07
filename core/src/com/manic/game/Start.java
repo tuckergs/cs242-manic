@@ -1,6 +1,7 @@
 package com.manic.game;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector2;
@@ -12,12 +13,14 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
+
+import box2dLight.PointLight;
+import box2dLight.RayHandler;
+
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 
 //pixels per meter
 import static com.manic.game.Settings.PPM;
-
-import java.awt.Color;
 
 public class Start extends GameState {
 	private World world;
@@ -177,10 +180,17 @@ public class Start extends GameState {
 		box2DCamera.setToOrtho(false, Manic.V_WIDTH/PPM, Manic.V_HEIGHT/PPM);
 		
 		handler = new RayHandler(world);
+		handler.setAmbientLight(.5f);
 		handler.setCombinedMatrix(camera.combined);
+		handler.setShadows(true);
 		
-		new PointLight(handler, 5000, Color.CYAN, 100, 150, 190);
+		PointLight light = new PointLight(handler, 200, Color.MAGENTA, 150f, 0, 240);
+		PointLight light2 = new PointLight(handler, 200, Color.CYAN, 150f, 160, 240);
+		PointLight light3 = new PointLight(handler, 200, Color.MAGENTA, 150f, 320, 240);
 		
+		light.setSoftnessLength(100f);
+		light2.setSoftnessLength(100f);
+		light3.setSoftnessLength(100f);
 	}
 	
 	public void handleInput()
