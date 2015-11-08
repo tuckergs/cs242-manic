@@ -74,7 +74,7 @@ public class Start extends GameState {
 		body.createFixture(e.getFixture());
 		
 		body = world.createBody(p.getBody());
-		body.createFixture(p.getFixture());
+		body.createFixture(p.getFixture()).setUserData("player");
 		
 		////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		//test platforms
@@ -180,7 +180,7 @@ public class Start extends GameState {
 		System.out.println("1.0f" + playerBody.getMass());
 		fixtureDef.restitution = 0.2f;
 		fixtureDef.filter.categoryBits = Settings.BIT_PLAYER;
-		fixtureDef.filter.maskBits = Settings.BIT_PLATFORM | Settings.BIT_BALL;
+		fixtureDef.filter.maskBits = Settings.BIT_PLATFORM | Settings.BIT_BALL | Settings.BIT_PLAYER;
 		playerBody.createFixture(fixtureDef).setUserData("player");
 		
 		//create foot sensor
