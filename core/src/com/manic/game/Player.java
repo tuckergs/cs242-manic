@@ -31,16 +31,12 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
  * @date 11/4/15
  */
 
-public class Player { //extends Entity
+public class Player extends Entity { //extends Entity
 	
 	private float currentHealth = 0;
 	private float damageModifier = 0; //damage done, increases future damage done
 	private float movementSpeed = 5;
 	private Character fighter;
-	BodyDef bodyDef;
-	FixtureDef fixtureDef;
-	FixtureDef sensDef;
-	PolygonShape box; 
 	
 	/**
 	 * @brief Brief description.
@@ -58,49 +54,15 @@ public class Player { //extends Entity
 	
 	public Player(int loc1, int loc2)
 	{
-		box = new PolygonShape();
+		super(BodyType.DynamicBody, new PolygonShape(), 5, 5, 60, 60);
 		
-		bodyDef = new BodyDef();
-		fixtureDef = new FixtureDef();
-		sensDef = new FixtureDef();
-		
-		
-		bodyDef.position.set(loc1/PPM, loc2/PPM);
-		bodyDef.type = BodyType.DynamicBody;
-		
-		
-		box.setAsBox(5/PPM, 5/PPM); //10x10
-		fixtureDef.shape = box;
 		fixtureDef.density = 75.0f;
 		fixtureDef.restitution = 0.2f;
 		fixtureDef.filter.categoryBits = Settings.BIT_PLAYER;
 		fixtureDef.filter.maskBits = Settings.BIT_PLATFORM | Settings.BIT_BALL | Settings.BIT_PLAYER;
 
 	}
-	
-	public FixtureDef getFix()
-	{
-		return fixtureDef;
-	}
-	
-	public BodyDef getBod()
-	{
-		return bodyDef;
-	}
-	
-	public FixtureDef getSens()
-	{
-		
-		box.setAsBox(5/PPM, 2/PPM, new Vector2(0, -5/PPM), 0); //TODO GET RID OF MAGIC NUMBERS
-		sensDef.shape = box;
-		sensDef.filter.categoryBits = Settings.BIT_PLAYER;
-		sensDef.filter.maskBits = Settings.BIT_PLATFORM | Settings.BIT_BALL;
-		sensDef.isSensor = true;
-		
-		
-		return sensDef;
-		
-	}
+
 	
 	//example function documentation
 	/**

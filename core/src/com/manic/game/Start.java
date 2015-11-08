@@ -68,13 +68,13 @@ public class Start extends GameState {
 		body.createFixture(fixtureDef).setUserData("platform");
 		
 		Entity e = new Entity(BodyType.StaticBody, new PolygonShape(), 5, 5, 90, 90);
-		Entity e2 = new Entity(BodyType.StaticBody, new CircleShape(), 5, 90, 90);
+		Player p = new Player(1, 1);
 		
 		body = world.createBody(e.getBody());
 		body.createFixture(e.getFixture());
 		
-		body = world.createBody(e2.getBody());
-		body.createFixture(e2.getFixture());
+		body = world.createBody(p.getBody());
+		body.createFixture(p.getFixture());
 		
 		////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		//test platforms

@@ -222,6 +222,6 @@ public class Entity {
     }
 
     public String toString() {
-        return "Root class of all visible objects. Has a sprite, dimension, and location";
+        return "Root class of all visible objects";
     }
 }

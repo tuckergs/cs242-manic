@@ -88,16 +88,12 @@ public class Test extends GameState {
 		Player p2 = new Player(200, 200);
 		
 		
-		playerBody = world.createBody(p.getBod());
-		playerBody.createFixture(p.getFix()).setUserData("player");
+		playerBody = world.createBody(p.getBody());
+		playerBody.createFixture(p.getFixture()).setUserData("player");
 		//hitbox
-		playerBody.createFixture(p.getSens()).setUserData("player foot");
 		
-		p2Bod = world.createBody(p2.getBod());
-		p2Bod.createFixture(p2.getFix()).setUserData("player");
-		//hitbox
-		p2Bod.createFixture(p2.getSens()).setUserData("player foot");
-		
+		p2Bod = world.createBody(p2.getBody());
+		p2Bod.createFixture(p.getFixture()).setUserData("player");;
 		
 		//setup box2DCamera
 		box2DCamera = new OrthographicCamera();
