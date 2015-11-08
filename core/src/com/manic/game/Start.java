@@ -9,6 +9,7 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.CircleShape;
+import com.badlogic.gdx.physics.box2d.Shape;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
@@ -55,19 +56,25 @@ public class Start extends GameState {
 		
 		PolygonShape box = new PolygonShape();
 		
-		//tester
-	
+		
 		
 		box.setAsBox(50/PPM, 5/PPM); //100x10
-
+		
+		
+		//TESTER
 		fixtureDef.shape = box;
 		fixtureDef.filter.categoryBits = Settings.BIT_PLATFORM;
 		fixtureDef.filter.maskBits = Settings.BIT_PLAYER | Settings.BIT_BALL; //it can collide with both the player and ball
 		body.createFixture(fixtureDef).setUserData("platform");
 		
-		Entity e = new Entity(BodyType.StaticBody, box, 5, 5, 90, 90);
+		Entity e = new Entity(BodyType.StaticBody, new PolygonShape(), 5, 5, 90, 90);
+		Entity e2 = new Entity(BodyType.StaticBody, new CircleShape(), 5, 90, 90);
+		
 		body = world.createBody(e.getBody());
 		body.createFixture(e.getFixture());
+		
+		body = world.createBody(e2.getBody());
+		body.createFixture(e2.getFixture());
 		
 		////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		//test platforms
