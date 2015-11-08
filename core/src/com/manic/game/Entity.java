@@ -1,114 +1,141 @@
 package com.manic.game;
 
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import static com.manic.game.Settings.PPM;
+
+//import com.badlogic.gdx.graphics.Texture;
+//import com.badlogic.gdx.graphics.g2d.Sprite;
+//import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+//protected SpriteBatch spriteBatchHandle;
+//protected Texture texture;
+
+import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
+import com.badlogic.gdx.physics.box2d.FixtureDef;
+import com.badlogic.gdx.physics.box2d.PolygonShape;
+
+/**
+ * @brief Basic structure of anything that exists within the world.
+ *
+ * This classes packages all the necessary Box2D data members necessary
+ *  to create anything within the world.
+ *
+ * @note Children classes will make assumptions about some of these parameters.
+ *
+ * @author Stephen Lorenz
+ *
+ * @version 0.1
+ *
+ * @date 11/4/15
+ */
 
 public class Entity {
-	private SpriteBatch spriteBatchHandle;
-	private Texture texture;
-	protected float xCoordinate = 0;
-	protected float yCoordinate = 0;
-	protected float height = 0;
-	protected float width = 0;
+    protected float x = 0;
+    protected float y = 0;
+    protected float height = 0;
+    protected float width = 0;
+   
+    protected BodyDef bodyDef;
+    protected FixtureDef fixtureDef;
+    
+    
 
-	/* Description: To exist, you must be initialized with a sprite, dimension, and location */
-	//TODO implement with SpriteHandler
-	public Entity(String texturePath, SpriteBatch batch, float x, float y, float h, float w)
-	{
-		spriteBatchHandle = batch;
-		texture = new Texture(texturePath);
+    public Entity(BodyType bt, PolygonShape ps, int height, int width, float x, float y)
+    {       
+        bodyDef = new BodyDef();
+        fixtureDef = new FixtureDef();
+       
+        setHeight(height);
+        setWidth(width);
+        setX(x);
+        setY(y);
+       
+        //PPM = 100
+        bodyDef.position.set(x/PPM, y/PPM);
+        bodyDef.type = bt;
+        ps.setAsBox(height/PPM, width/PPM);
+        fixtureDef.shape = ps;
+    }
 
-		setCoordinateX(x);
-		setCoordinateY(y);
 
-		setHeight(h);
-		setWidth(w);
-	}
+    //Getters
+    //Coordinates
+    public float getX()
+    {
+        return x;
+    }
 
-	// Draw the entity
-	protected void draw()
-	{
-		spriteBatchHandle.draw(texture, xCoordinate, yCoordinate);
-	}
+    public float getY()
+    {
+        return y;
+    }
 
-	// Kill the entity
-	protected void dispose()
-	{
-		spriteBatchHandle.dispose();
-		xCoordinate = -1;
-		yCoordinate = -1;
-		height = 0;
-		width = 0;
-	}
+    //Dimensions
+    public float getHeight()
+    {
+        return height;
+    }
 
-	//#### Getters ####
-	//Location coordinates
-	public float getCoordinateX()
-	{
-		return xCoordinate;
-	}
+    public float getWidth()
+    {
+        return width;
+    }
+   
+    //Bodies
+    public BodyDef getBody()
+    {
+        return bodyDef;
+    }
+   
+    //Fixtures
+    public FixtureDef getFixture()
+    {
+        return fixtureDef;
+    }
 
-	public float getCoordinateY()
-	{
-		return yCoordinate;
-	}
+    //Setters
+    //Coordinates
+    protected void setX(float x)
+    {
+        if (y > 0) {
+            this.x = x;
+        }
+        else {
+            this.x = 0;
+        }
+    }
 
-	public float getHeight()
-	{
-		return height;
-	}
+    protected void setY(float y)
+    {
+        if (y > 0) {
+            this.y = y;
+        }
+        else {
+            this.y = 0;
+        }
+    }
 
-	public float getWidth()
-	{
-		return width;
-	}
+    //Dimensions
+    protected void setHeight(int h)
+    {
+        if (h > 0) {
+            height = h;
+        }
+        else {
+            height = 1;
+        }
+    }
 
-	//#### Setters ####
-	//Location coordinates
-	protected void setCoordinateX(float x)
-	{
-		if (x > -1) {
-			xCoordinate = x;
-		}
-		else {
-			xCoordinate = 0;
-		}
-	}
+    protected void setWidth(int w)
+    {
+        if (w > 0) {
+            width = w;
+        }
+        else {
+            width = 1;
+        }
+    }
 
-	protected void setCoordinateY(float y)
-	{
-		if (y > -1) {
-			yCoordinate = y;
-		}
-		else {
-			yCoordinate = 0;
-		}
-	}
-
-	//dimensions
-	protected void setHeight(float h)
-	{
-		if (h > 0) {
-			height = h;
-		}
-		else {
-			height = 1;
-		}
-	}
-
-	protected void setWidth(float w)
-	{
-		if (w > 0) {
-			width = w;
-		}
-		else {
-			width = 1;
-		}
-	}
-
-	//misc
-	public String toString() {
-		return "Root class of all visible objects. Has a sprite, dimension, and location";
-	}
+    public String toString() {
+        return "Root class of all visible objects. Has a sprite, dimension, and location";
+    }
 }

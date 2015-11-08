@@ -51,14 +51,23 @@ public class Start extends GameState {
 		bodyDef.position.set(160/PPM, 120/PPM);
 		bodyDef.type = BodyType.StaticBody; //unaffected by gravity
 		Body body = world.createBody(bodyDef);
+
 		
 		PolygonShape box = new PolygonShape();
+		
+		//tester
+	
+		
 		box.setAsBox(50/PPM, 5/PPM); //100x10
 
 		fixtureDef.shape = box;
 		fixtureDef.filter.categoryBits = Settings.BIT_PLATFORM;
 		fixtureDef.filter.maskBits = Settings.BIT_PLAYER | Settings.BIT_BALL; //it can collide with both the player and ball
 		body.createFixture(fixtureDef).setUserData("platform");
+		
+		Entity e = new Entity(BodyType.StaticBody, box, 5, 5, 90, 90);
+		body = world.createBody(e.getBody());
+		body.createFixture(e.getFixture());
 		
 		////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		//test platforms
