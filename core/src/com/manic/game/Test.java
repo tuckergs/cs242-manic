@@ -83,21 +83,11 @@ public class Test extends GameState {
 		
 		
 		//create player
-		Player p = new Player(100, 100);
+		//Player p = new Player(100, 100);
 		
-		Player p2 = new Player(200, 200);
+		//Player p2 = new Player(200, 200);
 		
-		
-		playerBody = world.createBody(p.getBody());
-		playerBody.createFixture(p.getFixture()).setUserData("player");
-		//hitbox
-		
-		p2Bod = world.createBody(p2.getBody());
-		p2Bod.createFixture(p.getFixture()).setUserData("player");;
-		
-		//setup box2DCamera
-		box2DCamera = new OrthographicCamera();
-		box2DCamera.setToOrtho(false, Manic.V_WIDTH/PPM, Manic.V_HEIGHT/PPM);
+	
 	}
 	
 	public void handleInput()

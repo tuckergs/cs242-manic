@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
@@ -66,15 +67,10 @@ public class Start extends GameState {
 		fixtureDef.filter.categoryBits = Settings.BIT_PLATFORM;
 		fixtureDef.filter.maskBits = Settings.BIT_PLAYER | Settings.BIT_BALL; //it can collide with both the player and ball
 		body.createFixture(fixtureDef).setUserData("platform");
-		
-		Entity e = new Entity(BodyType.StaticBody, new PolygonShape(), 5, 5, 90, 90);
-		Player p = new Player(1, 1);
-		
-		body = world.createBody(e.getBody());
-		body.createFixture(e.getFixture());
-		
-		body = world.createBody(p.getBody());
-		body.createFixture(p.getFixture()).setUserData("player");
+
+		Player p = new Player(new Vector2(90, 90), 5, 5, new SpriteBatch(), "");
+		playerBody = world.createBody(p.getBody());
+		playerBody.createFixture(p.getFixture());
 		
 		////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		//test platforms

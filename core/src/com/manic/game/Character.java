@@ -3,18 +3,21 @@
 
 package com.manic.game;
 
-public class Character {
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
+
+public class Character extends Box {
 	private String characterName;
 	private float movementSpeed;
 	private float health;
+	private String placeholderPath;
 	
-	public Character(String name, float speed)
+	/* this class will give player all the information about their character */
+	
+	public Character(Vector2 v, float height, float width, SpriteBatch batch, String spritePath)
 	{
-		movementSpeed = speed;
-	}
-	
-	public float getMovementSpeed() {
-		return movementSpeed;
+		super(BodyType.DynamicBody, v, 5, 5, batch, "");
 	}
 
 }

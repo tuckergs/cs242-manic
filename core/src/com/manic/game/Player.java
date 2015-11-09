@@ -31,12 +31,7 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
  * @date 11/4/15
  */
 
-public class Player extends Entity { //extends Entity
-	
-	private float currentHealth = 0;
-	private float damageModifier = 0; //damage done, increases future damage done
-	private float movementSpeed = 5;
-	private Character fighter;
+public class Player extends Character {
 	
 	/**
 	 * @brief Brief description.
@@ -52,9 +47,9 @@ public class Player extends Entity { //extends Entity
 	 * @param w etc
 	 */
 	
-	public Player(int loc1, int loc2)
+	public Player(Vector2 v, float height, float width, SpriteBatch batch, String spritePath)
 	{
-		super(BodyType.DynamicBody, new PolygonShape(), 5, 5, 60, 60);
+		super(v, height, width, batch, spritePath);
 		
 		fixtureDef.density = 75.0f;
 		fixtureDef.restitution = 0.2f;
