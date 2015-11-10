@@ -10,19 +10,16 @@ import static com.manic.game.Settings.PPM;
 public class Box extends GameEntity {
 	private float height = 0;
     private float width = 0;
-    PolygonShape box;
     
-    public Box(BodyType type, Vector2 v, float height, float width, SpriteBatch batch, String spritePath)
+    public Box(BodyType type, Vector2 v, PolygonShape box, float height, float width, SpriteBatch batch, String spritePath)
     {
-    	super(v, batch, spritePath);
+    	super(type, v, batch, spritePath);
     	
     	setHeight(height);
      	setWidth(width);
 
      	bodyDef.position.set(v);
-        bodyDef.type = type;
      	
-    	box = new PolygonShape();
     	box.setAsBox(this.width, this.height);
     	fixtureDef.shape = box;
     }    
@@ -59,5 +56,11 @@ public class Box extends GameEntity {
         else {
         	width = 1;
         }
+    }
+    
+    @Override
+    public String toString()
+    {
+    	return "";
     }
 }

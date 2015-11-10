@@ -6,6 +6,7 @@ package com.manic.game;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
+import com.badlogic.gdx.physics.box2d.PolygonShape;
 
 public class Character extends Box {
 	private String characterName;
@@ -17,7 +18,7 @@ public class Character extends Box {
 	
 	public Character(Vector2 v, float height, float width, SpriteBatch batch, String spritePath)
 	{
-		super(BodyType.DynamicBody, v, 5, 5, batch, "");
+		super(BodyType.DynamicBody, v, new PolygonShape(), 5, 5, batch, "");
 	}
 
 }

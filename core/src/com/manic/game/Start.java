@@ -69,8 +69,8 @@ public class Start extends GameState {
 		body.createFixture(fixtureDef).setUserData("platform");
 
 		Player p = new Player(new Vector2(90, 90), 5, 5, new SpriteBatch(), "");
-		playerBody = world.createBody(p.getBody());
-		playerBody.createFixture(p.getFixture());
+		playerBody = world.createBody(p.getBodyDef());
+		playerBody.createFixture(p.getFixtureDef());
 		
 		////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		//test platforms
