@@ -16,9 +16,14 @@ public class Character extends Box {
 	
 	/* this class will give player all the information about their character */
 	
-	public Character(Vector2 v, float height, float width, SpriteBatch batch, String spritePath)
+	public Character(Vector2 coordinates, float height, float width, SpriteBatch batch, String spritePath)
 	{
-		super(BodyType.DynamicBody, v, new PolygonShape(), 5, 5, batch, "");
+		super(BodyType.DynamicBody, coordinates, new PolygonShape(), 5, 5, batch, "");
+		
+		fixtureDef.density = 75.0f;
+		fixtureDef.restitution = 0.2f;
 	}
+	
+	//ABLE TO CREATE SENSOR
 
 }

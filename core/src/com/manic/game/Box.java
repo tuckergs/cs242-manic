@@ -8,17 +8,17 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import static com.manic.game.Settings.PPM;
 
 public class Box extends GameEntity {
-	private float height = 0;
-    private float width = 0;
+	protected float height = 0;
+    protected float width = 0;
     
-    public Box(BodyType type, Vector2 v, PolygonShape box, float height, float width, SpriteBatch batch, String spritePath)
+    public Box(BodyType type, Vector2 coordinates, PolygonShape box, float height, float width, SpriteBatch batch, String spritePath)
     {
-    	super(type, v, batch, spritePath);
+    	super(type, coordinates, batch, spritePath);
     	
     	setHeight(height);
      	setWidth(width);
 
-     	bodyDef.position.set(v);
+     	bodyDef.position.set(coordinates);
      	
     	box.setAsBox(this.width, this.height);
     	fixtureDef.shape = box;
@@ -38,23 +38,23 @@ public class Box extends GameEntity {
     
     //Setters
     //Dimensions
-    protected void setHeight(float h)
+    protected void setHeight(float height)
     {
-        if (h > 0) {
-            height = h/PPM;
+        if (height > 0) {
+            this.height = height/PPM;
         }
         else {
-        	height = 1;
+        	this.height = 1;
         }
     }
     
-    protected void setWidth(float w)
+    protected void setWidth(float width)
     {
-        if (w > 0) {
-            width = w/PPM;
+        if (width > 0) {
+            this.width = width/PPM;
         }
         else {
-        	width = 1;
+        	this.width = 1;
         }
     }
     

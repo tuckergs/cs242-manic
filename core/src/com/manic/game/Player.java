@@ -51,8 +51,6 @@ public class Player extends Character {
 	{
 		super(v, height, width, batch, spritePath);
 		
-		fixtureDef.density = 75.0f;
-		fixtureDef.restitution = 0.2f;
 		fixtureDef.filter.categoryBits = Settings.BIT_PLAYER;
 		fixtureDef.filter.maskBits = Settings.BIT_PLATFORM | Settings.BIT_BALL | Settings.BIT_PLAYER;
 
