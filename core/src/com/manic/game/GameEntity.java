@@ -37,6 +37,10 @@ public class GameEntity extends Entity {
         batch.end();
     }
     
+    protected void update() {}
+    
+    protected void dispose() {}
+    
     //Setters
     protected void setCoordinates(Vector2 v)
     {

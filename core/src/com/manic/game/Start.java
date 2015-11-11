@@ -68,7 +68,7 @@ public class Start extends GameState {
 		fixtureDef.filter.maskBits = Settings.BIT_PLAYER | Settings.BIT_BALL; //it can collide with both the player and ball
 		body.createFixture(fixtureDef).setUserData("platform");
 
-		Player p = new Player(new Vector2(90, 90), 5, 5, new SpriteBatch(), "");
+		Player p = new Player(new Vector2(150, 150), 5, 5, new SpriteBatch(), "");
 		playerBody = world.createBody(p.getBodyDef());
 		playerBody.createFixture(p.getFixtureDef());
 		

@@ -10,7 +10,7 @@ abstract class Entity {
 	
     public Entity(Vector2 coordinates, SpriteBatch batch)
     {	
-    	this.coordinates = new Vector2(coordinates);
+    	this.coordinates = new Vector2(coordinates.scl(0.01f)); ///scale down vector
     	
         this.batch = batch;
     }
@@ -18,6 +18,10 @@ abstract class Entity {
     abstract void create();
     
     abstract void render();
+    
+    abstract void update();
+    
+    abstract void dispose();
     
     abstract Vector2 getCoordinates();
     

@@ -16,6 +16,7 @@ public class InputHandler
 	public static final int KEY_LEFT = 5;
 	public static final int KEY_RIGHT = 6;
 	public static final int KEY_DOWN = 7;
+	
 	static
 	{
 		keys = new boolean[NUM_KEYS];
