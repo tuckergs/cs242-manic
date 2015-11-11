@@ -17,7 +17,7 @@ public class GameEntity extends Entity {
     
     public GameEntity(BodyType type, Vector2 coordinates, SpriteBatch batch, String spritePath)
     {
-    	super(coordinates, batch);
+    	super(coordinates.scl(0.01f), batch); //divide coordinates by 100
     	
     	bodyDef = new BodyDef();
     	this.bodyDef.type = type;
