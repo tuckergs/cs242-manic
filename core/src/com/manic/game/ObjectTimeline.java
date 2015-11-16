@@ -1,6 +1,8 @@
 package com.manic.game;
 
-import java.lang.reflect.Array;
+
+import java.util.Arrays;
+import java.util.HashMap;
 
 /**
  * 
@@ -19,31 +21,34 @@ import java.lang.reflect.Array;
 
 public class ObjectTimeline<T> {
 
-	T[] objs;
-	int cur_obj;
+	//T[] objs;
+	//int cur_obj;
 	
-	float time;
-	float delay;
+	private HashMap < Integer , T > objs;
+	private int cur_obj;
+	private int cur_frame;
+	private int total_length;
+	
+	private float time;
+	private float delay;
+	
 	
 	
 	@SuppressWarnings("unchecked")
-	public ObjectTimeline ( T[] arr , float dly )
+	public ObjectTimeline ( HashMap < Integer , T > hsh , int len , float dly )
 	{
 		
-		objs = (T[]) new Object [ arr.length ];
+		objs = (HashMap<Integer, T>) hsh.clone();
 
-		for ( int i = 0 ; i < arr.length ; ++i )
-		{
-			
-			objs [ i ] = (T) new Object ();
-			
-		}
 		
+		//This will cause bugs if 
 		cur_obj = 0;
 		
 		time = 0;
 		
 		delay = dly;
+		
+		total_length = len;
 		
 	}
 	
@@ -92,14 +97,19 @@ public class ObjectTimeline<T> {
 	private void step ()
 	{
 		
-		++cur_obj;
+		++cur_frame;
 	
-		if ( cur_obj == objs.length )
+		if ( cur_frame == total_length )
 		{
 			
-			cur_obj = 0;
+			cur_frame = 0;
 			
 		}
+		
+		
+		if ( objs.containsKey(cur_frame))
+			cur_obj = cur_frame;
+		
 		
 	}
 	
@@ -107,16 +117,125 @@ public class ObjectTimeline<T> {
 	public T getCurrentObj ()
 	{
 		
-		return objs [ cur_obj ];
+		return objs.get( cur_obj ) ;
 		
 	}
 	
 	private void setCurrentIndex ( int index )
 	{
 		
-		cur_obj = index;
+		cur_frame = index;
+		
+		update_cur_obj();
 		
 	}
 	
 	
+	private void update_cur_obj ()
+	{
+		
+		Object[] temparr;
+		
+		int keyset[];
+		
+		temparr = objs.keySet().toArray();
+		
+		
+		keyset = new int [ temparr.length ];
+		
+		
+		
+		for ( int i = 0 ; i < temparr.length ; ++i )
+			keyset [ i ] = (Integer) temparr [ i ];
+		
+		
+		Arrays.sort ( keyset );
+		
+		
+		cur_obj = searchForObjIndex ( keyset );
+		
+		
+		
+	}
+	
+	
+	//Searches for the numbers that is just 
+	//below the cur_frame
+	//I had to write my own algorithm
+	private int searchForObjIndex ( int [] arr )
+	{
+		
+		
+		int [] l , r;
+		
+		
+		
+		if ( arr.length == 1 )
+			return arr [ 0 ];
+		
+		
+		int halfway = arr.length / 2;
+		
+		int halfwayVal = arr [ halfway ];
+		
+		
+		if ( cur_frame < halfwayVal )
+		{
+			
+			l = new int [ halfway ];
+			
+			for ( int i = 0 ; i < l.length ; ++i )
+			{
+				
+				l [ i ] = arr [ i ];
+				
+				
+				
+			}
+			
+			return searchForObjIndex ( l );
+			
+			
+		}
+		else // >=
+		{
+			
+			r = new int [ arr.length - halfway ];
+			
+			for ( int i = 0 ; i < r.length ; ++i )
+			{
+				
+				r [ i ] = arr [ i + halfway ];
+				
+			}
+			
+			return searchForObjIndex ( r );
+			
+		}
+		
+	}
+
+
+/*
+	public int test ( int cf )
+	{
+
+		cur_frame = cf;
+
+
+		update_cur_obj ();			
+
+		return cur_obj;
+
+
+
+	}
+*/
+	
+	
+	
 }
+	
+	
+	
+
