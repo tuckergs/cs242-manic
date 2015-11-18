@@ -15,6 +15,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.manic.game.entities.Player;
 import com.manic.game.exceptions.InvalidXMLException;
 import com.manic.game.helper.FileStuff;
+import com.manic.game.resource_management.AnimationResourceManager;
 import com.manic.game.states.GameStateManager;
 import com.manic.game.xml.AnimationDataParser;
 
@@ -32,6 +33,10 @@ public class Manic implements ApplicationListener
 	private OrthographicCamera camera;
 	private OrthographicCamera hudCamera;
 	private GameStateManager gsm;
+	
+	
+	public AnimationResourceManager res_animations;
+	
 	
 	//This is for testing purposes
 	private ObjectTimeline<TextureRegion> sagatstand;
@@ -54,6 +59,7 @@ public class Manic implements ApplicationListener
 	public void pause() {}
 	
 	
+	
 	@Override
 	public void create ()
 	{
@@ -70,22 +76,14 @@ public class Manic implements ApplicationListener
 			gsm = new GameStateManager(this);
 			
 			
-			//Test anim_data_parser
-			AnimationDataParser p = new AnimationDataParser();
+			//Test resource manager
 			
-			String xml = FileStuff.fileToString("..\\sprites\\sagatstand.xml");
+			res_animations = new AnimationResourceManager();
 			
-			
-			p.parse(xml);
+			res_animations.load("..\\sprites\\sagatstand.xml", "sagatstand");
 			
 			
-			HashMap < Integer , TextureRegion > hsh = p.get_data();
-			
-			int length = p.get_length();
-			
-			
-			
-			sagatstand = new ObjectTimeline <TextureRegion>( hsh , length , STEP );
+			sagatstand = res_animations.get("sagatstand");
 			
 			
 			
