@@ -3,20 +3,26 @@ package com.manic.game.entities;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
+import com.manic.game.ObjectTimeline;
 
 //root of all game objects effected by physics
 public class GameEntity extends Entity {
 	protected BodyDef bodyDef;
     protected FixtureDef fixtureDef;
-    protected Texture sprite;
+   
+    protected ObjectTimeline<TextureRegion> anim;
 	protected String spritePath;
-    
+    protected Texture sprite;
+	
+	
     public GameEntity(BodyType type, Vector2 coordinates, SpriteBatch batch, String spritePath)
     {
+    	//TODO: Is this PPM?
     	super(coordinates.scl(0.01f), batch); //divide coordinates by 100
     	
     	bodyDef = new BodyDef();
@@ -29,6 +35,9 @@ public class GameEntity extends Entity {
     
     protected void create() {
         sprite = new Texture(Gdx.files.internal(spritePath));
+        
+    	//TODO: Put in stuff to anim
+    	
     }
 
     protected void render() {

@@ -46,6 +46,11 @@ public class Start extends GameState {
 	public Start(GameStateManager gsm) {
 		super(gsm);
 		
+		
+		//
+		
+		
+		
 		world = new World(new Vector2(GRAVITY_X, GRAVITY_Y), true);
 		contactListener = new MyContactListener();
 		world.setContactListener(contactListener);
