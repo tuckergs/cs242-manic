@@ -33,7 +33,7 @@ public class Manic implements ApplicationListener
 	private OrthographicCamera hudCamera;
 	private GameStateManager gsm;
 	
-	//This is for testing porpoises
+	//This is for testing purposes
 	private ObjectTimeline<TextureRegion> sagatstand;
 	
 	public SpriteBatch getSpriteBatch()
