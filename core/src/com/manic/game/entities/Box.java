@@ -8,54 +8,35 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import static com.manic.game.Settings.PPM;
 
 public class Box extends GameEntity {
-	protected float height = 0;
-    protected float width = 0;
+	
+	protected Vector2 dimensions;
     
-    public Box(BodyType type, Vector2 coordinates, PolygonShape box, float height, float width, SpriteBatch batch, String spritePath)
+    public Box(BodyType type, Vector2 coordinates, Vector2 dimensions, SpriteBatch batch, String spritePath)
     {
     	super(type, coordinates, batch, spritePath);
     	
-    	setHeight(height);
-     	setWidth(width);
+    	setDimensions ( dimensions );
 
      	bodyDef.position.set(coordinates);
      	
-    	box.setAsBox(this.width, this.height);
+     	PolygonShape box = new PolygonShape();
+    	box.setAsBox( dimensions.x, dimensions.y );
     	fixtureDef.shape = box;
     }    
     
     //Getters
     //Dimensions
-    public float getHeight()
-    {
-        return height;
-    }
-
-    public float getWidth()
-    {
-        return width;
+    public Vector2 getDimensions(){
+    	return dimensions;
     }
     
     //Setters
     //Dimensions
-    protected void setHeight(float height)
+    protected void setDimensions ( Vector2 d )
     {
-        if (height > 0) {
-            this.height = height/PPM;
-        }
-        else {
-        	this.height = 1;
-        }
-    }
-    
-    protected void setWidth(float width)
-    {
-        if (width > 0) {
-            this.width = width/PPM;
-        }
-        else {
-        	this.width = 1;
-        }
+    	
+    	this.dimensions = d;
+    	
     }
     
     @Override

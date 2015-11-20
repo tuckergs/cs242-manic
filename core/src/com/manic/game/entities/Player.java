@@ -54,9 +54,9 @@ public class Player extends Character {
 	 * @param w etc
 	 */
 	
-	public Player(Vector2 v, float height, float width, SpriteBatch batch, String spritePath)
+	public Player(Vector2 v, Vector2 d, SpriteBatch batch, String spritePath)
 	{
-		super(v, height, width, batch, spritePath);
+		super(v, d , batch, spritePath);
 		
 		fixtureDef.filter.categoryBits = Settings.BIT_PLAYER;
 		fixtureDef.filter.maskBits = Settings.BIT_PLATFORM | Settings.BIT_BALL | Settings.BIT_PLAYER;

@@ -1,15 +1,11 @@
 package com.manic.game;
 
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.HashMap;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.manic.game.entities.Player;
@@ -17,7 +13,7 @@ import com.manic.game.exceptions.InvalidXMLException;
 import com.manic.game.helper.FileStuff;
 import com.manic.game.resource_management.AnimationResourceManager;
 import com.manic.game.states.GameStateManager;
-import com.manic.game.xml.AnimationDataParser;
+import com.manic.game.xml.AnimationResourceManagerDataParser;
 
 public class Manic implements ApplicationListener
 {
@@ -35,7 +31,7 @@ public class Manic implements ApplicationListener
 	private GameStateManager gsm;
 	
 	
-	public AnimationResourceManager res_animations;
+	public static AnimationResourceManager res_animations;
 	
 	
 	//This is for testing purposes
@@ -80,23 +76,30 @@ public class Manic implements ApplicationListener
 			
 			res_animations = new AnimationResourceManager();
 			
-			res_animations.load("..\\sprites\\sagatstand.xml", "sagatstand");
+			AnimationResourceManagerDataParser p 
+						= new AnimationResourceManagerDataParser(
+								res_animations);
+			
+			String xml = FileStuff.fileToString(
+						"..\\resources\\sprites.xml");
+			
+			p.parse(xml);
 			
 			
 			sagatstand = res_animations.get("sagatstand");
+		
 			
+		}	
+		catch (InvalidXMLException e) {
 			
+			System.out.println( e.getMessage() );
 			
 		} catch (IOException e) {
 			
 			System.out.println( e.getMessage() );
-	
-		} catch (InvalidXMLException e) {
-			
-			System.out.println( e.getMessage() );
-			
+
 		}
-		
+
 		
 		
 	}

@@ -67,11 +67,11 @@ super(gsm);
 		fixtureDef.filter.maskBits = Settings.BIT_PLAYER | Settings.BIT_BALL; //it can collide with both the player and ball
 		body.createFixture(fixtureDef).setUserData("platform");
 		
-		Player p = new Player(new Vector2(140, 140), 5, 5, new SpriteBatch(), "");
+		Player p = new Player(new Vector2(140, 140), new Vector2(5, 5), new SpriteBatch(), "");
 		playerBody = world.createBody(p.getBodyDef());
 		playerBody.createFixture(p.getFixtureDef()).setUserData("player");
 		
-		Player p2 = new Player(new Vector2(150, 150), 5, 5, new SpriteBatch(), "");
+		Player p2 = new Player(new Vector2(150, 150), new Vector2(5, 5) , new SpriteBatch(), "");
 		p2Bod = world.createBody(p2.getBodyDef());
 		p2Bod.createFixture(p2.getFixtureDef()).setUserData("player");
 		

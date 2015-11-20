@@ -7,7 +7,8 @@ public class InvalidXMLException extends Exception{
 	private static final int UNSPECIFIED = -1;
 	private static final int INVALID_TAG = 0;
 	private static final int MISSING_TAG = 1;
-	private static final int XML_EMPTY = 2;
+	private static final int CANT_PARSE_XML = 2;
+	private static final int CANT_PARSE_FILE = 3;
 	
 	
 	private int err_no;
@@ -32,16 +33,28 @@ public class InvalidXMLException extends Exception{
 	
 	
 	
-	public InvalidXMLException setXMLEmpty (){
+	public void setCantParseXML ( String xml ){
 	
-		err_no = XML_EMPTY;
+		strings = new String[1];
 		
-		return this;
+		strings[0] = xml;
 		
+		err_no = CANT_PARSE_XML;		
 		
 	}
 	
-	public InvalidXMLException setMissingTag ( String expected )
+	public void setCantParseFile ( String filename )
+	{
+		
+		strings = new String[1];
+		
+		strings[0] = filename;
+		
+		err_no = CANT_PARSE_FILE;
+		
+	}
+	
+	public void setMissingTag ( String expected )
 	{
 	
 		//TODO: Do stuff
@@ -52,14 +65,9 @@ public class InvalidXMLException extends Exception{
 		
 		strings[0] = expected;
 		
-		
-		
-		return this;
-		
-		
 	}
 	
-	public InvalidXMLException setInvalidTag ( String expected , String received )
+	public void setInvalidTag ( String expected , String received )
 	{
 		
 		//TODO: Do stuff
@@ -71,9 +79,6 @@ public class InvalidXMLException extends Exception{
 		strings[0] = expected;
 		
 		strings[1] = received;
-		
-		
-		return this;
 		
 	}
 	
@@ -96,12 +101,18 @@ public class InvalidXMLException extends Exception{
 			return "The parser expected at least one \"" + strings[0] + "\"";
 					
 		} 
-		else if ( err_no == XML_EMPTY )
+		else if ( err_no == CANT_PARSE_XML )
 		{
 			
-			return "There doesn't seem to be anything to parse";
+			return "XML snippet \"" + strings[0] +"\" can't be parsed";
 			
 		} 
+		else if ( err_no == CANT_PARSE_FILE )
+		{
+			
+			return "File \"" + strings[0] + "\" can't be opened or parsed";
+			
+		}
 		else //UNSPECIFIED
 		{
 			

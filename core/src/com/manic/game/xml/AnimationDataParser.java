@@ -8,6 +8,7 @@ import java.util.StringTokenizer;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.utils.XmlReader.Element;
 import com.manic.game.exceptions.InvalidXMLException;
 
 public class AnimationDataParser extends XMLParser{
@@ -19,10 +20,14 @@ public class AnimationDataParser extends XMLParser{
 	private int animation_length;
 	
 	
+	
 	@Override
-	public void parse( String xml ) throws InvalidXMLException{
+	public void parse ( String xml ) throws InvalidXMLException
+	{
+		
 		
 		cur = document.parse(xml);
+		
 		
 		String head;
 		
@@ -36,7 +41,7 @@ public class AnimationDataParser extends XMLParser{
 			
 			InvalidXMLException f = new InvalidXMLException();
 			
-			f.setXMLEmpty();
+			f.setCantParseXML(xml);
 			
 			throw f;
 			

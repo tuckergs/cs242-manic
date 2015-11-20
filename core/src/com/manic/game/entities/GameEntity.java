@@ -15,12 +15,13 @@ public class GameEntity extends Entity {
 	protected BodyDef bodyDef;
     protected FixtureDef fixtureDef;
    
-    protected ObjectTimeline<TextureRegion> anim;
+    
+    
 	protected String spritePath;
     protected Texture sprite;
 	
 	
-    public GameEntity(BodyType type, Vector2 coordinates, SpriteBatch batch, String spritePath)
+    public GameEntity(BodyType type, Vector2 coordinates, SpriteBatch batch, String spriteID )
     {
     	//TODO: Is this PPM?
     	super(coordinates.scl(0.01f), batch); //divide coordinates by 100

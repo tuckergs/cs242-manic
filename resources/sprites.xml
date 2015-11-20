@@ -1,0 +1,11 @@
+<animations>
+    
+    <ref>
+        
+        <name>sagatstand</name>
+        
+        <path>..\\sprites\\sagatstand.xml</path>
+        
+    </ref>
+    
+</animations>
