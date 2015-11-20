@@ -107,6 +107,9 @@ public class AnimationResourceManagerDataParser extends XMLParser{
 				err_string = "name";
 				animationName = child.getChildByName("name").getText();
 				
+				if ( animationName == null )
+					animationName = "";
+				
 				
 			}
 			catch (NullPointerException e)

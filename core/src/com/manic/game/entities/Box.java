@@ -5,8 +5,6 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 
-import static com.manic.game.Settings.PPM;
-
 public class Box extends GameEntity {
 	
 	protected Vector2 dimensions;

@@ -4,9 +4,11 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.manic.game.ObjectTimeline;
+
+import com.manic.game.Manic;
 	
 //root of all things drawn to screen
-abstract class Entity {
+public class Entity {
 	
 	protected Vector2 coordinates;
 	
@@ -15,23 +17,60 @@ abstract class Entity {
 	
 	protected ObjectTimeline<TextureRegion> anim;
     protected boolean is_animated;
+    
+    String spriteName;
 	
-    public Entity(Vector2 coordinates, SpriteBatch batch)
+    //TODO: Shall I just have Entity take a ObjTmline?
+    public Entity(Vector2 coordinates, SpriteBatch batch , String spriteID)
     {	
-    	this.coordinates = new Vector2(coordinates); ///scale down vector
+    	this.coordinates = new Vector2(coordinates); //This assumes you'll scale
+    												//later
     	
         this.batch = batch;
+        
+        this.spriteName = spriteID;
+        
+        create();
     }
     
-    abstract void create();
+    public void create(){
     
-    abstract void render();
+    	anim = Manic.res_animations.get(spriteName).clone();
+    	
+    }
     
-    abstract void update();
+    public void render(){
+    	
+    	batch.begin();
+    	batch.draw(anim.getCurrentObj(), coordinates.x, coordinates.y );
+    	batch.end();
+    	
+    }
     
-    abstract void dispose();
+    public void update(float dt){
+    	
+    	anim.update(dt);
+    	
+    }
     
-    abstract Vector2 getCoordinates();
+    public void dispose(){
+    	
+    	//TODO: Add disposing code
+    	
+    }
+    
+    public Vector2 getCoordinates(){
+    	
+    	return coordinates;
+    	
+    }
+    
+    public void setCoordinates( Vector2 c )
+    {
+    	
+    	coordinates = c;
+    	
+    }
     
     @Override
     public String toString()

@@ -19,6 +19,7 @@ import com.manic.game.InputHandler;
 import com.manic.game.Manic;
 import com.manic.game.MyContactListener;
 import com.manic.game.Settings;
+import com.manic.game.entities.Entity;
 import com.manic.game.entities.Player;
 
 import box2dLight.PointLight;
@@ -43,14 +44,20 @@ public class Start extends GameState {
 	private Body playerBody;
 	private RayHandler handler;
 	
+	private Entity sagatstand;
+	
 	public Start(GameStateManager gsm) {
 		super(gsm);
 		
 		
-		//
+		//Create sagatstand sprite
+		sagatstand = new Entity(
+							new Vector2 ( 30 , 30 ),
+							Manic.getSpriteBatch(),
+							"sagatstand");
 		
 		
-		
+		//Create world and all its inhabitants
 		world = new World(new Vector2(GRAVITY_X, GRAVITY_Y), true);
 		contactListener = new MyContactListener();
 		world.setContactListener(contactListener);
@@ -251,6 +258,8 @@ public class Start extends GameState {
 	{
 		handleInput();
 		
+		sagatstand.update(dt);
+		
 		world.step(dt, 6, 2);
 	}
 	public void render() {
@@ -258,6 +267,7 @@ public class Start extends GameState {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		
 		//draw
+		sagatstand.render();
 		debugRenderer.render(world, box2DCamera.combined);
 		handler.updateAndRender();
 	}

@@ -7,7 +7,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.manic.game.entities.Player;
 import com.manic.game.exceptions.InvalidXMLException;
 import com.manic.game.helper.FileStuff;
@@ -25,7 +24,7 @@ public class Manic implements ApplicationListener
 	public static final int SCALE = 2;
 	public static final float STEP = 1 / 60f;
 	private float accum;
-	private SpriteBatch batch;
+	private static SpriteBatch batch;
 	private OrthographicCamera camera;
 	private OrthographicCamera hudCamera;
 	private GameStateManager gsm;
@@ -33,11 +32,7 @@ public class Manic implements ApplicationListener
 	
 	public static AnimationResourceManager res_animations;
 	
-	
-	//This is for testing purposes
-	private ObjectTimeline<TextureRegion> sagatstand;
-	
-	public SpriteBatch getSpriteBatch()
+	public static SpriteBatch getSpriteBatch()
 	{
 		return batch;
 	}
@@ -61,6 +56,20 @@ public class Manic implements ApplicationListener
 	{
 		try {
 			
+			//Load animations
+			res_animations = new AnimationResourceManager();
+			
+			AnimationResourceManagerDataParser p 
+						= new AnimationResourceManagerDataParser(
+								res_animations);
+			
+			String xml = FileStuff.fileToString(
+						"..\\resources\\sprites.xml");
+			
+			p.parse(xml); //This fills the res_animations
+			
+			
+			
 			Gdx.input.setInputProcessor(new InputProcessor());
 			
 			batch = new SpriteBatch();
@@ -74,21 +83,8 @@ public class Manic implements ApplicationListener
 			
 			//Test resource manager
 			
-			res_animations = new AnimationResourceManager();
 			
-			AnimationResourceManagerDataParser p 
-						= new AnimationResourceManagerDataParser(
-								res_animations);
-			
-			String xml = FileStuff.fileToString(
-						"..\\resources\\sprites.xml");
-			
-			p.parse(xml);
-			
-			
-			sagatstand = res_animations.get("sagatstand");
 		
-			
 		}	
 		catch (InvalidXMLException e) {
 			
@@ -113,15 +109,6 @@ public class Manic implements ApplicationListener
 			gsm.update(STEP);
 			gsm.render();
 			InputHandler.update();
-			
-			sagatstand.update( STEP );
-			
-			batch.begin();
-			
-			batch.draw ( sagatstand.getCurrentObj() , 30 , 30 );
-			
-			batch.end();
-			
 		}
 	}
 	

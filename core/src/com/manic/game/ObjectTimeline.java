@@ -19,7 +19,7 @@ import java.util.HashMap;
 
 
 
-public class ObjectTimeline<T> {
+public class ObjectTimeline<T> implements Cloneable{
 
 	//T[] objs;
 	//int cur_obj;
@@ -215,23 +215,15 @@ public class ObjectTimeline<T> {
 		
 	}
 
-
-/*
-	public int test ( int cf )
-	{
-
-		cur_frame = cf;
-
-
-		update_cur_obj ();			
-
-		return cur_obj;
-
-
-
-	}
-*/
 	
+	//Cloner
+	public ObjectTimeline<T> clone(){
+		
+		ObjectTimeline<T> cl = new ObjectTimeline<T>( objs , total_length , delay);
+		
+		return cl;
+		
+	}
 	
 	
 }
