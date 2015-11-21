@@ -4,7 +4,7 @@
         
         <name>sagatstand</name>
         
-        <path>..\\sprites\\sagatstand.xml</path>
+        <path>..\\resources\\sprites\\sagatstand.xml</path>
         
     </ref>
     
@@ -12,7 +12,7 @@
         
         <name></name>
         
-        <path>..\\sprites\\placeholder.xml</path>
+        <path>..\\resources\\sprites\\placeholder.xml</path>
         
     </ref>
     
