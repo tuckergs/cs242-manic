@@ -33,7 +33,7 @@ public class Entity {
         create();
     }
     
-    public void create(){
+    private void create(){
     
     	anim = Manic.res_animations.get(spriteName).clone();
     	

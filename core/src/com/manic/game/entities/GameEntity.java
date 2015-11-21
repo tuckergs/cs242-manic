@@ -1,61 +1,66 @@
 package com.manic.game.entities;
 
 
-import com.badlogic.gdx.graphics.Texture;
+
+
+
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
-import com.badlogic.gdx.physics.box2d.FixtureDef;
+import com.badlogic.gdx.physics.box2d.World;
+import com.manic.game.Settings;
 
 
 //root of all game objects effected by physics
 public class GameEntity extends Entity {
-	protected BodyDef bodyDef;
-    protected FixtureDef fixtureDef;
-   
-    
-    
-	protected String spritePath;
-    protected Texture sprite;
 	
+    
+    protected Body body;
+    protected World world;
 	
-    public GameEntity(BodyType type, Vector2 coordinates, SpriteBatch batch, String spriteID )
+    
+    //the coordinates variable here is basically unused
+	
+    public GameEntity(BodyDef bdef, World world , Vector2 coordinates, SpriteBatch batch, String spriteID )
     {
     	
     	super(coordinates, batch , spriteID); 
     	
-    	bodyDef = new BodyDef();
-    	this.bodyDef.type = type;
+    	bdef.position.set(coordinates);
     	
-    	fixtureDef = new FixtureDef();
+    	this.world = world;
+    	body = world.createBody(bdef);
     	
-    	
-    }
-   
-   
-    
-    //Setters
-    protected void setBodyDef(BodyDef bodyDef)
-    {
-        this.bodyDef = bodyDef;
-    }
-   
-    protected void setFixtureDef(FixtureDef fixtureDef)
-    {
-    	this.fixtureDef = fixtureDef;
     }
     
-    //Getters   
-    public BodyDef getBodyDef()
-    {
-        return bodyDef;
+    
+    @Override
+    public void render(){
+    	
+    	TextureRegion currentFrame = anim.getCurrentObj();
+    	
+    	batch.begin();
+    	
+    	batch.draw( currentFrame ,
+    				body.getPosition().x * Settings.PPM  - 11 ,
+    				body.getPosition().y * Settings.PPM  - 26 );
+    	
+    	batch.end();
+    	
     }
-   
-    public FixtureDef getFixtureDef()
-    {
-        return fixtureDef;
+
+    //Getters
+    public Body getBody(){
+    	return body;
     }
+    
+    public World getWorld(){
+    	return world;
+    }
+    
+    
     
     @Override
     public String toString()

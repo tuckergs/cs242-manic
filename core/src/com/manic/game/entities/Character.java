@@ -5,10 +5,13 @@ package com.manic.game.entities;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
+import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
+import com.badlogic.gdx.physics.box2d.World;
 
-public class Character extends Box {
+public class Character extends GameEntity {
 	private String characterName;
 	private float movementSpeed;
 	private float health;
@@ -16,12 +19,16 @@ public class Character extends Box {
 	
 	/* this class will give player all the information about their character */
 	
-	public Character(Vector2 coordinates, Vector2 dimensions, SpriteBatch batch, String spritePath)
+	public Character( BodyDef bdef , World world , Vector2 coordinates, Vector2 dimensions, SpriteBatch batch, String spriteID)
 	{
-		super(BodyType.DynamicBody, coordinates, dimensions, batch, "");
+		
+		super( bdef , world , coordinates, batch, "" );
+		
+		FixtureDef fixtureDef = new FixtureDef();
 		
 		fixtureDef.density = 75.0f;
 		fixtureDef.restitution = 0.2f;
+		
 	}
 	
 	//ABLE TO CREATE SENSOR

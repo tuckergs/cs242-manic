@@ -16,6 +16,7 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
+import com.badlogic.gdx.physics.box2d.World;
 import com.manic.game.Settings;
 
 
@@ -54,9 +55,11 @@ public class Player extends Character {
 	 * @param w etc
 	 */
 	
-	public Player(Vector2 v, Vector2 d, SpriteBatch batch, String spritePath)
+	public Player( BodyDef bdef , World world , Vector2 coordinates, Vector2 dimensions, SpriteBatch batch, String spriteID)
 	{
-		super(v, d , batch, spritePath);
+		super(bdef , world , coordinates, dimensions ,  batch, spriteID );
+		
+		FixtureDef fixtureDef = new FixtureDef();
 		
 		fixtureDef.filter.categoryBits = Settings.BIT_PLAYER;
 		fixtureDef.filter.maskBits = Settings.BIT_PLATFORM | Settings.BIT_BALL | Settings.BIT_PLAYER;

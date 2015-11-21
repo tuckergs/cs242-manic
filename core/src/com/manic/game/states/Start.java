@@ -20,6 +20,7 @@ import com.manic.game.Manic;
 import com.manic.game.MyContactListener;
 import com.manic.game.Settings;
 import com.manic.game.entities.Entity;
+import com.manic.game.entities.GameEntity;
 import com.manic.game.entities.Player;
 
 import box2dLight.PointLight;
@@ -45,16 +46,14 @@ public class Start extends GameState {
 	private RayHandler handler;
 	
 	private Entity sagatstand;
+	private Player p;
+	private GameEntity sagat;
 	
 	public Start(GameStateManager gsm) {
 		super(gsm);
 		
 		
-		//Create sagatstand sprite
-		sagatstand = new Entity(
-							new Vector2 ( 30 , 30 ),
-							Manic.getSpriteBatch(),
-							"sagatstand");
+		
 		
 		
 		//Create world and all its inhabitants
@@ -85,9 +84,7 @@ public class Start extends GameState {
 		fixtureDef.filter.maskBits = Settings.BIT_PLAYER | Settings.BIT_BALL; //it can collide with both the player and ball
 		body.createFixture(fixtureDef).setUserData("platform");
 
-		Player p = new Player(new Vector2(150, 150), new Vector2(5, 5) , new SpriteBatch(), "");
-		playerBody = world.createBody(p.getBodyDef());
-		playerBody.createFixture(p.getFixtureDef());
+		
 		
 		////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		//test platforms
@@ -183,21 +180,23 @@ public class Start extends GameState {
 		fixtureDef.filter.maskBits = Settings.BIT_PLATFORM | Settings.BIT_PLAYER; //can collide with ground
 		body.createFixture(fixtureDef).setUserData("ball");
 		
-		//create player
-		bodyDef.position.set(168/PPM, 200/PPM);
-		playerBody = world.createBody(bodyDef);
 		
-		box.setAsBox(5/PPM, 5/PPM); //10x10
+		//create player
+		bodyDef.type = BodyType.DynamicBody;
+		sagat = new GameEntity ( bodyDef  , world ,  new Vector2(200/PPM,200/PPM) , new SpriteBatch() , "sagatstand");
+		playerBody = sagat.getBody();
+		
+		box.setAsBox(11/PPM, 26/PPM); //10x10
 		fixtureDef.shape = box;
-		fixtureDef.density = 75.0f;
+		fixtureDef.density = 7.5f;
 		System.out.println("1.0f" + playerBody.getMass());
-		fixtureDef.restitution = 0.2f;
+		fixtureDef.restitution = 0f;
 		fixtureDef.filter.categoryBits = Settings.BIT_PLAYER;
 		fixtureDef.filter.maskBits = Settings.BIT_PLATFORM | Settings.BIT_BALL | Settings.BIT_PLAYER;
 		playerBody.createFixture(fixtureDef).setUserData("player");
 		
 		//create foot sensor
-		box.setAsBox(5/PPM, 2/PPM, new Vector2(0, -5/PPM), 0); //TODO GET RID OF MAGIC NUMBERS
+		box.setAsBox(22/PPM, 2/PPM, new Vector2(0, -27/PPM), 0); //TODO GET RID OF MAGIC NUMBERS
 		fixtureDef.shape = box;
 		fixtureDef.filter.categoryBits = Settings.BIT_PLAYER;
 		fixtureDef.filter.maskBits = Settings.BIT_PLATFORM | Settings.BIT_BALL;
@@ -258,7 +257,7 @@ public class Start extends GameState {
 	{
 		handleInput();
 		
-		sagatstand.update(dt);
+		sagat.update(dt);
 		
 		world.step(dt, 6, 2);
 	}
@@ -267,7 +266,7 @@ public class Start extends GameState {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		
 		//draw
-		sagatstand.render();
+		sagat.render();
 		debugRenderer.render(world, box2DCamera.combined);
 		handler.updateAndRender();
 	}

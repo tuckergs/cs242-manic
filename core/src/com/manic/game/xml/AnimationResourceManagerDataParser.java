@@ -80,8 +80,6 @@ public class AnimationResourceManagerDataParser extends XMLParser{
 			
 			Element child = cur.getChild(i);
 			
-			AnimationDataParser p = new AnimationDataParser();
-			
 			String childName = child.getName();
 			
 			String err_string = "";
