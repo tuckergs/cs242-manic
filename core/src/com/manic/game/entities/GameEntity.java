@@ -44,8 +44,8 @@ public class GameEntity extends Entity {
     	batch.begin();
     	
     	batch.draw( currentFrame ,
-    				body.getPosition().x * Settings.PPM  - 11 ,
-    				body.getPosition().y * Settings.PPM  - 26 );
+    				body.getPosition().x * 2 * Settings.PPM  - (currentFrame.getRegionWidth() / 2) ,
+    				body.getPosition().y * 2 * Settings.PPM  - (currentFrame.getRegionHeight() / 2) );
     	
     	batch.end();
     	

@@ -62,6 +62,7 @@ public class Start extends GameState {
 		world.setContactListener(contactListener);
 		
 		debugRenderer = new Box2DDebugRenderer();
+		debugRenderer.setDrawBodies(true);;
 		BodyDef bodyDef= new BodyDef();
 		FixtureDef fixtureDef = new FixtureDef();
 		
@@ -183,6 +184,7 @@ public class Start extends GameState {
 		
 		//create player
 		bodyDef.type = BodyType.DynamicBody;
+		bodyDef.fixedRotation = true;
 		sagat = new GameEntity ( bodyDef  , world ,  new Vector2(200/PPM,200/PPM) , new SpriteBatch() , "sagatstand");
 		playerBody = sagat.getBody();
 		
@@ -194,6 +196,7 @@ public class Start extends GameState {
 		fixtureDef.filter.categoryBits = Settings.BIT_PLAYER;
 		fixtureDef.filter.maskBits = Settings.BIT_PLATFORM | Settings.BIT_BALL | Settings.BIT_PLAYER;
 		playerBody.createFixture(fixtureDef).setUserData("player");
+		
 		
 		//create foot sensor
 		box.setAsBox(22/PPM, 2/PPM, new Vector2(0, -27/PPM), 0); //TODO GET RID OF MAGIC NUMBERS
