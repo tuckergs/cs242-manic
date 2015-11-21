@@ -9,7 +9,7 @@ public class GameStateManager {
 	private Stack<GameState> gameStates;
 	private enum States
 	{
-		PLAY, ROUND, EXIT
+		MAINMENU, PLAY, ROUND, EXIT
 	}
 	
 	public GameStateManager(Manic manic)
@@ -17,6 +17,7 @@ public class GameStateManager {
 		this.manic = manic;
 		gameStates = new Stack<GameState>();
 		
+		addState(States.MAINMENU);
 		addState(States.PLAY);
 	}
 	
@@ -27,12 +28,11 @@ public class GameStateManager {
 	
 	private GameState getState(States state)
 	{
- 		if (state == States.PLAY)
- 		{
+ 		if (state == States.PLAY){
  			return new Start(this);
- 		}
- 		else
- 		{
+ 		}else if( state == States.MAINMENU){
+ 			return new MainMenu(this);
+		}else {
  			return null;
  		}
 	}
