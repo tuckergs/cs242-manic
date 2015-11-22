@@ -43,7 +43,7 @@ public class MainMenu extends GameState{
 
 	@Override
 	public void handleInput() {
-		if (Gdx.input.isButtonPressed(-1)){
+		if (InputHandler.isPressed(InputHandler.KEY_SPACE)){
 			System.out.println("SPACE");
 			gsm.setState(GameStateManager.State.PLAY);
         }
@@ -63,7 +63,7 @@ public class MainMenu extends GameState{
 
     	gsm=super.gsm;
         Stage stage = new Stage();
-        Gdx.input.setInputProcessor(stage);// Make the stage consume events
+        //Gdx.input.setInputProcessor(stage);// Make the stage consume events
         //Create Skin
         createBasicSkin();
         
