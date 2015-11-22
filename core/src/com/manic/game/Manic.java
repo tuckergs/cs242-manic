@@ -1,5 +1,6 @@
 package com.manic.game;
 
+import java.awt.Font;
 import java.io.IOException;
 
 import com.badlogic.gdx.ApplicationListener;
@@ -24,10 +25,11 @@ public class Manic implements ApplicationListener
 	public static final int SCALE = 2;
 	public static final float STEP = 1 / 60f;
 	private float accum;
-	private static SpriteBatch batch;
+	public static SpriteBatch batch;
 	private OrthographicCamera camera;
 	private OrthographicCamera hudCamera;
 	private GameStateManager gsm;
+	public Font font;
 	
 	
 	public static AnimationResourceManager res_animations;
