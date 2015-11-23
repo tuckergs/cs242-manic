@@ -23,6 +23,9 @@ import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 //pixels per meter
 import static com.manic.game.Settings.PPM;
 
+
+//This needs to be fixed to test two player
+/*
 public class Test extends GameState {
 	private World world;
 	
@@ -36,6 +39,7 @@ public class Test extends GameState {
 	private MyContactListener contactListener;
 	private Body playerBody;
 	Body p2Bod;
+	
 	
 	public Test(GameStateManager gsm) {
 super(gsm);
@@ -198,6 +202,7 @@ super(gsm);
 	
 	}
 	
+	
 	public void handleInput()
 	{
 		//player can jump
@@ -275,3 +280,4 @@ super(gsm);
 	
 	public void dispose() {}
 }
+*/
