@@ -10,6 +10,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.World;
+import com.manic.game.Manic;
 import com.manic.game.Settings;
 
 
@@ -44,8 +45,8 @@ public class GameEntity extends Entity {
     	batch.begin();
     	
     	batch.draw( currentFrame ,
-    				body.getPosition().x * 2 * Settings.PPM  - (currentFrame.getRegionWidth() / 2) ,
-    				body.getPosition().y * 2 * Settings.PPM  - (currentFrame.getRegionHeight() / 2) );
+    				body.getPosition().x * Settings.SCALE_PPM  - (currentFrame.getRegionWidth() / 2) ,
+    				body.getPosition().y * Settings.SCALE_PPM  - (currentFrame.getRegionHeight() / 2) );
     	
     	batch.end();
     	

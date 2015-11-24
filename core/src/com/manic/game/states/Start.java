@@ -30,6 +30,7 @@ import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 
 //pixels per meter
 import static com.manic.game.Settings.PPM;
+import static com.manic.game.Settings.SCALE_PPM;
 
 public class Start extends GameState {
 	private World world;
@@ -188,7 +189,7 @@ public class Start extends GameState {
 		sagat = new GameEntity ( bodyDef  , world ,  new Vector2(220/PPM,220/PPM) , new SpriteBatch() , "sagatstand");
 		playerBody = sagat.getBody();
 		
-		box.setAsBox(11/PPM, 26/PPM); //10x10
+		box.setAsBox(22/SCALE_PPM, 52/SCALE_PPM); //10x10
 		fixtureDef.shape = box;
 		fixtureDef.density = 7.5f;
 		System.out.println("1.0f" + playerBody.getMass());
@@ -199,7 +200,7 @@ public class Start extends GameState {
 		
 		
 		//create foot sensor
-		box.setAsBox(11/PPM, 2/PPM, new Vector2(0, -26/PPM), 0); //TODO GET RID OF MAGIC NUMBERS
+		box.setAsBox(22/SCALE_PPM, 2/SCALE_PPM, new Vector2(0, -52/SCALE_PPM), 0); //TODO GET RID OF MAGIC NUMBERS
 		fixtureDef.shape = box;
 		fixtureDef.filter.categoryBits = Settings.BIT_PLAYER;
 		fixtureDef.filter.maskBits = Settings.BIT_PLATFORM | Settings.BIT_BALL;
