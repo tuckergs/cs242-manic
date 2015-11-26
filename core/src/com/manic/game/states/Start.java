@@ -22,6 +22,7 @@ import com.manic.game.Settings;
 import com.manic.game.entities.Entity;
 import com.manic.game.entities.GameEntity;
 import com.manic.game.entities.Player;
+import com.manic.game.entities.Character;
 
 import box2dLight.PointLight;
 import box2dLight.RayHandler;
@@ -46,9 +47,9 @@ public class Start extends GameState {
 	private Body playerBody;
 	private RayHandler handler;
 	
-	private Entity sagatstand;
+	
 	private Player p;
-	private GameEntity sagat;
+	private Character sagat;
 	
 	public Start(GameStateManager gsm) {
 		super(gsm);
@@ -184,28 +185,14 @@ public class Start extends GameState {
 		
 		
 		//create player
-		bodyDef.type = BodyType.DynamicBody;
-		bodyDef.fixedRotation = true;
-		sagat = new GameEntity ( bodyDef  , world ,  new Vector2(220/PPM,220/PPM) , new SpriteBatch() , "sagatstand");
+		sagat = new Character
+				( world , new Vector2 ( 200 , 200 ) , new Vector2 ( 44  , 104 ),
+				new SpriteBatch() , "sagat");
+		
 		playerBody = sagat.getBody();
 		
-		box.setAsBox(22/SCALE_PPM, 52/SCALE_PPM); //10x10
-		fixtureDef.shape = box;
-		fixtureDef.density = 7.5f;
-		System.out.println("1.0f" + playerBody.getMass());
-		fixtureDef.restitution = 0f;
-		fixtureDef.filter.categoryBits = Settings.BIT_PLAYER;
-		fixtureDef.filter.maskBits = Settings.BIT_PLATFORM | Settings.BIT_BALL | Settings.BIT_PLAYER;
-		playerBody.createFixture(fixtureDef).setUserData("player");
 		
 		
-		//create foot sensor
-		box.setAsBox(22/SCALE_PPM, 2/SCALE_PPM, new Vector2(0, -52/SCALE_PPM), 0); //TODO GET RID OF MAGIC NUMBERS
-		fixtureDef.shape = box;
-		fixtureDef.filter.categoryBits = Settings.BIT_PLAYER;
-		fixtureDef.filter.maskBits = Settings.BIT_PLATFORM | Settings.BIT_BALL;
-		fixtureDef.isSensor = true;
-		playerBody.createFixture(fixtureDef).setUserData("player foot");
 		
 		//setup box2DCamera
 		box2DCamera = new OrthographicCamera();

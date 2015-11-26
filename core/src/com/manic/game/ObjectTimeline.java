@@ -21,8 +21,6 @@ import java.util.HashMap;
 
 public class ObjectTimeline<T> implements Cloneable{
 
-	//T[] objs;
-	//int cur_obj;
 	
 	private HashMap < Integer , T > objs;
 	private int cur_obj;
@@ -32,25 +30,63 @@ public class ObjectTimeline<T> implements Cloneable{
 	private float time;
 	private float delay;
 	
+	private boolean is_looping;
+	private boolean get_on_no_keyframe;
+	
 	
 	
 	@SuppressWarnings("unchecked")
-	public ObjectTimeline ( HashMap < Integer , T > hsh , int len , float dly )
+	private void init ( HashMap < Integer , T > hsh , int len , float dly , 
+						boolean loop , boolean get_on_no_keyframe )
 	{
 		
 		objs = (HashMap<Integer, T>) hsh.clone();
 
 		
-		//This will cause bugs if 
-		cur_obj = 0;
+		total_length = len;
+		
+		
+		//This is set to the length so when it updates before it does stuff, the first
+		//frame of "animation" will be hit
+		cur_obj = total_length;
 		
 		time = 0;
 		
 		delay = dly;
 		
-		total_length = len;
+		
+		is_looping = loop;
+		
+		this.get_on_no_keyframe = get_on_no_keyframe;
 		
 	}
+	
+	public ObjectTimeline ( HashMap < Integer , T > hsh , int len , float dly , 
+							boolean loop , boolean get_on_no_keyframe )
+	{
+	
+		init ( hsh , len , dly , loop , get_on_no_keyframe );
+		
+	}
+	
+	public ObjectTimeline ( HashMap < Integer , T > hsh , int len , float dly , 
+							boolean loop)
+	{
+	
+		init ( hsh , len , dly , loop , true );
+		
+	}
+	
+	public ObjectTimeline ( HashMap < Integer , T > hsh , int len , float dly )
+	{
+		
+		//Defaults to looping
+		init ( hsh , len , dly , true , true );
+		
+	}
+	
+	
+	
 	
 	public void update ( Float increment )
 	{
@@ -97,16 +133,23 @@ public class ObjectTimeline<T> implements Cloneable{
 	private void step ()
 	{
 		
-		++cur_frame;
+		//We don't want to increment if the object
+		//is non-looping and if the current frame
+		//is the length
+		//We do this to give the object the ability to return
+		//a certain something if the "animation"
+		//is done
+		if ( is_looping || cur_frame != total_length )
+			++cur_frame;
 	
-		if ( cur_frame == total_length )
-		{
-			
+		//We don't want looping if we turned off looping
+		if ( is_looping && cur_frame == total_length )
 			cur_frame = 0;
-			
-		}
 		
 		
+		//Change the current object if the
+		//current frame is a keyframe
+		//A keyframe is a key in the hashmap
 		if ( objs.containsKey(cur_frame))
 			cur_obj = cur_frame;
 		
@@ -117,7 +160,18 @@ public class ObjectTimeline<T> implements Cloneable{
 	public T getCurrentObj ()
 	{
 		
-		return objs.get( cur_obj ) ;
+		//The reason why I  check it here is because
+		//the calling function doesn't need to know what went "wrong"
+		//I use "wrong" in quotation marks because often,
+		//there's nothing wrong
+		//Also, the calling function wouldn't have 
+		//to check this condition every time
+		
+		if ( total_length != 0 
+				&& ( get_on_no_keyframe || cur_frame == cur_obj ) )
+			return objs.get( cur_obj ) ;
+		else
+			return null;
 		
 	}
 	

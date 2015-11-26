@@ -57,7 +57,7 @@ public class Player extends Character {
 	
 	public Player( BodyDef bdef , World world , Vector2 coordinates, Vector2 dimensions, SpriteBatch batch, String spriteID)
 	{
-		super(bdef , world , coordinates, dimensions ,  batch, spriteID );
+		super( world , coordinates, dimensions ,  batch, spriteID );
 		
 		FixtureDef fixtureDef = new FixtureDef();
 		

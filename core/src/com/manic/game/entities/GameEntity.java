@@ -42,11 +42,16 @@ public class GameEntity extends Entity {
     	
     	TextureRegion currentFrame = anim.getCurrentObj();
     	
+    	if ( currentFrame == null )
+    		return;
+    	
     	batch.begin();
     	
     	batch.draw( currentFrame ,
-    				body.getPosition().x * Settings.SCALE_PPM  - (currentFrame.getRegionWidth() / 2) ,
-    				body.getPosition().y * Settings.SCALE_PPM  - (currentFrame.getRegionHeight() / 2) );
+    				body.getPosition().x * Settings.SCALE_PPM  
+    						- (currentFrame.getRegionWidth() / 2) ,
+    				body.getPosition().y * Settings.SCALE_PPM  
+    						- (currentFrame.getRegionHeight() / 2) );
     	
     	batch.end();
     	

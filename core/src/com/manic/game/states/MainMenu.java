@@ -23,6 +23,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.manic.game.InputHandler;
 import com.manic.game.InputProcessor;
 import com.manic.game.Manic;
+
 public class MainMenu extends GameState{
 	
 	private static final float buttonHeight = 50f;
@@ -43,10 +44,17 @@ public class MainMenu extends GameState{
 
 	@Override
 	public void handleInput() {
+		
 		if (InputHandler.isPressed(InputHandler.KEY_SPACE)){
+			
 			System.out.println("SPACE");
+			
+			Manic.changeStateLock = true;
+			
 			gsm.setState(GameStateManager.State.PLAY);
-        }
+        
+		}
+		
 	}
 
 	@Override

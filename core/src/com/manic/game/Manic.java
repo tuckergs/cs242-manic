@@ -12,6 +12,7 @@ import com.manic.game.entities.Player;
 import com.manic.game.exceptions.InvalidXMLException;
 import com.manic.game.helper.FileStuff;
 import com.manic.game.resource_management.AnimationResourceManager;
+import com.manic.game.resource_management.Moves;
 import com.manic.game.states.GameStateManager;
 import com.manic.game.xml.AnimationResourceManagerDataParser;
 
@@ -33,6 +34,12 @@ public class Manic implements ApplicationListener
 	
 	
 	public static AnimationResourceManager res_animations;
+	public static Moves res_moves;
+	
+	
+	public static boolean changeStateLock = false;
+	
+	
 	
 	public static SpriteBatch getSpriteBatch()
 	{
@@ -61,6 +68,7 @@ public class Manic implements ApplicationListener
 			//Load animations
 			res_animations = new AnimationResourceManager();
 			
+			
 			AnimationResourceManagerDataParser p 
 						= new AnimationResourceManagerDataParser(
 								res_animations);
@@ -70,6 +78,10 @@ public class Manic implements ApplicationListener
 			
 			p.parse(xml); //This fills the res_animations
 			
+			
+			//Load moves
+			res_moves = new Moves();
+			res_moves.init();
 			
 			
 			Gdx.input.setInputProcessor(new InputProcessor());
@@ -108,9 +120,16 @@ public class Manic implements ApplicationListener
 		accum += Gdx.graphics.getDeltaTime();
 		while (accum >= STEP) {
 			accum -= STEP;
+			
 			gsm.update(STEP);
-			gsm.render();
+			if (!changeStateLock) 
+				gsm.render();
+			
 			InputHandler.update();
+			
+			
+			changeStateLock = false;
+			
 		}
 	}
 	
