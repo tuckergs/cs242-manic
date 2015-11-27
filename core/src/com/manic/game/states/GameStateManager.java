@@ -8,7 +8,7 @@ public class GameStateManager {
 	protected Manic manic;
 	protected Stack<GameState> gameStates;
 	protected enum State{
-		MAINMENU, PLAY, ROUND, EXIT
+		MAINMENU, PLAY, PAUSE, RESUME
 	}
 	
 	public GameStateManager(Manic manic){
@@ -28,9 +28,10 @@ public class GameStateManager {
  			return new Start(this);
  		}else if( state == State.MAINMENU){
  			return new MainMenu(this);
-		}else{
- 			return null;
- 		}
+		}else if(state == State.PAUSE){
+			
+		}
+ 		return new Start(this);
 	}
 	
 	public void setState(State state){

@@ -4,6 +4,10 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Pixmap;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.Texture.TextureFilter;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -15,6 +19,9 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.manic.game.InputHandler;
 import com.manic.game.Manic;
 import com.manic.game.MyContactListener;
@@ -46,17 +53,26 @@ public class Start extends GameState {
 	private MyContactListener contactListener;
 	private Body playerBody;
 	private RayHandler handler;
-	
+	private static Skin skin;
+	private Stage stage = new Stage();
 	
 	private Player p;
-	private Character sagat;
+	private Character sagat;	
+	//score tracker
+	public static int points = 0;
+	private CharSequence charSeq;
+	private Label scoreBoard;
 	
 	public Start(GameStateManager gsm) {
 		super(gsm);
-		
-		
-		
-		
+	
+		//Create Skin
+		createSkin();
+		//Point Board
+        charSeq = "SCORE: "+ points;
+        scoreBoard = new Label(charSeq, skin);
+        scoreBoard.setPosition((float) (Gdx.graphics.getWidth()*.5 - Gdx.graphics.getWidth()*.125) , (float) (Gdx.graphics.getHeight()*.90));
+        
 		
 		//Create world and all its inhabitants
 		world = new World(new Vector2(GRAVITY_X, GRAVITY_Y), true);
@@ -136,7 +152,7 @@ public class Start extends GameState {
 		bodyDef.position.set(300/PPM, 165/PPM);
 		body = world.createBody(bodyDef);
 		box.setAsBox(8/PPM, 8/PPM); //100x10
-		body.createFixture(fixtureDef).setUserData("platform");
+		body.createFixture(fixtureDef).setUserData("hoop");
 		
 		//loads of balls
 		CircleShape circle = new CircleShape();
@@ -210,6 +226,7 @@ public class Start extends GameState {
 		light.setSoftnessLength(100f);
 		light2.setSoftnessLength(100f);
 		light3.setSoftnessLength(100f);
+		stage.addActor(scoreBoard);
 	}
 	
 	public void handleInput()
@@ -222,6 +239,7 @@ public class Start extends GameState {
 				//apply upward force when on the ground
 				playerBody.applyForceToCenter(0, JUMP_FORCE_NEWTONS, true);
 			}
+			points ++;
 		}
 		
 		if (InputHandler.isPressed(InputHandler.KEY_S))
@@ -242,8 +260,37 @@ public class Start extends GameState {
 		{
 			playerBody.applyForceToCenter(-MOVEMENT_SPEED_NEWTONS, 0, true);
 		}
+		if(InputHandler.isPressed(InputHandler.KEY_P)){
+			System.out.println("PAUSE");
+			
+			Manic.changeStateLock = true;
+			
+			gsm.setState(GameStateManager.State.PAUSE);        
+		}
+	
 	}
 	
+	public void createSkin(){
+		//Create a font
+				BitmapFont font = new BitmapFont();
+				skin = new Skin();
+				skin.add("default", font);
+		 
+				//Create a texture
+				Pixmap pixmap = new Pixmap((int)Gdx.graphics.getWidth()/4,(int)Gdx.graphics.getHeight()/10, Pixmap.Format.RGB888);
+				pixmap.setColor(Color.LIME);
+				pixmap.fill();
+				skin.add("background",new Texture(pixmap));
+				Label.LabelStyle labelStyle = new Label.LabelStyle();
+		  		labelStyle.fontColor = Color.RED;
+		  		Pixmap titlePixmap = new Pixmap((int)Gdx.graphics.getWidth()/4,(int)Gdx.graphics.getHeight()/10, Pixmap.Format.RGB888);
+				titlePixmap.setColor(Color.CLEAR);
+				titlePixmap.fill();
+				skin.add("titleBackground",new Texture(titlePixmap));
+		  		labelStyle.background = skin.newDrawable("titleBackground",Color.CLEAR);
+		  		labelStyle.font = skin.getFont("default");
+		  		skin.add("default", labelStyle);
+	}
 	public void update(float dt)
 	{
 		handleInput();
@@ -256,7 +303,8 @@ public class Start extends GameState {
 		//clear
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		
-		//draw
+		stage.act();
+        stage.draw();
 		sagat.render();
 		debugRenderer.render(world, box2DCamera.combined);
 		handler.updateAndRender();

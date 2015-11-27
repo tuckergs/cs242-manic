@@ -17,7 +17,7 @@ import com.manic.game.Manic;
 
 public class MainMenu extends GameState{
 	
-    private Skin skin;
+    private static Skin skin;
 	
 	public MainMenu(GameStateManager gsm){
 		super (gsm);
@@ -78,7 +78,7 @@ public class MainMenu extends GameState{
 		
 	}
 
-	private void createSkin(){
+	public static void createSkin(){
 		//Create a font
 		BitmapFont font = new BitmapFont();
 		skin = new Skin();
@@ -103,8 +103,8 @@ public class MainMenu extends GameState{
   		Label.LabelStyle labelStyle = new Label.LabelStyle();
   		labelStyle.fontColor = Color.RED;
   		Pixmap titlePixmap = new Pixmap((int)Gdx.graphics.getWidth()/4,(int)Gdx.graphics.getHeight()/10, Pixmap.Format.RGB888);
-		pixmap.setColor(Color.CLEAR);
-		pixmap.fill();
+		titlePixmap.setColor(Color.CLEAR);
+		titlePixmap.fill();
 		skin.add("titleBackground",new Texture(titlePixmap));
   		labelStyle.background = skin.newDrawable("titleBackground",Color.CLEAR);
   		labelStyle.font = skin.getFont("default");
