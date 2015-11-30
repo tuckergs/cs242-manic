@@ -63,13 +63,13 @@ public class Start extends GameState {
 	private Entity backgroundOfMeow;
 	private Player p;
 	private Character sagat;
-	public static int healthPoints1 = 20;
-	public static int healthPoints2 = 20;
+	private static int maxHealth=20;
+	public static int healthPoints1 = maxHealth;
+	public static int healthPoints2 = maxHealth;
 	private CharSequence p1HealthCharSeq;
 	private CharSequence p2HealthCharSeq;
 	private Label p1Health;
 	private Label p2Health;
-	private int maxHealth=20;
 	private int p1Wins=0;
 	private int p2Wins=0;
 	private CharSequence roundChars;
@@ -278,16 +278,15 @@ public class Start extends GameState {
 			p2Wins++;
 			healthPoints1=maxHealth;
 			healthPoints2=maxHealth;
-			gsm.setState(GameStateManager.State.RESTART);
+			
 		}
 		if (healthPoints2==0){
 			p1Wins++;
 			healthPoints1=maxHealth;
 			healthPoints2=maxHealth;
-			gsm.setState(GameStateManager.State.RESTART);
 		}
 		if (p1Wins==2 || p2Wins==2){
-			gsm.setState(GameStateManager.State.VICTORY);
+			//gsm.setState(GameStateManager.State.VICTORY);
 			
 		}
 	
@@ -328,11 +327,12 @@ public class Start extends GameState {
 		stage.clear();
 		//Create Skin
 		createSkin();
-		//Players health
+		//Player 1 health
 		p1HealthCharSeq = "Health: "+ healthPoints1;
 		p1Health = new Label(p1HealthCharSeq, skin);
         p1Health.setPosition((float) (Gdx.graphics.getWidth()*.25 - Gdx.graphics.getWidth()*.125) , (float) (Gdx.graphics.getHeight()*.90));
 		stage.addActor(p1Health);
+		//Player 2 health
 		p2HealthCharSeq = "Health: "+ healthPoints2;
         p2Health = new Label(p2HealthCharSeq, skin);
         p2Health.setPosition((float) (Gdx.graphics.getWidth()*.85 - Gdx.graphics.getWidth()*.12) , (float) (Gdx.graphics.getHeight()*.90));
