@@ -98,7 +98,7 @@ public class Start extends GameState {
 		FixtureDef fixtureDef = new FixtureDef();
 		
 		//create platform
-		bodyDef.position.set(160/PPM, 120/PPM);
+		bodyDef.position.set(160/PPM, 20/PPM);
 		bodyDef.type = BodyType.StaticBody; //unaffected by gravity
 		Body body = world.createBody(bodyDef);
 
@@ -106,8 +106,6 @@ public class Start extends GameState {
 		PolygonShape box = new PolygonShape();
 		
 		
-		
-		box.setAsBox(50/PPM, 5/PPM); //100x10
 		
 		fixtureDef.shape = box;
 		fixtureDef.filter.categoryBits = Settings.BIT_PLATFORM;
@@ -120,6 +118,22 @@ public class Start extends GameState {
 		//test platforms
 		//USES DIMENSIONS OF V_WIDTH, V_HEIGHT
 		//bottom plat
+		bodyDef.position.set(30/PPM, 100/PPM);
+		body = world.createBody(bodyDef);
+		box.setAsBox(20/PPM, 5/PPM); //100x10
+		body.createFixture(fixtureDef).setUserData("platform");
+		
+		bodyDef.position.set(160/PPM, 160/PPM);
+		body = world.createBody(bodyDef);
+		box.setAsBox(30/PPM, 5/PPM); //100x10
+		body.createFixture(fixtureDef).setUserData("platform");
+		
+		bodyDef.position.set(290/PPM, 100/PPM);
+		body = world.createBody(bodyDef);
+		box.setAsBox(20/PPM, 5/PPM); //100x10
+		body.createFixture(fixtureDef).setUserData("platform");
+		
+		
 		bodyDef.position.set(0/PPM, 25/PPM);
 		body = world.createBody(bodyDef);
 		box.setAsBox(320/PPM, 0/PPM); //100x10
@@ -145,7 +159,7 @@ public class Start extends GameState {
 		
 		
 		//loads of balls
-		CircleShape circle = new CircleShape();
+		/*CircleShape circle = new CircleShape();
 		circle.setRadius(10/SCALE_PPM);
 		fixtureDef.shape = circle;
 		fixtureDef.density = 75.0f;
@@ -183,11 +197,11 @@ public class Start extends GameState {
 		body.createFixture(fixtureDef).setUserData("ball");
 		new Hitbox ( body , coordinates , dimensions , HitboxType.DAMAGING , "ballHbox" , 5 , 0 );
 		
-		
+		*/
 		///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		
 		
-		
+		/*
 		//create ball guy
 		bodyDef.position.set(153/PPM, 220/PPM);
 		bodyDef.type = BodyType.DynamicBody;
@@ -198,8 +212,8 @@ public class Start extends GameState {
 		fixtureDef.shape = circle;
 		fixtureDef.restitution = 1.0f; //max bounce
 		fixtureDef.filter.categoryBits = Settings.BIT_BALL; //it is a type ball
-		fixtureDef.filter.maskBits = Settings.BIT_PLATFORM | Settings.BIT_PLAYER | Settings.BIT_BALL; //can collide with ground
-		body.createFixture(fixtureDef).setUserData("ball");
+		fixtureDef.filter.maskBits = Settings.BIT_PLATFORM | Settings.BIT_PLAYER | Settings.BIT_BALL; //can collide with ground*/
+		//body.createFixture(fixtureDef).setUserData("ball");
 		
 		
 		//create player
@@ -220,19 +234,20 @@ public class Start extends GameState {
 		box2DCamera.setToOrtho(false, Manic.V_WIDTH/PPM, Manic.V_HEIGHT/PPM);
 		
 		handler = new RayHandler(world);
-		handler.setAmbientLight(.60f);
+		handler.setAmbientLight(.50f);
 		handler.setCombinedMatrix(camera.combined);
 		handler.setShadows(true);
 		
-		//PointLight light = new PointLight(handler, 200, Color.SALMON, 175f, 0, 245);
-		//PointLight light2 = new PointLight(handler, 200, Color.SALMON, 175f, 160, 245);
-		//PointLight light3 = new PointLight(handler, 200, Color.SALMON, 175f, 320, 245);
+		PointLight light = new PointLight(handler, 200, Color.BLACK, 175f, -5, 225);
+		PointLight light2 = new PointLight(handler, 200, Color.BLACK, 100f, 160, 245);
+		PointLight light3 = new PointLight(handler, 200, Color.BLACK, 175f, 320, 210);
+		PointLight light6 = new PointLight(handler, 200, Color.SALMON, 175f, -5, 0);
 		PointLight light4 = new PointLight(handler, 200, Color.LIME, 50f, 197/2, 155);
 		PointLight light5 = new PointLight(handler, 200, Color.LIME, 50f, 324/2, 156);
-		PointLight light6 = new PointLight(handler, 200, Color.SALMON, 175f, -5, 0);
-		//light.setSoftnessLength(100f);
-		//light2.setSoftnessLength(100f);
-		//light3.setSoftnessLength(100f);
+		
+		light.setSoftnessLength(100f);
+		light2.setSoftnessLength(100f);
+		light3.setSoftnessLength(100f);
 	}
 	
 	public void handleInput()
