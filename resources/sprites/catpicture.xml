@@ -1,0 +1,15 @@
+
+
+<animation>
+    
+    <path>..\\resources\\sprites\\catpicture.png</path>
+    
+    <frames>0</frames>
+    
+    <length>1</length>
+    
+    <width>640</width>
+    
+    <height>480</height>
+    
+</animation>

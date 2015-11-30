@@ -120,6 +120,7 @@ public class Manic implements ApplicationListener
 		accum += Gdx.graphics.getDeltaTime();
 		while (accum >= STEP) {
 			accum -= STEP;
+
 			
 			gsm.update(STEP);
 			if (!changeStateLock) 

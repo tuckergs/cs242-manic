@@ -66,6 +66,9 @@ public class Start extends GameState {
 	private Stage stage = new Stage();
 
 	
+	private Entity backgroundOfMeow;
+	
+	
 	private Player p;
 	private Character sagat;	
 	//score tracker
@@ -77,6 +80,15 @@ public class Start extends GameState {
 	public Start(GameStateManager gsm) {
 		super(gsm);
 	
+		
+		//Create cat background
+		backgroundOfMeow = new Entity
+				( new Vector2 ( 0 , 0 ) , sb , "catscatscatscatscats" );
+		
+		//Update it once and only once
+		backgroundOfMeow.update(Manic.STEP);
+		
+		
 		//Create Skin
 		createSkin();
 		//Point Board
@@ -119,9 +131,9 @@ public class Start extends GameState {
 		//test platforms
 		//USES DIMENSIONS OF V_WIDTH, V_HEIGHT
 		//bottom plat
-		bodyDef.position.set(0/PPM, 0/PPM);
+		bodyDef.position.set(0/PPM, 25/PPM);
 		body = world.createBody(bodyDef);
-		box.setAsBox(320/PPM, 2/PPM); //100x10
+		box.setAsBox(320/PPM, 0/PPM); //100x10
 		body.createFixture(fixtureDef).setUserData("platform");
 		
 		//left side plat
@@ -244,13 +256,15 @@ public class Start extends GameState {
 		box2DCamera.setToOrtho(false, Manic.V_WIDTH/PPM, Manic.V_HEIGHT/PPM);
 		
 		handler = new RayHandler(world);
-		handler.setAmbientLight(.5f);
+		handler.setAmbientLight(.60f);
 		handler.setCombinedMatrix(camera.combined);
 		handler.setShadows(true);
 		
 		PointLight light = new PointLight(handler, 200, Color.MAGENTA, 150f, 0, 240);
 		PointLight light2 = new PointLight(handler, 200, Color.CYAN, 150f, 160, 240);
 		PointLight light3 = new PointLight(handler, 200, Color.MAGENTA, 150f, 320, 240);
+		PointLight light4 = new PointLight(handler, 200, Color.LIME, 50f, 197/2, 155);
+		PointLight light5 = new PointLight(handler, 200, Color.LIME, 50f, 324/2, 156);
 		
 		light.setSoftnessLength(100f);
 		light2.setSoftnessLength(100f);
@@ -332,11 +346,13 @@ public class Start extends GameState {
 		//clear
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		
+		backgroundOfMeow.render();
+		
 		stage.act();
         stage.draw();
 		sagat.render();
 		debugRenderer.render(world, box2DCamera.combined);
-		//handler.updateAndRender();
+		handler.updateAndRender();
 	}
 	
 	public void dispose() {}
