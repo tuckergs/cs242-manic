@@ -20,7 +20,7 @@ public class Entity {
     
     String spriteName;
 	
-    //TODO: Shall I just have Entity take a ObjTmline?
+    
     public Entity(Vector2 coordinates, SpriteBatch batch , String spriteID)
     {	
     	this.coordinates = new Vector2(coordinates); //This assumes you'll scale

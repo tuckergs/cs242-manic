@@ -3,9 +3,14 @@ package com.manic.game.resource_management;
 import java.util.HashMap;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Body;
 import com.manic.game.Manic;
 import com.manic.game.ObjectTimeline;
 import com.manic.game.moves.CodeSnippet;
+import com.manic.game.moves.Hitbox;
+import com.manic.game.moves.HitboxGroup;
+import com.manic.game.moves.HitboxType;
 import com.manic.game.moves.Move;
 import com.manic.game.entities.Character;
 
@@ -44,7 +49,7 @@ public class Moves {
 		
 		moves = new HashMap < String , Move >();
 		
-		createStandMove( "sagat" );
+		createSagatStand();
 		
 	}
 	
@@ -73,10 +78,10 @@ public class Moves {
 		
 	}
 	
-	private void createStandMove( String charID )
+	private void createSagatStand( )
 	{
 		
-		final String CHAR_ID_STAND = charID + "stand";
+		final String SAGATSTAND = "sagatstand";
 		
 		HashMap < Integer , CodeSnippet > hsh 
 				= new HashMap< Integer , CodeSnippet >();
@@ -84,6 +89,7 @@ public class Moves {
 		int length = 8;
 		float delay = Manic.STEP;
 		boolean loop = false;
+		boolean get_on_no_keyframe = false;
 		
 		
 		hsh.put( 0 , new CodeSnippet(){
@@ -91,23 +97,83 @@ public class Moves {
 			public void run( Character ch )
 			{
 				
-				ObjectTimeline<TextureRegion> a
-						= Manic.res_animations.get( CHAR_ID_STAND );
+				//Set the animations
+				createAnimation ( ch );
+			
 				
+				//Create hitboxes
+				createHitboxes ( ch );
+				
+				
+			}
+			
+			
+			public void createAnimation( Character ch )
+			{
+				
+				ObjectTimeline<TextureRegion> a
+						= Manic.res_animations.get( SAGATSTAND );
+		
 				ch.setAnimation( a );
 				
 			}
+			
+			public void createHitboxes( Character ch )
+			{
+				
+				Body body = ch.getBody();
+				
+				HitboxGroup group = ch.getCharacterHitboxes();
+				
+				//Create top box
+				group.add("top" ,
+						new Hitbox (
+								body ,
+								new Vector2 ( 3f , 31.5f ) ,
+								new Vector2 ( 34f , 23f ) ,
+								HitboxType.CHARACTER ,
+								"hurtbox" , 
+								0 , 0 
+								));
+				
+				//Create hip box
+				group.add("hip", 
+						new Hitbox (
+								body , 
+								new Vector2 ( -2 , -2 ) ,
+								new Vector2 ( 28 , 34) ,
+								HitboxType.CHARACTER ,
+								"hurtbox" ,
+								0 , 0
+								));
+				
+				//Create leg box
+				group.add("leg", 
+						new Hitbox (
+								body ,
+								new Vector2 ( -4 , -35.5f ) ,
+								new Vector2 ( 34 , 29 ) ,
+								HitboxType.CHARACTER ,
+								"hurtbox" ,
+								0 , 0
+								));
+								
+				
+				
+				
+			}
+			
 			
 		});
 		
 		
 		ObjectTimeline< CodeSnippet > code
 				= new ObjectTimeline < CodeSnippet >(
-						hsh , length , delay , loop );
+						hsh , length , delay , loop , get_on_no_keyframe );
 		
 		Move move = new Move ( code );
 		
-		moves.put( CHAR_ID_STAND , move );
+		moves.put( SAGATSTAND , move );
 		
 	}
 	

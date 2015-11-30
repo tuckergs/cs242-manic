@@ -5,16 +5,28 @@ import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Manifold;
+import com.manic.game.states.GameState;
 
 public class MyContactListener implements ContactListener {
 	
 	private boolean isOnGround;
+	private GameState state;
+	
+	
+	
+	public void bindState ( GameState st )
+	{
+		
+		state = st;
+		
+	}
 	
 	public void beginContact(Contact c)
 	{
 		Fixture fixtureA = c.getFixtureA();
 		Fixture fixtureB = c.getFixtureB();
 		
+		//Handle jumping
 		if (fixtureA.getUserData() != null && fixtureA.getUserData().equals("player foot")) {
 			isOnGround = true;
 		}
@@ -23,8 +35,23 @@ public class MyContactListener implements ContactListener {
 			isOnGround = true;
 		}
 		
-		System.out.println(fixtureA.getUserData() + ", " + fixtureB.getUserData());
+		//Handle hitbox collision
+		if ( fixtureA.getUserData() instanceof CharacterHitboxFixtureUserData )
+			handleHitboxCollision ( fixtureA , fixtureB );
+		
+		
+		//System.out.println(fixtureA.getUserData() + ", " + fixtureB.getUserData());
 	}
+	
+	public void handleHitboxCollision(Fixture fixtureA , Fixture fixtureB)
+	{
+		
+		//TODO: Finish me
+		
+		
+		
+	}
+	
 	
 	public void endContact(Contact c)
 	{

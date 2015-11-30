@@ -16,6 +16,9 @@ public class Settings {
 	public static final short BIT_PLAYER = 4;
 	public static final short BIT_BALL = 8;
 	
+	public static final short BIT_HITBOX_CHARACTER = 16;
+	public static final short BIT_HITBOX_DAMAGING = 32;
+	
 	
 	//load()
 	

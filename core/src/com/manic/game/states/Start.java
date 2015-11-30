@@ -22,6 +22,8 @@ import com.manic.game.Settings;
 import com.manic.game.entities.Entity;
 import com.manic.game.entities.GameEntity;
 import com.manic.game.entities.Player;
+import com.manic.game.moves.Hitbox;
+import com.manic.game.moves.HitboxType;
 import com.manic.game.entities.Character;
 
 import box2dLight.PointLight;
@@ -32,6 +34,8 @@ import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 //pixels per meter
 import static com.manic.game.Settings.PPM;
 import static com.manic.game.Settings.SCALE_PPM;
+
+import java.util.HashMap;
 
 public class Start extends GameState {
 	private World world;
@@ -47,9 +51,12 @@ public class Start extends GameState {
 	private Body playerBody;
 	private RayHandler handler;
 	
+	public HashMap < String , GameEntity > gameEntities;
+	
 	
 	private Player p;
 	private Character sagat;
+	
 	
 	public Start(GameStateManager gsm) {
 		super(gsm);
@@ -61,6 +68,7 @@ public class Start extends GameState {
 		//Create world and all its inhabitants
 		world = new World(new Vector2(GRAVITY_X, GRAVITY_Y), true);
 		contactListener = new MyContactListener();
+		contactListener.bindState(this);
 		world.setContactListener(contactListener);
 		
 		debugRenderer = new Box2DDebugRenderer();
@@ -80,8 +88,6 @@ public class Start extends GameState {
 		
 		box.setAsBox(50/PPM, 5/PPM); //100x10
 		
-		
-		//TESTER
 		fixtureDef.shape = box;
 		fixtureDef.filter.categoryBits = Settings.BIT_PLATFORM;
 		fixtureDef.filter.maskBits = Settings.BIT_PLAYER | Settings.BIT_BALL; //it can collide with both the player and ball
@@ -116,7 +122,7 @@ public class Start extends GameState {
 		body.createFixture(fixtureDef).setUserData("platform");
 		
 		//shaqs badass practice hoop of true greatness. this is how he practices in real life
-		
+		/*
 		bodyDef.position.set(300/PPM, 0/PPM);
 		body = world.createBody(bodyDef);
 		box.setAsBox(4/PPM, 155/PPM); //100x10
@@ -137,37 +143,50 @@ public class Start extends GameState {
 		body = world.createBody(bodyDef);
 		box.setAsBox(8/PPM, 8/PPM); //100x10
 		body.createFixture(fixtureDef).setUserData("platform");
+		*/
 		
 		//loads of balls
 		CircleShape circle = new CircleShape();
-		circle.setRadius(5/PPM);
+		circle.setRadius(10/SCALE_PPM);
 		fixtureDef.shape = circle;
 		fixtureDef.density = 75.0f;
 		fixtureDef.restitution = 1.0f; //max bounce
 		fixtureDef.filter.categoryBits = Settings.BIT_BALL; //it is a type ball
-		fixtureDef.filter.maskBits = Settings.BIT_PLATFORM | Settings.BIT_PLAYER | Settings.BIT_BALL; //can collide with ground
+		fixtureDef.filter.maskBits = Settings.BIT_PLATFORM | Settings.BIT_BALL; //can collide with ground
 		bodyDef.position.set(153/PPM, 220/PPM);
 		bodyDef.type = BodyType.DynamicBody;
 		body = world.createBody(bodyDef);
 		bodyDef.position.set(10/PPM, 100/PPM);
 		
-		System.out.println("0.5f" + body.getMass());
+		
+		Vector2 coordinates = new Vector2 ( 0 , 0 );
+		Vector2 dimensions =  new Vector2 ( 10f , 10f );
+		
+		/*
+		//System.out.println("0.5f" + body.getMass());
 		body = world.createBody(bodyDef);
 		body.createFixture(fixtureDef).setUserData("ball");
+		new Hitbox ( body , coordinates , dimensions , HitboxType.DAMAGING , "ballHbox" , 5 , 0 );
+		
 		
 		bodyDef.position.set(20/PPM, 100/PPM);
 		body = world.createBody(bodyDef);
 		body.createFixture(fixtureDef).setUserData("ball");
+		new Hitbox ( body , coordinates , dimensions , HitboxType.DAMAGING , "ballHbox" , 5 , 0 );
 		
 		bodyDef.position.set(40/PPM, 100/PPM);
 		body = world.createBody(bodyDef);
 		body.createFixture(fixtureDef).setUserData("ball");
+		new Hitbox ( body , coordinates , dimensions , HitboxType.DAMAGING , "ballHbox" , 5 , 0 );
 		
 		bodyDef.position.set(60/PPM, 100/PPM);
 		body = world.createBody(bodyDef);
 		body.createFixture(fixtureDef).setUserData("ball");
+		new Hitbox ( body , coordinates , dimensions , HitboxType.DAMAGING , "ballHbox" , 5 , 0 );
+		*/
 		
 		///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		
 		
 		
 		//create ball guy
@@ -176,20 +195,23 @@ public class Start extends GameState {
 		body = world.createBody(bodyDef);
 		
 		//CircleShape circle = new CircleShape();
-		circle.setRadius(5/PPM);
+		circle.setRadius(30/SCALE_PPM);
 		fixtureDef.shape = circle;
 		fixtureDef.restitution = 1.0f; //max bounce
 		fixtureDef.filter.categoryBits = Settings.BIT_BALL; //it is a type ball
-		fixtureDef.filter.maskBits = Settings.BIT_PLATFORM | Settings.BIT_PLAYER; //can collide with ground
+		fixtureDef.filter.maskBits = Settings.BIT_PLATFORM | Settings.BIT_PLAYER | Settings.BIT_BALL; //can collide with ground
 		body.createFixture(fixtureDef).setUserData("ball");
 		
 		
 		//create player
 		sagat = new Character
 				( world , new Vector2 ( 200 , 200 ) , new Vector2 ( 44  , 104 ),
-				new SpriteBatch() , "sagat");
+				new SpriteBatch() , "sagat" , 1 );
 		
+		//We need this assignment for input
 		playerBody = sagat.getBody();
+		
+		sagat.setHealth(100f);
 		
 		
 		

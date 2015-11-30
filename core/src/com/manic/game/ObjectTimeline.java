@@ -46,9 +46,9 @@ public class ObjectTimeline<T> implements Cloneable{
 		total_length = len;
 		
 		
-		//This is set to the length so when it updates before it does stuff, the first
-		//frame of "animation" will be hit
-		cur_obj = total_length;
+		//This sets cur_obj to -1 because we assume update is called before getCurrentObj
+		cur_obj = -1;
+		cur_frame = -1;
 		
 		time = 0;
 		

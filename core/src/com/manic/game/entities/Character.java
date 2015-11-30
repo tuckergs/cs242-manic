@@ -22,6 +22,7 @@ import com.manic.game.Manic;
 import com.manic.game.ObjectTimeline;
 import com.manic.game.Settings;
 import com.manic.game.moves.Hitbox;
+import com.manic.game.moves.HitboxGroup;
 import com.manic.game.moves.Move;
 import com.manic.game.resource_management.Moves;
 
@@ -32,17 +33,22 @@ public class Character extends GameEntity
 	private float movementSpeed;
 	private float health;
 	private String placeholderPath;
+	
+	private int playerID;
 
 	private Move currentMove;
 	
 	private Fixture physicsBox;
 	private Fixture footBox;
 	
-	private HashMap < String , Hitbox > hitboxes; 
+	private HitboxGroup character_hitboxes; 
+	private HitboxGroup damaging_hitboxes;
 
 	/* this class will give player all the information about their character */
 
-	public Character( World world , Vector2 coordinates, Vector2 dimensions, SpriteBatch batch, String charID)
+	//The constructor
+	public Character( World world , Vector2 coordinates, Vector2 dimensions , 
+						SpriteBatch batch, String charID , int playerID )
 	{
 
 		super ( new BodyDef() , world , coordinates , batch , "");
@@ -54,12 +60,17 @@ public class Character extends GameEntity
 		FixtureDef fixtureDef = new FixtureDef();
 		
 		//create player
-		bodyDef.position.set(coordinates.scl(1/SCALE_PPM));
+		bodyDef.position.set(coordinates.scl( 1f/SCALE_PPM ));
 		bodyDef.type = BodyType.DynamicBody;
 		bodyDef.fixedRotation = true;
 		
+		this.playerID = playerID;
+		
 		body = world.createBody(bodyDef);
-
+		body.setUserData( "c" + this.playerID );
+		
+		
+		
 		PolygonShape box = new PolygonShape();
 		box.setAsBox(dimensions.x /2 /SCALE_PPM, dimensions.y /2 /SCALE_PPM); //10x10
 		fixtureDef.shape = box;
@@ -73,16 +84,27 @@ public class Character extends GameEntity
 
 
 		//create foot sensor
-		box.setAsBox(dimensions.x /2 /SCALE_PPM, 2/SCALE_PPM, new Vector2( 0, -dimensions.y /2 /SCALE_PPM ), 0);
+		box.setAsBox( (dimensions.x/2) /2/SCALE_PPM, 2/SCALE_PPM, new Vector2( 0, (-dimensions.y /2 + 2) /SCALE_PPM ), 0);
 		fixtureDef.shape = box;
 		fixtureDef.filter.categoryBits = Settings.BIT_PLAYER;
-		fixtureDef.filter.maskBits = Settings.BIT_PLATFORM | Settings.BIT_BALL;
+		fixtureDef.filter.maskBits = Settings.BIT_PLATFORM;
 		fixtureDef.isSensor = true;
 		footBox = body.createFixture(fixtureDef);
 		footBox.setUserData("player foot");
 		
+		
+		characterName = charID;
+		
+		
+		
+		//Init HboxGroups
+		character_hitboxes = new HitboxGroup();
+		damaging_hitboxes = new HitboxGroup();
+		
+		
+		
 		//Init move
-		currentMove = Manic.res_moves.get( charID + "stand" );
+		currentMove = Manic.res_moves.get( characterName + "stand" );
 		
 
 	}
@@ -113,6 +135,42 @@ public class Character extends GameEntity
 		currentMove = m;
 
 	}
+	
+	public void setHealth ( float h )
+	{
+		
+		health = h;
+		
+		System.out.println ( characterName + ": " + health );
+		
+	}
+	
+	public void addHealth ( float r )
+	{
+		
+		health += r;
+		
+		System.out.println( characterName + ": " + health );
+		
+	}
+	
+	//Getters
+	public float getHealth ()
+	{
+		return health;
+	}
+	
+	public HitboxGroup getCharacterHitboxes()
+	{
+		return character_hitboxes;
+	}
+	
+	public HitboxGroup getDamagingHitboxes()
+	{
+		return damaging_hitboxes;
+	}
+	
+	
 
 	//ABLE TO CREATE SENSOR
 
