@@ -60,6 +60,7 @@ public class Start extends GameState {
 	public HashMap < String , GameEntity > gameEntities;
 	private static Skin skin;
 	private Stage stage = new Stage();
+	private Entity backgroundOfMeow;
 	private Player p;
 	private Character sagat;
 	public static int healthPoints1 = 20;
@@ -75,7 +76,14 @@ public class Start extends GameState {
 	
 	public Start(GameStateManager gsm) {
 		super(gsm);
+	
 		
+		//Create cat background
+		backgroundOfMeow = new Entity
+				( new Vector2 ( 0 , 0 ) , sb , "catscatscatscatscats" );
+		
+		//Update it once and only once
+		backgroundOfMeow.update(Manic.STEP);
 		
 		
 		//Create world and all its inhabitants
@@ -112,9 +120,9 @@ public class Start extends GameState {
 		//test platforms
 		//USES DIMENSIONS OF V_WIDTH, V_HEIGHT
 		//bottom plat
-		bodyDef.position.set(0/PPM, 0/PPM);
+		bodyDef.position.set(0/PPM, 25/PPM);
 		body = world.createBody(bodyDef);
-		box.setAsBox(320/PPM, 2/PPM); //100x10
+		box.setAsBox(320/PPM, 0/PPM); //100x10
 		body.createFixture(fixtureDef).setUserData("platform");
 		
 		//left side plat
@@ -212,17 +220,19 @@ public class Start extends GameState {
 		box2DCamera.setToOrtho(false, Manic.V_WIDTH/PPM, Manic.V_HEIGHT/PPM);
 		
 		handler = new RayHandler(world);
-		handler.setAmbientLight(.5f);
+		handler.setAmbientLight(.60f);
 		handler.setCombinedMatrix(camera.combined);
 		handler.setShadows(true);
 		
-		PointLight light = new PointLight(handler, 200, Color.MAGENTA, 150f, 0, 240);
-		PointLight light2 = new PointLight(handler, 200, Color.CYAN, 150f, 160, 240);
-		PointLight light3 = new PointLight(handler, 200, Color.MAGENTA, 150f, 320, 240);
-		
-		light.setSoftnessLength(100f);
-		light2.setSoftnessLength(100f);
-		light3.setSoftnessLength(100f);
+		//PointLight light = new PointLight(handler, 200, Color.SALMON, 175f, 0, 245);
+		//PointLight light2 = new PointLight(handler, 200, Color.SALMON, 175f, 160, 245);
+		//PointLight light3 = new PointLight(handler, 200, Color.SALMON, 175f, 320, 245);
+		PointLight light4 = new PointLight(handler, 200, Color.LIME, 50f, 197/2, 155);
+		PointLight light5 = new PointLight(handler, 200, Color.LIME, 50f, 324/2, 156);
+		PointLight light6 = new PointLight(handler, 200, Color.SALMON, 175f, -5, 0);
+		//light.setSoftnessLength(100f);
+		//light2.setSoftnessLength(100f);
+		//light3.setSoftnessLength(100f);
 	}
 	
 	public void handleInput()
@@ -299,8 +309,6 @@ public class Start extends GameState {
 		//clear
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		stage.clear();
-		//render
-		
 		//Create Skin
 		createSkin();
 		//Players health
@@ -318,11 +326,12 @@ public class Start extends GameState {
 		roundWins.setPosition((float) (Gdx.graphics.getWidth()*.5 - Gdx.graphics.getWidth()*.04) , (float) (Gdx.graphics.getHeight()*.90));
 		stage.addActor(roundWins);
 		//Draw
+		backgroundOfMeow.render();
 		stage.act();
         stage.draw();
 		sagat.render();
 		debugRenderer.render(world, box2DCamera.combined);
-		//handler.updateAndRender();
+		handler.updateAndRender();
 	}
 	
 	public void dispose() {
