@@ -64,14 +64,14 @@ public class Start extends GameState {
 	private Player p;
 	private Character sagat;
 	private static int maxHealth=20;
-	public static int healthPoints1 = maxHealth;
-	public static int healthPoints2 = maxHealth;
+	private static int healthPoints1 = maxHealth;
+	private static int healthPoints2 = maxHealth;
 	private CharSequence p1HealthCharSeq;
 	private CharSequence p2HealthCharSeq;
 	private Label p1Health;
 	private Label p2Health;
-	private int p1Wins=0;
-	private int p2Wins=0;
+	public static int p1Wins=0;
+	public static int p2Wins=0;
 	private CharSequence roundChars;
 	private Label roundWins;
 	
@@ -286,7 +286,7 @@ public class Start extends GameState {
 			healthPoints2=maxHealth;
 		}
 		if (p1Wins==2 || p2Wins==2){
-			//gsm.setState(GameStateManager.State.VICTORY);
+			gsm.setState(GameStateManager.State.VICTORY);
 			
 		}
 	
