@@ -25,7 +25,8 @@ public class Hitbox {
 	
 	
 	//Constructor
-	public Hitbox ( Body body , Vector2 coordinates , Vector2 dimensions , HitboxType type , String userData , float damage , float hitstun ){
+	public Hitbox ( Body body , Vector2 coordinates , Vector2 dimensions , HitboxType type , 
+					String userData , float damage , float hitstun ){
 		
 		//Create fixture
 		FixtureDef fdef = new FixtureDef();
@@ -71,7 +72,15 @@ public class Hitbox {
 		
 	}
 	
-	
+	public Hitbox (Body body , Vector2 coordinates , Vector2 dimensions , HitboxType type , 
+					String charData , String hitboxID , float damage , float hitstun)
+	{
+		
+		this ( body , coordinates , dimensions , type , "" , damage , hitstun );
+		
+		//Make
+		
+	}
 	
 	public void destroy ()
 	{
