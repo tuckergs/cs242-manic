@@ -73,6 +73,10 @@ public class Start extends GameState {
 	private CharSequence p2HealthCharSeq;
 	private Label p1Health;
 	private Label p2Health;
+	private int p1Wins=0;
+	private int p2Wins=0;
+	private CharSequence roundChars;
+	private Label roundWins;
 	
 	public Start(GameStateManager gsm) {
 		super(gsm);
@@ -304,15 +308,20 @@ public class Start extends GameState {
 		
 		//Create Skin
 		createSkin();
-		//Player 1 health
+		//Players health
 		p1HealthCharSeq = "Health: "+ healthPoints1;
-		p2HealthCharSeq = "Health: "+ healthPoints2;
-        p1Health = new Label(p1HealthCharSeq, skin);
+		p1Health = new Label(p1HealthCharSeq, skin);
         p1Health.setPosition((float) (Gdx.graphics.getWidth()*.25 - Gdx.graphics.getWidth()*.125) , (float) (Gdx.graphics.getHeight()*.90));
 		stage.addActor(p1Health);
-		p2Health = new Label(p2HealthCharSeq, skin);
+		p2HealthCharSeq = "Health: "+ healthPoints2;
+        p2Health = new Label(p2HealthCharSeq, skin);
         p2Health.setPosition((float) (Gdx.graphics.getWidth()*.85 - Gdx.graphics.getWidth()*.125) , (float) (Gdx.graphics.getHeight()*.90));
 		stage.addActor(p2Health);
+		//Round score
+		roundChars = p1Wins + " : " + p2Wins;
+		roundWins = new Label(roundChars, skin);
+		roundWins.setPosition((float) (Gdx.graphics.getWidth()*.5 - Gdx.graphics.getWidth()*.04) , (float) (Gdx.graphics.getHeight()*.90));
+		stage.addActor(roundWins);
 		stage.act();
         stage.draw();
 		sagat.render();
