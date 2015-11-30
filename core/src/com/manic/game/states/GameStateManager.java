@@ -8,13 +8,12 @@ public class GameStateManager {
 	protected Manic manic;
 	protected Stack<GameState> gameStates;
 	protected enum State{
-		MAINMENU, PLAY, PAUSE, RESUME
+		MAINMENU, PLAY, RESTART, VICTORY
 	}
 	
 	public GameStateManager(Manic manic){
 		this.manic = manic;
 		gameStates = new Stack<GameState>();
-		//addState(State.PLAY);
 		addState(State.MAINMENU);
 		
 	}
@@ -26,12 +25,15 @@ public class GameStateManager {
 	protected GameState getState(State state){
  		if (state == State.PLAY){
  			return new Start(this);
- 		}else if( state == State.MAINMENU){
+ 		}else if(state == State.MAINMENU){
  			return new MainMenu(this);
-		}else if(state == State.PAUSE){
-			
+		}else if(state == State.RESTART){
+			return new Start(this);
+		}else if(state == State.VICTORY){
+			return new Victory(this);
+		}else{
+			return new Start(this);
 		}
- 		return new Start(this);
 	}
 	
 	public void setState(State state){

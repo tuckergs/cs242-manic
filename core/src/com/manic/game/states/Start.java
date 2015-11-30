@@ -57,18 +57,13 @@ public class Start extends GameState {
 	private MyContactListener contactListener;
 	private Body playerBody;
 	private RayHandler handler;
-
-	
 	public HashMap < String , GameEntity > gameEntities;
-	
-
 	private static Skin skin;
 	private Stage stage = new Stage();
-	
 	private Player p;
 	private Character sagat;
-	public static int healthPoints1 = 100;
-	public static int healthPoints2 = 100;
+	public static int healthPoints1 = 20;
+	public static int healthPoints2 = 20;
 	private CharSequence p1HealthCharSeq;
 	private CharSequence p2HealthCharSeq;
 	private Label p1Health;
@@ -80,7 +75,7 @@ public class Start extends GameState {
 	
 	public Start(GameStateManager gsm) {
 		super(gsm);
-	
+		
 		
 		
 		//Create world and all its inhabitants
@@ -266,7 +261,7 @@ public class Start extends GameState {
 			
 			Manic.changeStateLock = true;
 			
-			gsm.setState(GameStateManager.State.PAUSE);        
+			gsm.setState(GameStateManager.State.RESTART);        
 		}
 	
 	}
@@ -315,13 +310,14 @@ public class Start extends GameState {
 		stage.addActor(p1Health);
 		p2HealthCharSeq = "Health: "+ healthPoints2;
         p2Health = new Label(p2HealthCharSeq, skin);
-        p2Health.setPosition((float) (Gdx.graphics.getWidth()*.85 - Gdx.graphics.getWidth()*.125) , (float) (Gdx.graphics.getHeight()*.90));
+        p2Health.setPosition((float) (Gdx.graphics.getWidth()*.85 - Gdx.graphics.getWidth()*.12) , (float) (Gdx.graphics.getHeight()*.90));
 		stage.addActor(p2Health);
 		//Round score
 		roundChars = p1Wins + " : " + p2Wins;
 		roundWins = new Label(roundChars, skin);
 		roundWins.setPosition((float) (Gdx.graphics.getWidth()*.5 - Gdx.graphics.getWidth()*.04) , (float) (Gdx.graphics.getHeight()*.90));
 		stage.addActor(roundWins);
+		//Draw
 		stage.act();
         stage.draw();
 		sagat.render();
