@@ -162,7 +162,7 @@ public class Start extends GameState {
 		Vector2 coordinates = new Vector2 ( 0 , 0 );
 		Vector2 dimensions =  new Vector2 ( 10f , 10f );
 		
-		/*
+		
 		//System.out.println("0.5f" + body.getMass());
 		body = world.createBody(bodyDef);
 		body.createFixture(fixtureDef).setUserData("ball");
@@ -183,7 +183,7 @@ public class Start extends GameState {
 		body = world.createBody(bodyDef);
 		body.createFixture(fixtureDef).setUserData("ball");
 		new Hitbox ( body , coordinates , dimensions , HitboxType.DAMAGING , "ballHbox" , 5 , 0 );
-		*/
+		
 		
 		///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		
@@ -281,7 +281,7 @@ public class Start extends GameState {
 		//draw
 		sagat.render();
 		debugRenderer.render(world, box2DCamera.combined);
-		handler.updateAndRender();
+		//handler.updateAndRender();
 	}
 	
 	public void dispose() {}

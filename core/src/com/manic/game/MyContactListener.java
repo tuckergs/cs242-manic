@@ -40,13 +40,16 @@ public class MyContactListener implements ContactListener {
 			handleHitboxCollision ( fixtureA , fixtureB );
 		
 		
-		//System.out.println(fixtureA.getUserData() + ", " + fixtureB.getUserData());
+		System.out.println(fixtureA.getUserData() + ", " + fixtureB.getUserData());
 	}
 	
 	public void handleHitboxCollision(Fixture fixtureA , Fixture fixtureB)
 	{
 		
 		//TODO: Finish me
+		
+		
+		
 		
 		
 		

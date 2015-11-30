@@ -102,7 +102,7 @@ public class Moves {
 			
 				
 				//Create hitboxes
-				createHitboxes ( ch );
+				//createHitboxes ( ch );
 				
 				
 			}
@@ -125,6 +125,25 @@ public class Moves {
 				
 				HitboxGroup group = ch.getCharacterHitboxes();
 				
+				
+				
+				
+				//Create big hitbox
+				group.add( "hi", 
+						new Hitbox (
+								body ,
+								new Vector2 ( 0f , 0f ) ,
+								new Vector2 ( 22f , 52f ) ,
+								HitboxType.CHARACTER ,
+								"hurtbox" , 
+								0 , 0
+								));
+				
+				
+				
+				
+				
+				/*
 				//Create top box
 				group.add("top" ,
 						new Hitbox (
@@ -157,7 +176,7 @@ public class Moves {
 								"hurtbox" ,
 								0 , 0
 								));
-								
+				*/			
 				
 				
 				
