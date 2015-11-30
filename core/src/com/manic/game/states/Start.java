@@ -273,6 +273,18 @@ public class Start extends GameState {
 			
 			gsm.setState(GameStateManager.State.RESTART);        
 		}
+		if (healthPoints1==0){
+			p2Wins++;
+			gsm.setState(GameStateManager.State.RESTART);
+		}
+		if (healthPoints2==0){
+			p1Wins++;
+			gsm.setState(GameStateManager.State.RESTART);
+		}
+		if (p1Wins==2 || p2Wins==2){
+			gsm.setState(GameStateManager.State.VICTORY);
+			
+		}
 	
 	}
 	
