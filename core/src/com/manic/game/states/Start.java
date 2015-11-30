@@ -260,15 +260,15 @@ public class Start extends GameState {
 		handler.setCombinedMatrix(camera.combined);
 		handler.setShadows(true);
 		
-		PointLight light = new PointLight(handler, 200, Color.MAGENTA, 150f, 0, 240);
-		PointLight light2 = new PointLight(handler, 200, Color.CYAN, 150f, 160, 240);
-		PointLight light3 = new PointLight(handler, 200, Color.MAGENTA, 150f, 320, 240);
+		//PointLight light = new PointLight(handler, 200, Color.SALMON, 175f, 0, 245);
+		//PointLight light2 = new PointLight(handler, 200, Color.SALMON, 175f, 160, 245);
+		//PointLight light3 = new PointLight(handler, 200, Color.SALMON, 175f, 320, 245);
 		PointLight light4 = new PointLight(handler, 200, Color.LIME, 50f, 197/2, 155);
 		PointLight light5 = new PointLight(handler, 200, Color.LIME, 50f, 324/2, 156);
-		
-		light.setSoftnessLength(100f);
-		light2.setSoftnessLength(100f);
-		light3.setSoftnessLength(100f);
+		PointLight light6 = new PointLight(handler, 200, Color.SALMON, 175f, -5, 0);
+		//light.setSoftnessLength(100f);
+		//light2.setSoftnessLength(100f);
+		//light3.setSoftnessLength(100f);
 		stage.addActor(scoreBoard);
 	}
 	
