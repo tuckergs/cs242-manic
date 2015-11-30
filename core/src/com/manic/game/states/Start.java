@@ -57,25 +57,22 @@ public class Start extends GameState {
 	private MyContactListener contactListener;
 	private Body playerBody;
 	private RayHandler handler;
-
-	
 	public HashMap < String , GameEntity > gameEntities;
-	
-
 	private static Skin skin;
 	private Stage stage = new Stage();
-
-	
 	private Entity backgroundOfMeow;
-	
-	
 	private Player p;
-	private Character sagat;	
-	//score tracker
-	public static int points = 0;
-	private CharSequence charSeq;
-	private Label scoreBoard;
-	
+	private Character sagat;
+	public static int healthPoints1 = 20;
+	public static int healthPoints2 = 20;
+	private CharSequence p1HealthCharSeq;
+	private CharSequence p2HealthCharSeq;
+	private Label p1Health;
+	private Label p2Health;
+	private int p1Wins=0;
+	private int p2Wins=0;
+	private CharSequence roundChars;
+	private Label roundWins;
 	
 	public Start(GameStateManager gsm) {
 		super(gsm);
@@ -88,14 +85,6 @@ public class Start extends GameState {
 		//Update it once and only once
 		backgroundOfMeow.update(Manic.STEP);
 		
-		
-		//Create Skin
-		createSkin();
-		//Point Board
-        charSeq = "SCORE: "+ points;
-        scoreBoard = new Label(charSeq, skin);
-        scoreBoard.setPosition((float) (Gdx.graphics.getWidth()*.5 - Gdx.graphics.getWidth()*.125) , (float) (Gdx.graphics.getHeight()*.90));
-        
 		
 		//Create world and all its inhabitants
 		world = new World(new Vector2(GRAVITY_X, GRAVITY_Y), true);
@@ -153,31 +142,6 @@ public class Start extends GameState {
 		box.setAsBox(320/PPM, 2/PPM); //100x10
 		body.createFixture(fixtureDef).setUserData("platform");
 		
-		//shaqs badass practice hoop of true greatness. this is how he practices in real life
-		/*
-		bodyDef.position.set(300/PPM, 0/PPM);
-		body = world.createBody(bodyDef);
-		box.setAsBox(4/PPM, 155/PPM); //100x10
-		body.createFixture(fixtureDef).setUserData("platform");
-		
-		fixtureDef.filter.maskBits = Settings.BIT_PLAYER;
-		bodyDef.position.set(300/PPM, 180/PPM);
-		body = world.createBody(bodyDef);
-		box.setAsBox(25/PPM, 25/PPM); //100x10
-		body.createFixture(fixtureDef).setUserData("platform");
-		
-		bodyDef.position.set(300/PPM, 180/PPM);
-		body = world.createBody(bodyDef);
-		box.setAsBox(25/PPM, 25/PPM); //100x10
-		body.createFixture(fixtureDef).setUserData("platform");
-
-		bodyDef.position.set(300/PPM, 165/PPM);
-		body = world.createBody(bodyDef);
-		box.setAsBox(8/PPM, 8/PPM); //100x10
-
-		body.createFixture(fixtureDef).setUserData("hoop");
-
-		*/
 		
 		
 		//loads of balls
@@ -269,7 +233,6 @@ public class Start extends GameState {
 		//light.setSoftnessLength(100f);
 		//light2.setSoftnessLength(100f);
 		//light3.setSoftnessLength(100f);
-		stage.addActor(scoreBoard);
 	}
 	
 	public void handleInput()
@@ -282,7 +245,7 @@ public class Start extends GameState {
 				//apply upward force when on the ground
 				playerBody.applyForceToCenter(0, JUMP_FORCE_NEWTONS, true);
 			}
-			points ++;
+			healthPoints1 --;
 		}
 		
 		if (InputHandler.isPressed(InputHandler.KEY_S))
@@ -308,7 +271,7 @@ public class Start extends GameState {
 			
 			Manic.changeStateLock = true;
 			
-			gsm.setState(GameStateManager.State.PAUSE);        
+			gsm.setState(GameStateManager.State.RESTART);        
 		}
 	
 	}
@@ -345,9 +308,25 @@ public class Start extends GameState {
 	public void render() {
 		//clear
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		
+		stage.clear();
+		//Create Skin
+		createSkin();
+		//Players health
+		p1HealthCharSeq = "Health: "+ healthPoints1;
+		p1Health = new Label(p1HealthCharSeq, skin);
+        p1Health.setPosition((float) (Gdx.graphics.getWidth()*.25 - Gdx.graphics.getWidth()*.125) , (float) (Gdx.graphics.getHeight()*.90));
+		stage.addActor(p1Health);
+		p2HealthCharSeq = "Health: "+ healthPoints2;
+        p2Health = new Label(p2HealthCharSeq, skin);
+        p2Health.setPosition((float) (Gdx.graphics.getWidth()*.85 - Gdx.graphics.getWidth()*.12) , (float) (Gdx.graphics.getHeight()*.90));
+		stage.addActor(p2Health);
+		//Round score
+		roundChars = p1Wins + " : " + p2Wins;
+		roundWins = new Label(roundChars, skin);
+		roundWins.setPosition((float) (Gdx.graphics.getWidth()*.5 - Gdx.graphics.getWidth()*.04) , (float) (Gdx.graphics.getHeight()*.90));
+		stage.addActor(roundWins);
+		//Draw
 		backgroundOfMeow.render();
-		
 		stage.act();
         stage.draw();
 		sagat.render();
@@ -355,5 +334,7 @@ public class Start extends GameState {
 		handler.updateAndRender();
 	}
 	
-	public void dispose() {}
+	public void dispose() {
+		stage.dispose();
+	}
 }
