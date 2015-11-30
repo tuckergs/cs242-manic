@@ -6,6 +6,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.StringTokenizer;
 
 
 
@@ -43,6 +44,22 @@ public class FileStuff {
 		
 	}
 	
+	
+	public static String fixPathCharacters ( String filename )
+	{
+		
+		StringTokenizer tok = new StringTokenizer ( filename , "/" );
+		
+		String out = new String();
+		
+		
+		//TODO: Do stuff
+		return null;
+		
+		
+		
+		
+	}
 	
 
 }
