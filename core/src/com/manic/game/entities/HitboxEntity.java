@@ -24,5 +24,12 @@ public class HitboxEntity extends GameEntity {
 	}
 
 	
+	public HitboxGroup getHitboxes()
+	{
+		
+		return hboxes;
+		
+	}
+	
 	
 }

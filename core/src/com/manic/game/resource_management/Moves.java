@@ -123,7 +123,7 @@ public class Moves {
 				
 				Body body = ch.getBody();
 				
-				HitboxGroup group = ch.getCharacterHitboxes();
+				HitboxGroup group = ch.getHitboxes();
 				
 				
 				

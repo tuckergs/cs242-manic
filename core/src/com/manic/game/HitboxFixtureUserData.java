@@ -3,9 +3,10 @@ package com.manic.game;
 import java.util.HashMap;
 
 import com.manic.game.moves.Hitbox;
+import com.manic.game.moves.HitboxGroup;
 import com.manic.game.entities.Character;
 
-public class CharacterHitboxFixtureUserData {
+public class HitboxFixtureUserData {
 
 	private String charID;
 	
@@ -14,7 +15,7 @@ public class CharacterHitboxFixtureUserData {
 	private String hboxID;
 	
 	
-	public CharacterHitboxFixtureUserData ( String cID , boolean is_attack , String hID ){
+	public HitboxFixtureUserData ( String cID , boolean is_attack , String hID ){
 		
 		setCharID (cID);
 		
@@ -47,18 +48,13 @@ public class CharacterHitboxFixtureUserData {
 		
 		Hitbox h;
 		
-		if ( is_attack )
-		{
-			
-			h = ch.getDamagingHitboxes().get(hboxID);
-			
-		}
-		else
-		{
-			
-			h = ch.getCharacterHitboxes().get(hboxID);
-			
-		}
+		HitboxGroup group;
+		
+		group = ch.getHitboxes();
+		
+		
+		h = group.get(hboxID);
+		
 		
 		return h;
 		

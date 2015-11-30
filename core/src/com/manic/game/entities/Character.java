@@ -26,7 +26,7 @@ import com.manic.game.moves.HitboxGroup;
 import com.manic.game.moves.Move;
 import com.manic.game.resource_management.Moves;
 
-public class Character extends GameEntity 
+public class Character extends HitboxEntity 
 {
 	
 	private String characterName;
@@ -41,8 +41,6 @@ public class Character extends GameEntity
 	private Fixture physicsBox;
 	private Fixture footBox;
 	
-	private HitboxGroup character_hitboxes; 
-	private HitboxGroup damaging_hitboxes;
 
 	/* this class will give player all the information about their character */
 
@@ -97,9 +95,6 @@ public class Character extends GameEntity
 		
 		
 		
-		//Init HboxGroups
-		character_hitboxes = new HitboxGroup();
-		damaging_hitboxes = new HitboxGroup();
 		
 		
 		
@@ -160,15 +155,6 @@ public class Character extends GameEntity
 		return health;
 	}
 	
-	public HitboxGroup getCharacterHitboxes()
-	{
-		return character_hitboxes;
-	}
-	
-	public HitboxGroup getDamagingHitboxes()
-	{
-		return damaging_hitboxes;
-	}
 	
 	
 

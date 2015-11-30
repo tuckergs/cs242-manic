@@ -41,7 +41,7 @@ public class MyContactListener implements ContactListener {
 
 		
 		//Handle hitbox collision
-		if ( fixtureA.getUserData() instanceof CharacterHitboxFixtureUserData )
+		if ( fixtureA.getUserData() instanceof HitboxFixtureUserData )
 			handleHitboxCollision ( fixtureA , fixtureB );
 		
 		System.out.println(fixtureA.getUserData() + ", " + fixtureB.getUserData());
