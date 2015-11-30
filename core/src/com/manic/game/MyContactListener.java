@@ -5,7 +5,10 @@ import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Manifold;
+
 import com.manic.game.states.GameState;
+import com.manic.game.states.Start;
+
 
 public class MyContactListener implements ContactListener {
 	
@@ -26,19 +29,20 @@ public class MyContactListener implements ContactListener {
 		Fixture fixtureA = c.getFixtureA();
 		Fixture fixtureB = c.getFixtureB();
 		
+
 		//Handle jumping
 		if (fixtureA.getUserData() != null && fixtureA.getUserData().equals("player foot")) {
 			isOnGround = true;
 		}
 		
-		if (fixtureB.getUserData() != null && fixtureB.getUserData().equals("player foot")) {
+		if (fixtureB.getUserData().equals("player foot")) {
 			isOnGround = true;
 		}
+
 		
 		//Handle hitbox collision
 		if ( fixtureA.getUserData() instanceof CharacterHitboxFixtureUserData )
 			handleHitboxCollision ( fixtureA , fixtureB );
-		
 		
 		System.out.println(fixtureA.getUserData() + ", " + fixtureB.getUserData());
 	}
@@ -61,11 +65,11 @@ public class MyContactListener implements ContactListener {
 		Fixture fixtureA = c.getFixtureA();
 		Fixture fixtureB = c.getFixtureB();
 		
-		if (fixtureA.getUserData() != null && fixtureA.getUserData().equals("player foot")) {
+		if (fixtureA.getUserData().equals("player foot")) {
 			isOnGround = false;
 		}
 		
-		if (fixtureB.getUserData() != null && fixtureB.getUserData().equals("player foot")) {
+		if (fixtureB.getUserData().equals("player foot")) {
 			isOnGround = false;
 		}
 		

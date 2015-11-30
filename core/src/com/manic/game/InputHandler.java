@@ -6,7 +6,7 @@ public class InputHandler
 	public static boolean pressedDown;
 	public static boolean[] keys;
 	public static boolean[] pressedKeys;
-	private static final int NUM_KEYS = 8;
+	private static final int NUM_KEYS = 9;
 	public static final int KEY_SPACE = 0;
 	public static final int KEY_A = 1;
 	public static final int KEY_D = 2;
@@ -16,6 +16,8 @@ public class InputHandler
 	public static final int KEY_LEFT = 5;
 	public static final int KEY_RIGHT = 6;
 	public static final int KEY_DOWN = 7;
+	
+	public static final int KEY_P = 8;
 	
 	static
 	{
