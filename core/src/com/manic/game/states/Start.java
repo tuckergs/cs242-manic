@@ -28,6 +28,7 @@ import com.manic.game.MyContactListener;
 import com.manic.game.Settings;
 import com.manic.game.entities.Entity;
 import com.manic.game.entities.GameEntity;
+import com.manic.game.entities.HitboxEntity;
 import com.manic.game.entities.Player;
 import com.manic.game.moves.Hitbox;
 import com.manic.game.moves.HitboxType;
@@ -57,7 +58,6 @@ public class Start extends GameState {
 	private MyContactListener contactListener;
 	private Body playerBody;
 	private RayHandler handler;
-	public HashMap < String , GameEntity > gameEntities;
 	private static Skin skin;
 	private Stage stage = new Stage();
 	private Entity backgroundOfMeow;
@@ -74,6 +74,11 @@ public class Start extends GameState {
 	private int p2Wins=0;
 	private CharSequence roundChars;
 	private Label roundWins;
+	
+	
+	public HashMap < String , HitboxEntity > hboxEntities;
+	
+	
 	
 	public Start(GameStateManager gsm) {
 		super(gsm);

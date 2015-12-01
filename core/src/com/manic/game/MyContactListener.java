@@ -13,11 +13,11 @@ import com.manic.game.states.Start;
 public class MyContactListener implements ContactListener {
 	
 	private boolean isOnGround;
-	private GameState state;
+	private Start state;
 	
 	
 	
-	public void bindState ( GameState st )
+	public void bindState ( Start st )
 	{
 		
 		state = st;
