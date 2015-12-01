@@ -8,6 +8,8 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
+import com.manic.game.FixtureDestroyer;
+import com.manic.game.HitboxFixtureUserData;
 import com.manic.game.Settings;
 
 import static com.manic.game.Settings.SCALE_PPM;
@@ -16,6 +18,8 @@ public class Hitbox {
 
 	
 	private Fixture hboxFixture;
+	
+	private String hboxID;
 	
 	private HitboxType type;
 	
@@ -26,7 +30,7 @@ public class Hitbox {
 	
 	//Constructor
 	public Hitbox ( Body body , Vector2 coordinates , Vector2 dimensions , HitboxType type , 
-					String userData , float damage , float hitstun ){
+					String hboxUserData , float damage , float hitstun ){
 		
 		//Create fixture
 		FixtureDef fdef = new FixtureDef();
@@ -59,7 +63,11 @@ public class Hitbox {
 		
 		hboxFixture = body.createFixture(fdef);
 		
-		hboxFixture.setUserData(userData);
+		//Set user data
+		hboxFixture.setUserData( new HitboxFixtureUserData (
+									body.getUserData().toString() , hboxUserData ));
+		
+		hboxID = hboxUserData;
 		
 		
 		
@@ -72,28 +80,38 @@ public class Hitbox {
 		
 	}
 	
+	
+	/*
+	 * I think this, if implemented, would break the design of Hitbox in relation to user data
 	public Hitbox (Body body , Vector2 coordinates , Vector2 dimensions , HitboxType type , 
 					String charData , String hitboxID , float damage , float hitstun)
 	{
 		
 		this ( body , coordinates , dimensions , type , "" , damage , hitstun );
 		
-		//Make
+		//Make user data
 		
 	}
+	*/
 	
-	public void destroy ()
+	public void destroy ( FixtureDestroyer fd )
 	{
 		
-		hboxFixture.getBody().destroyFixture(hboxFixture);
+		fd.add(hboxFixture);
 		
 	}
-	
 	
 	
 	
 	
 	//Getters
+		
+	public String getHitboxID()
+	{
+		return hboxID;
+	}
+	
+		
 	public HitboxType getType()
 	{
 		return type;

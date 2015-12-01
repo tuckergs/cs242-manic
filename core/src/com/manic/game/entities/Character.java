@@ -46,13 +46,18 @@ public class Character extends HitboxEntity
 
 	//The constructor
 	public Character( World world , Vector2 coordinates, Vector2 dimensions , 
-						SpriteBatch batch, String charID , int playerID )
+						SpriteBatch batch, String charID , String entityID ,
+						HashMap < String , HitboxEntity> hsh )
 	{
 
-		super ( new BodyDef() , world , coordinates , batch , "");
+		super ( new BodyDef() , world , coordinates , batch , "" , entityID , hsh );
 		
 		//Now get rid of that body that we just created... -_-
+		//And all its connections
 		world.destroyBody(body);
+		hsh.remove(entityID);
+		
+		
 		
 		BodyDef bodyDef = new BodyDef();
 		FixtureDef fixtureDef = new FixtureDef();
@@ -62,10 +67,10 @@ public class Character extends HitboxEntity
 		bodyDef.type = BodyType.DynamicBody;
 		bodyDef.fixedRotation = true;
 		
-		this.playerID = playerID;
 		
 		body = world.createBody(bodyDef);
-		body.setUserData( "c" + this.playerID );
+		body.setUserData( entityID );
+		
 		
 		
 		
@@ -91,15 +96,15 @@ public class Character extends HitboxEntity
 		footBox.setUserData("player foot");
 		
 		
+		//Set characterName
 		characterName = charID;
-		
-		
-		
-		
-		
 		
 		//Init move
 		currentMove = Manic.res_moves.get( characterName + "stand" );
+		
+		
+		//Put body user data to entity table
+		putToEntityTable ( hsh );
 		
 
 	}

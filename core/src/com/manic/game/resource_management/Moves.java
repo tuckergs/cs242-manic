@@ -123,7 +123,6 @@ public class Moves {
 				
 				Body body = ch.getBody();
 				
-				HitboxGroup group = ch.getHitboxes();
 				
 				
 				
@@ -146,37 +145,31 @@ public class Moves {
 				
 				
 				//Create top box
-				group.add("top" ,
-						new Hitbox (
-								body ,
+				ch.addHitbox (
 								new Vector2 ( 3f , 31.5f ) ,
 								new Vector2 ( 34f , 23f ) ,
 								HitboxType.CHARACTER ,
 								"hurtbox" , 
 								0 , 0 
-								));
+							);
 				
 				//Create hip box
-				group.add("hip", 
-						new Hitbox (
-								body , 
+				ch.addHitbox (
 								new Vector2 ( -2 , -2 ) ,
 								new Vector2 ( 28 , 34) ,
 								HitboxType.CHARACTER ,
 								"hurtbox" ,
 								0 , 0
-								));
+							);
 				
 				//Create leg box
-				group.add("leg", 
-						new Hitbox (
-								body ,
+				ch.addHitbox (
 								new Vector2 ( -4 , -35.5f ) ,
 								new Vector2 ( 34 , 29 ) ,
 								HitboxType.CHARACTER ,
 								"hurtbox" ,
 								0 , 0
-								));
+							);
 							
 				
 				
