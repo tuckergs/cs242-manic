@@ -22,15 +22,12 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.manic.game.BodyDestroyer;
-import com.manic.game.FixtureDestroyer;
 import com.manic.game.InputHandler;
 import com.manic.game.Manic;
 import com.manic.game.MyContactListener;
 import com.manic.game.Settings;
 import com.manic.game.entities.Entity;
 import com.manic.game.entities.GameEntity;
-import com.manic.game.entities.HitboxEntity;
 import com.manic.game.entities.Player;
 import com.manic.game.moves.Hitbox;
 import com.manic.game.moves.HitboxType;
@@ -46,8 +43,6 @@ import static com.manic.game.Settings.PPM;
 import static com.manic.game.Settings.SCALE_PPM;
 
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.TreeSet;
 
 public class Start extends GameState {
 	private World world;
@@ -61,47 +56,35 @@ public class Start extends GameState {
 	private OrthographicCamera box2DCamera;
 	private MyContactListener contactListener;
 	private Body playerBody;
-	
-	
-	private BodyDestroyer bodyDestroyer;
-	private FixtureDestroyer fixtureDestroyer;
-	
-	
-	
 	private RayHandler handler;
+	public HashMap < String , GameEntity > gameEntities;
 	private static Skin skin;
 	private Stage stage = new Stage();
 	private Entity backgroundOfMeow;
 	
+
+	private GameEntity greatPlatform;
+	private GameEntity liberalPlatform;
+	private GameEntity conservativePlatform;
 	
+	
+
 	private Player p;
 	private Character sagat;
-	private static int maxHealth=20;
-	
-	//This is replaced by sagat's health
-	//private static int healthPoints1 = maxHealth;
-	private static int healthPoints2 = maxHealth;
-	
+	public static int healthPoints1 = 20;
+	public static int healthPoints2 = 20;
 	private CharSequence p1HealthCharSeq;
 	private CharSequence p2HealthCharSeq;
 	private Label p1Health;
 	private Label p2Health;
-	public static int p1Wins=0;
-	public static int p2Wins=0;
+	private int p1Wins=0;
+	private int p2Wins=0;
 	private CharSequence roundChars;
 	private Label roundWins;
-	
-	
-	public HashMap < String , HitboxEntity > hboxEntities;
-	
-	
 	
 	public Start(GameStateManager gsm) {
 		super(gsm);
 	
-		
-		hboxEntities = new HashMap < String , HitboxEntity >();
-		
 		
 		//Create cat background
 		backgroundOfMeow = new Entity
@@ -111,45 +94,32 @@ public class Start extends GameState {
 		backgroundOfMeow.update(Manic.STEP);
 		
 		
-		
-		//Create body destroyer and fixture destroyer
-		bodyDestroyer = new BodyDestroyer();
-		fixtureDestroyer = new FixtureDestroyer();
-		
-		
 		//Create world and all its inhabitants
 		world = new World(new Vector2(GRAVITY_X, GRAVITY_Y), true);
-		
-		
-		//Create contact listener, the collision detection thing
 		contactListener = new MyContactListener();
 		contactListener.bindState(this);
-		contactListener.bindBodyDestroyer(bodyDestroyer);
-		contactListener.bindFixtureDestroyer(fixtureDestroyer);
 		world.setContactListener(contactListener);
 		
-		//Create debug render
+		
 		debugRenderer = new Box2DDebugRenderer();
 		debugRenderer.setDrawBodies(true);;
 		BodyDef bodyDef= new BodyDef();
 		FixtureDef fixtureDef = new FixtureDef();
 		
-		
+		//create platform
+		bodyDef.position.set(160/PPM, 20/PPM);
 		bodyDef.type = BodyType.StaticBody; //unaffected by gravity
-		Body body;
+		Body body = world.createBody(bodyDef);
 
 		
 		PolygonShape box = new PolygonShape();
 		
+		box.setAsBox(50/PPM, 5/PPM); //100x10
 		
-		
-		//Set fixture stuff
 		fixtureDef.shape = box;
 		fixtureDef.filter.categoryBits = Settings.BIT_PLATFORM;
-		fixtureDef.filter.maskBits = Settings.BIT_PLAYER | Settings.BIT_BALL
-									| Settings.BIT_HITBOX_DAMAGING; 
-									//it can collide with the player, ball, and damaging hitboxes 
-		
+		fixtureDef.filter.maskBits = Settings.BIT_PLAYER | Settings.BIT_BALL; //it can collide with both the player and ball
+		body.createFixture(fixtureDef).setUserData("platform");
 
 		
 		
@@ -157,20 +127,35 @@ public class Start extends GameState {
 		//test platforms
 		//USES DIMENSIONS OF V_WIDTH, V_HEIGHT
 		//bottom plat
-		bodyDef.position.set(30/PPM, 100/PPM);
-		body = world.createBody(bodyDef);
-		box.setAsBox(20/PPM, 5/PPM); //100x10
-		body.createFixture(fixtureDef).setUserData("platform");
+		//bodyDef.position.set(30/PPM, 100/PPM);
+		//body = world.createBody(bodyDef);
+		box.setAsBox(35/SCALE_PPM, 10/SCALE_PPM); //100x10
+		fixtureDef.shape = box;
 		
-		bodyDef.position.set(160/PPM, 160/PPM);
-		body = world.createBody(bodyDef);
-		box.setAsBox(30/PPM, 5/PPM); //100x10
-		body.createFixture(fixtureDef).setUserData("platform");
 		
-		bodyDef.position.set(290/PPM, 100/PPM);
-		body = world.createBody(bodyDef);
-		box.setAsBox(20/PPM, 5/PPM); //100x10
-		body.createFixture(fixtureDef).setUserData("platform");
+		liberalPlatform = new GameEntity ( bodyDef , world , new Vector2 ( 30/PPM , 100/PPM ) , sb , "platform" );
+		liberalPlatform.getBody().createFixture(fixtureDef).setUserData("platform");
+		liberalPlatform.update(Manic.STEP);
+		
+		
+		
+		box.setAsBox(58/SCALE_PPM, 10/SCALE_PPM); //100x10
+		fixtureDef.shape = box;
+		greatPlatform = new GameEntity ( bodyDef , world , new Vector2 ( 160/PPM , 160/PPM ) , sb , "platform2" );
+		greatPlatform.getBody().createFixture(fixtureDef).setUserData("platform");
+		greatPlatform.update(Manic.STEP);
+		
+		
+		
+		
+	
+		
+		
+		box.setAsBox(35/SCALE_PPM, 10/SCALE_PPM); //100x10
+		fixtureDef.shape = box;
+		conservativePlatform = new GameEntity ( bodyDef , world , new Vector2 ( 290/PPM , 100/PPM ) , sb , "platform" );
+		conservativePlatform.getBody().createFixture(fixtureDef).setUserData("platform");
+		conservativePlatform.update(Manic.STEP);
 		
 		
 		bodyDef.position.set(0/PPM, 25/PPM);
@@ -198,66 +183,45 @@ public class Start extends GameState {
 		
 		
 		//loads of balls
-		
-		HitboxEntity ball1 , ball2;
-		
-		CircleShape circle = new CircleShape();
+		/*CircleShape circle = new CircleShape();
 		circle.setRadius(10/SCALE_PPM);
 		fixtureDef.shape = circle;
 		fixtureDef.density = 75.0f;
 		fixtureDef.restitution = 1.0f; //max bounce
 		fixtureDef.filter.categoryBits = Settings.BIT_BALL; //it is a type ball
 		fixtureDef.filter.maskBits = Settings.BIT_PLATFORM | Settings.BIT_BALL; //can collide with ground
-		
-		/*
 		bodyDef.position.set(153/PPM, 220/PPM);
 		bodyDef.type = BodyType.DynamicBody;
 		body = world.createBody(bodyDef);
 		bodyDef.position.set(10/PPM, 100/PPM);
-		*/
+		
 		
 		Vector2 coordinates = new Vector2 ( 0 , 0 );
 		Vector2 dimensions =  new Vector2 ( 10f , 10f );
 		
 		
 		//System.out.println("0.5f" + body.getMass());
-		
-		
-		/*
 		body = world.createBody(bodyDef);
 		body.createFixture(fixtureDef).setUserData("ball");
 		new Hitbox ( body , coordinates , dimensions , HitboxType.DAMAGING , "ballHbox" , 5 , 0 );
-		*/
-		
-		bodyDef.type = BodyType.DynamicBody;
 		
 		
-		ball1 = new HitboxEntity ( bodyDef , world , new Vector2 ( 20 , 100 ) , sb ,
-									"" , "ball1" , hboxEntities );
+		bodyDef.position.set(20/PPM, 100/PPM);
+		body = world.createBody(bodyDef);
+		body.createFixture(fixtureDef).setUserData("ball");
+		new Hitbox ( body , coordinates , dimensions , HitboxType.DAMAGING , "ballHbox" , 5 , 0 );
 		
-		//Create physics fixture
-		ball1.getBody().createFixture(fixtureDef).setUserData("ball");
-		//Create hitbox
-		ball1.addHitbox( coordinates , dimensions , 
-								HitboxType.DAMAGING , "hbox" , 5 , 0 );
+		bodyDef.position.set(40/PPM, 100/PPM);
+		body = world.createBody(bodyDef);
+		body.createFixture(fixtureDef).setUserData("ball");
+		new Hitbox ( body , coordinates , dimensions , HitboxType.DAMAGING , "ballHbox" , 5 , 0 );
 		
-		
-		ball2 = new HitboxEntity ( bodyDef , world , new Vector2 ( 40  , 100 ) , sb , 
-									"" , "ball2" , hboxEntities );
-		
-		//Create physics fixture
-		ball2.getBody().createFixture(fixtureDef).setUserData("ball");
-		ball2.addHitbox( coordinates, dimensions, 
-								HitboxType.DAMAGING, "hbox", 5 , 0);
-		
-		
-		/*
 		bodyDef.position.set(60/PPM, 100/PPM);
 		body = world.createBody(bodyDef);
 		body.createFixture(fixtureDef).setUserData("ball");
 		new Hitbox ( body , coordinates , dimensions , HitboxType.DAMAGING , "ballHbox" , 5 , 0 );
-		*/
 		
+		*/
 		///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		
 		
@@ -279,13 +243,13 @@ public class Start extends GameState {
 		//create player
 		sagat = new Character
 				( world , new Vector2 ( 200 , 200 ) , new Vector2 ( 44  , 104 ),
-				new SpriteBatch() , "sagat" , "c1" , hboxEntities );
-		sagat.set_is_flipped(true);
+				new SpriteBatch() , "sagat" , 1 );
 		
 		//We need this assignment for input
 		playerBody = sagat.getBody();
 		
-		sagat.setHealth(20f);
+		sagat.setHealth(100f);
+		
 		
 		
 		
@@ -298,7 +262,6 @@ public class Start extends GameState {
 		handler.setCombinedMatrix(camera.combined);
 		handler.setShadows(true);
 		
-		
 		PointLight light = new PointLight(handler, 200, Color.BLACK, 175f, -5, 225);
 		PointLight light2 = new PointLight(handler, 200, Color.BLACK, 100f, 160, 245);
 		PointLight light3 = new PointLight(handler, 200, Color.BLACK, 175f, 320, 210);
@@ -306,12 +269,9 @@ public class Start extends GameState {
 		PointLight light4 = new PointLight(handler, 200, Color.LIME, 50f, 197/2, 155);
 		PointLight light5 = new PointLight(handler, 200, Color.LIME, 50f, 324/2, 156);
 		
-		
-		
 		light.setSoftnessLength(100f);
 		light2.setSoftnessLength(100f);
 		light3.setSoftnessLength(100f);
-		
 	}
 	
 	public void handleInput()
@@ -324,19 +284,7 @@ public class Start extends GameState {
 				//apply upward force when on the ground
 				playerBody.applyForceToCenter(0, JUMP_FORCE_NEWTONS, true);
 			}
-			//sagat.getHealth()--;
-		}
-		
-		//boy, can't sagat shoot things! :3
-		if ( InputHandler.isPressed( InputHandler.KEY_B ))
-		{
-			
-			if (contactListener.isOnGround()) {
-				
-				sagat.setMove("sagattigershot");
-				
-			}
-			
+			healthPoints1 --;
 		}
 		
 		if (InputHandler.isPressed(InputHandler.KEY_S))
@@ -351,30 +299,11 @@ public class Start extends GameState {
 		{
 			//playerBody.applyForce(new Vector2(3f, 0), playerBody.getPosition(), true);
 			playerBody.applyForceToCenter(MOVEMENT_SPEED_NEWTONS, 0, true);
-			
-			if ( sagat.is_flipped() )
-			{
-				
-				sagat.set_is_flipped ( false );
-				sagat.setMove( "sagatstandturn" );
-				
-			}
-				
 		}
 		
 		if (InputHandler.isDown(InputHandler.KEY_A))
 		{
-			
 			playerBody.applyForceToCenter(-MOVEMENT_SPEED_NEWTONS, 0, true);
-			if ( !sagat.is_flipped() )
-			{
-				
-				sagat.set_is_flipped ( true );
-				sagat.setMove( "sagatstandturn" );
-				
-			}
-		
-			
 		}
 		if(InputHandler.isPressed(InputHandler.KEY_P)){
 			System.out.println("PAUSE");
@@ -382,21 +311,6 @@ public class Start extends GameState {
 			Manic.changeStateLock = true;
 			
 			gsm.setState(GameStateManager.State.RESTART);        
-		}
-		if (sagat.getHealth()==0){
-			p2Wins++;
-			sagat.setHealth(maxHealth);
-			healthPoints2=maxHealth;
-			
-		}
-		if (healthPoints2==0){
-			p1Wins++;
-			sagat.setHealth(maxHealth);
-			healthPoints2=maxHealth;
-		}
-		if (p1Wins==2 || p2Wins==2){
-			gsm.setState(GameStateManager.State.VICTORY);
-			
 		}
 	
 	}
@@ -426,18 +340,9 @@ public class Start extends GameState {
 	{
 		handleInput();
 		
-		//Update hitbox entities
-		TreeSet < String > keys = new TreeSet < String > ();
-        keys.addAll(hboxEntities.keySet());
-		for ( Iterator<String> itr = keys.iterator() ; itr.hasNext() ; )
-			hboxEntities.get(itr.next()).update(dt);
+		sagat.update(dt);
 		
 		world.step(dt, 6, 2);
-		
-		//Clean up body stuff
-		fixtureDestroyer.destroyAll();
-		bodyDestroyer.destroyAll(world);
-		
 	}
 	public void render() {
 		//clear
@@ -445,13 +350,11 @@ public class Start extends GameState {
 		stage.clear();
 		//Create Skin
 		createSkin();
-		//Player 1 health
-		
-		p1HealthCharSeq = "Health: "+ sagat.getHealth();
+		//Players health
+		p1HealthCharSeq = "Health: "+ healthPoints1;
 		p1Health = new Label(p1HealthCharSeq, skin);
         p1Health.setPosition((float) (Gdx.graphics.getWidth()*.25 - Gdx.graphics.getWidth()*.125) , (float) (Gdx.graphics.getHeight()*.90));
 		stage.addActor(p1Health);
-		//Player 2 health
 		p2HealthCharSeq = "Health: "+ healthPoints2;
         p2Health = new Label(p2HealthCharSeq, skin);
         p2Health.setPosition((float) (Gdx.graphics.getWidth()*.85 - Gdx.graphics.getWidth()*.12) , (float) (Gdx.graphics.getHeight()*.90));
@@ -465,14 +368,12 @@ public class Start extends GameState {
 		backgroundOfMeow.render();
 		stage.act();
         stage.draw();
-        
-        //Render hitbox entities
-        TreeSet < String > keys = new TreeSet < String > ();
-        keys.addAll(hboxEntities.keySet());
-        for ( Iterator <String> itr = keys.iterator() ; itr.hasNext() ; )
-        	hboxEntities.get( itr.next() ).render();
+		sagat.render();
 		
-		debugRenderer.render(world, box2DCamera.combined);
+		greatPlatform.render();
+		liberalPlatform.render();
+		conservativePlatform.render();
+		//debugRenderer.render(world, box2DCamera.combined);
 		handler.updateAndRender();
 	}
 	
