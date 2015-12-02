@@ -4,6 +4,7 @@ package com.manic.game.moves;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Set;
+import java.util.TreeSet;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -52,14 +53,16 @@ public class HitboxGroup {
 	public void removeAllHitboxes ( FixtureDestroyer fd )
 	{
 		
-		Set<String> keys = hitboxes.keySet();
+		Set<String> keys = new TreeSet<String>();
+		keys.addAll(hitboxes.keySet());
 		
-		for ( Iterator<String> itr = keys.iterator() ; itr.hasNext() ; )
+		
+		for ( String itr : keys )
 		{
 			
-			String k = itr.next();
+			String k = itr;
 			
-			removeHitbox ( k , fd);
+			removeHitbox ( k , fd );
 			
 		}
 		
@@ -70,6 +73,9 @@ public class HitboxGroup {
 	{
 		
 		hitboxes.get(k).destroy( fd );
+		
+		
+		hitboxes.remove(k);
 		
 	}
 	

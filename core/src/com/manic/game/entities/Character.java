@@ -122,6 +122,13 @@ public class Character extends HitboxEntity
 	
 	
 	//Setters
+	public void set_is_flipped ( boolean flipX )
+	{
+		
+		is_flipped = flipX;
+		
+	}
+	
 	public void setAnimation ( ObjectTimeline<TextureRegion> anim )
 	{
 
@@ -129,10 +136,10 @@ public class Character extends HitboxEntity
 
 	}
 
-	public void setMove ( Move m )
+	public void setMove ( String moveID )
 	{
 
-		currentMove = m;
+		currentMove = Manic.res_moves.get(moveID).clone();
 
 	}
 	
