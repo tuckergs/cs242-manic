@@ -344,12 +344,16 @@ public class Start extends GameState {
 		//player can jump
 		if (InputHandler.isPressed(InputHandler.KEY_SPACE))
 		{
-			if (contactListener.isOnGround()) {
-				//in newtons. player weighs 1kg, -9.78 gravity
-				//apply upward force when on the ground
-				playerBody.applyForceToCenter(0, JUMP_FORCE_NEWTONS, true);
-			}
-			//sagat.getHealth()--;
+
+			handleUpInput ( sagat );
+			
+		}
+		
+		if (InputHandler.isPressed(InputHandler.KEY_UP))
+		{
+			
+			handleUpInput ( fluffy );
+			
 		}
 		
 		//boy, can't sagat shoot things! :3
@@ -372,30 +376,6 @@ public class Start extends GameState {
 			}
 		}
 		
-		if (InputHandler.isDown(InputHandler.KEY_D))
-		{
-			//playerBody.applyForce(new Vector2(3f, 0), playerBody.getPosition(), true);
-			playerBody.applyForceToCenter(MOVEMENT_SPEED_NEWTONS, 0, true);
-			
-			if ( sagat.is_flipped() )
-			{
-				
-				sagat.set_is_flipped ( false );
-				sagat.setMove( "sagatstandturn" );
-				
-			}
-				
-		}
-		
-		if (InputHandler.isPressed(InputHandler.KEY_UP))
-		{
-			if (contactListener.isOnGround()) {
-				//in newtons. player weighs 1kg, -9.78 gravity
-				//apply upward force when on the ground
-				player2Body.applyForceToCenter(0, JUMP_FORCE_NEWTONS, true);
-			}
-		}
-		
 		if (InputHandler.isPressed(InputHandler.KEY_DOWN))
 		{
 			if (!contactListener.isOnGround()) {
@@ -404,29 +384,35 @@ public class Start extends GameState {
 			}
 		}
 		
+		if (InputHandler.isDown(InputHandler.KEY_D))
+		{
+			
+			handleRightInput ( sagat );
+							
+		}
+		
+	
+		
+	
+		
 		if (InputHandler.isDown(InputHandler.KEY_RIGHT))
 		{
-			//playerBody.applyForce(new Vector2(3f, 0), playerBody.getPosition(), true);
-			player2Body.applyForceToCenter(MOVEMENT_SPEED_NEWTONS, 0, true);
+			
+			 handleRightInput ( fluffy );
+		
 		}
 		
 		if (InputHandler.isDown(InputHandler.KEY_LEFT))
 		{
-			player2Body.applyForceToCenter(-MOVEMENT_SPEED_NEWTONS, 0, true);
+
+			handleLeftInput ( fluffy );
+			
 		}
 		
 		if (InputHandler.isDown(InputHandler.KEY_A))
 		{
 			
-			playerBody.applyForceToCenter(-MOVEMENT_SPEED_NEWTONS, 0, true);
-			if ( !sagat.is_flipped() )
-			{
-				
-				sagat.set_is_flipped ( true );
-				sagat.setMove( "sagatstandturn" );
-				
-			}
-		
+			handleLeftInput ( sagat );
 			
 		}
 		if(InputHandler.isPressed(InputHandler.KEY_P)){
@@ -452,6 +438,68 @@ public class Start extends GameState {
 			
 		}
 	
+	}
+	
+	private void handleRightInput ( Character ch )
+	{
+		
+		if ( ch.canInput() )
+		{
+			//playerBody.applyForce(new Vector2(3f, 0), playerBody.getPosition(), true);
+			ch.getBody().applyForceToCenter(MOVEMENT_SPEED_NEWTONS, 0, true);
+		
+			if ( sagat.is_flipped() )
+			{
+			
+				sagat.set_is_flipped ( false );
+				sagat.setMove( "sagatstandturn" );
+			
+			}
+		
+		}
+			
+			
+	}
+	
+	private void handleLeftInput ( Character ch )
+	{
+		
+		if ( ch.canInput() )
+		{
+			ch.getBody().applyForceToCenter(-MOVEMENT_SPEED_NEWTONS, 0, true);
+			if ( !sagat.is_flipped() )
+			{
+
+				sagat.set_is_flipped ( true );
+				sagat.setMove( "sagatstandturn" );
+
+			}
+		}
+		
+	}
+	
+	private void handleUpInput ( Character ch )
+	{
+		
+		if ( ch.isOnGround() && ch.canInput() ) {
+			//in newtons. player weighs 1kg, -9.78 gravity
+			//apply upward force when on the ground
+			ch.getBody().applyForceToCenter(0, JUMP_FORCE_NEWTONS, true);
+			
+			//sagat.getHealth()--;
+			
+		}
+		
+	}
+	
+	private void handleDownInput ( Character ch )
+	{
+		
+		if ( !ch.isOnGround() && ch.canInput() ) {
+			//apply downward force when airborne
+			playerBody.applyForceToCenter(0, -JUMP_FORCE_NEWTONS, true);
+		}
+		
 	}
 	
 	public void createSkin(){
@@ -480,13 +528,11 @@ public class Start extends GameState {
 		handleInput();
 		
 		//Update hitbox entities
-		/*TreeSet < String > keys = new TreeSet < String > ();
+		TreeSet < String > keys = new TreeSet < String > ();
         keys.addAll(hboxEntities.keySet());
 		for ( Iterator<String> itr = keys.iterator() ; itr.hasNext() ; )
 			hboxEntities.get(itr.next()).update(dt);
-		*/
-		sagat.update(dt);
-		fluffy.update(dt);
+		
 		
 		
 		world.step(dt, 6, 2);
@@ -528,11 +574,11 @@ public class Start extends GameState {
         
         
         //Render hitbox entities
-        /*TreeSet < String > keys = new TreeSet < String > ();
+        TreeSet < String > keys = new TreeSet < String > ();
         keys.addAll(hboxEntities.keySet());
         for ( Iterator <String> itr = keys.iterator() ; itr.hasNext() ; )
         	hboxEntities.get( itr.next() ).render();
-		*/
+		
 		sagat.render();
 		fluffy.render();
 		

@@ -41,6 +41,9 @@ public class Character extends HitboxEntity
 	private Fixture physicsBox;
 	private Fixture footBox;
 	
+	private boolean canInput;
+	private boolean isOnGround;
+	
 	
 	private boolean move_changed;
 	
@@ -101,6 +104,9 @@ public class Character extends HitboxEntity
 		footBox = body.createFixture(fixtureDef);
 		footBox.setUserData("player foot");
 		
+		
+		//Character can use input
+		canInput = true;
 		
 		//Set characterName
 		characterName = charID;
@@ -175,6 +181,26 @@ public class Character extends HitboxEntity
 		
 	}
 	
+	public void acceptInput()
+	{
+		canInput = true;
+	}
+	
+	public void denyInput()
+	{
+		canInput = false;
+	}
+	
+	public void onGround()
+	{
+		isOnGround = true;
+	}
+	
+	public void offGround()
+	{
+		isOnGround = false;
+	}
+	
 	
 	
 	//Getters
@@ -188,7 +214,15 @@ public class Character extends HitboxEntity
 		return boundHboxEntityMap;
 	}
 	
+	public boolean canInput()
+	{
+		return canInput;
+	}
 	
+	public boolean isOnGround()
+	{
+		return isOnGround;
+	}
 	
 
 	//ABLE TO CREATE SENSOR

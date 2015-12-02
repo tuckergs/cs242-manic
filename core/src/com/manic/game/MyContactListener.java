@@ -52,14 +52,29 @@ public class MyContactListener implements ContactListener {
 		Fixture fixtureA = c.getFixtureA();
 		Fixture fixtureB = c.getFixtureB();
 		
+		HitboxEntity entA = null , entB = null;
+		
+		if ( fixtureA.getBody().getUserData() != null )
+			entA = state.hboxEntities.get
+				(fixtureA.getBody().getUserData().toString());
+		if ( fixtureB.getBody().getUserData()!=null)
+			entB = state.hboxEntities.get(fixtureB.getBody().getUserData().toString());
+		Character ent;
+		
+		if ( entA != null && entA instanceof Character )  ent = (Character) entA;
+		else if ( entB != null &&  entB instanceof Character ) ent = (Character) entB;
+		else ent = null;
+		
 
 		//Handle jumping
 		if (fixtureA.getUserData() != null && fixtureA.getUserData().equals("player foot")) {
-			isOnGround = true;
+			if ( ent != null )
+				ent.onGround ();
 		}
 		
 		if (fixtureB.getUserData().equals("player foot")) {
-			isOnGround = true;
+			if ( ent != null )
+				ent.onGround();;
 		}
 
 		
@@ -72,46 +87,7 @@ public class MyContactListener implements ContactListener {
 		
 	}
 	
-	/*
-	private void handleWallCollison(Fixture fixtureA, Fixture fixtureB) {
-		
-		Hitbox hbox;
-		HitboxEntity ent;
-		
-		Fixture hboxFixture;
-		
-		if ( fixtureA.getUserData() instanceof HitboxFixtureUserData )
-		{
-			
-			HitboxFixtureUserData udA = (HitboxFixtureUserData) fixtureA.getUserData();
-			
-			hbox = udA.getHitbox(state.hboxEntities);
-			ent = udA.getEntity(state.hboxEntities);
-			
-			hboxFixture = fixtureA;
-			
-		}
-		else
-		{
-			
-			HitboxFixtureUserData udB = (HitboxFixtureUserData) fixtureB.getUserData();
-			
-			hbox = udB.getHitbox(state.hboxEntities);
-			ent = udB.getEntity(state.hboxEntities);
-			
-			hboxFixture = fixtureB;
-			
-		}
-		
-		if ( !(ent instanceof Character))
-		{
-			hbox.destroy(fixtureDestroyer);
-			bodyDestroyer.add(hboxFixture.getBody());
-			
-		}
-		
-	}
-	*/
+	
 
 	public void handleHitboxCollision(Fixture fixtureA , Fixture fixtureB)
 	{
@@ -192,12 +168,29 @@ public class MyContactListener implements ContactListener {
 		Fixture fixtureA = c.getFixtureA();
 		Fixture fixtureB = c.getFixtureB();
 		
+		
+		HitboxEntity entA = null , entB = null;
+
+		if ( fixtureA.getBody().getUserData() != null )
+			entA = state.hboxEntities.get
+			(fixtureA.getBody().getUserData().toString());
+		if ( fixtureB.getBody().getUserData()!=null)
+			entB = state.hboxEntities.get(fixtureB.getBody().getUserData().toString());
+		Character ent;
+
+		if ( entA != null && entA instanceof Character )  ent = (Character) entA;
+		else if ( entB != null &&  entB instanceof Character ) ent = (Character) entB;
+		else ent = null;
+		
+		
 		if (fixtureA.getUserData().equals("player foot")) {
-			isOnGround = false;
+			if ( ent != null )
+				ent.offGround();
 		}
 		
 		if (fixtureB.getUserData().equals("player foot")) {
-			isOnGround = false;
+			if ( ent != null )
+				ent.offGround();;
 		}
 		
 	}
