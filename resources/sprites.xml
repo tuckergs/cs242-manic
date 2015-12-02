@@ -4,7 +4,7 @@
         
         <name>sagatstand</name>
         
-        <path>..\\resources\\sprites\\sagatstand.xml</path>
+        <path>..\\resources\\sprites/sagatstand.xml</path>
         
     </ref>
     
@@ -12,7 +12,7 @@
         
         <name></name>
         
-        <path>..\\resources\\sprites\\placeholder.xml</path>
+        <path>../resources/sprites/placeholder.xml</path>
         
     </ref>
     
@@ -20,7 +20,23 @@
         
         <name>catscatscatscatscats</name>
         
-        <path>..\\resources\\sprites\\catpicture.xml</path>
+        <path>../resources/sprites/catpicture.xml</path>
+        
+    </ref>
+
+    <ref>
+
+        <name>platform</name>
+
+        <path>..\\resources\\sprites\\platform.xml</path>
+
+    </ref>
+    
+    <ref>
+        
+        <name>tigershot</name>
+        
+        <path>../resources/sprites/tigershot.xml</path>
         
     </ref>
     
@@ -31,13 +47,13 @@
         <path>../resources/sprites/sagattigershot.xml</path>
         
     </ref>
-    
+
     <ref>
-        
-        <name>tigershot</name>
-        
-        <path>../resources/sprites/tigershot.xml</path>
-        
+
+        <name>platform2</name>
+
+        <path>..\\resources\\sprites\\platform2.xml</path>
+
     </ref>
     
 </animations>

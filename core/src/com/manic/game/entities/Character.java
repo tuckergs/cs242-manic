@@ -106,7 +106,7 @@ public class Character extends HitboxEntity
 		characterName = charID;
 		
 		//Init move
-		currentMove = Manic.res_moves.get( characterName + "stand" );
+		setMove ( characterName + "stand" );
 		
 		
 		//Bind hitbox entity map

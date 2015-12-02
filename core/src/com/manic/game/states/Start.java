@@ -61,12 +61,15 @@ public class Start extends GameState {
 	private OrthographicCamera box2DCamera;
 	private MyContactListener contactListener;
 	private Body playerBody;
+	private Body player2Body;
 	
 	
 	private BodyDestroyer bodyDestroyer;
 	private FixtureDestroyer fixtureDestroyer;
 	
-	
+	private GameEntity greatPlatform;
+	private GameEntity liberalPlatform;
+	private GameEntity conservativePlatform;
 	
 	private RayHandler handler;
 	private static Skin skin;
@@ -74,8 +77,8 @@ public class Start extends GameState {
 	private Entity backgroundOfMeow;
 	
 	
-	private Player p;
 	private Character sagat;
+	private Character fluffy;
 	private static int maxHealth=20;
 	
 	//This is replaced by sagat's health
@@ -156,21 +159,28 @@ public class Start extends GameState {
 		//test platforms
 		//USES DIMENSIONS OF V_WIDTH, V_HEIGHT
 		//bottom plat
-		bodyDef.position.set(30/PPM, 100/PPM);
-		body = world.createBody(bodyDef);
-		box.setAsBox(20/PPM, 5/PPM); //100x10
-		body.createFixture(fixtureDef).setUserData("platform");
 		
-		bodyDef.position.set(160/PPM, 160/PPM);
-		body = world.createBody(bodyDef);
-		box.setAsBox(30/PPM, 5/PPM); //100x10
-		body.createFixture(fixtureDef).setUserData("platform");
 		
-		bodyDef.position.set(290/PPM, 100/PPM);
-		body = world.createBody(bodyDef);
-		box.setAsBox(20/PPM, 5/PPM); //100x10
-		body.createFixture(fixtureDef).setUserData("platform");
+		box.setAsBox(35/SCALE_PPM, 10/SCALE_PPM);
+		liberalPlatform = new GameEntity ( bodyDef , world , new Vector2 ( 30 , 100 ) , sb , "platform" );
+		liberalPlatform.getBody().createFixture(fixtureDef).setUserData("platform");
+		liberalPlatform.update(Manic.STEP);
 		
+		box.setAsBox(58/SCALE_PPM, 10/SCALE_PPM); //100x10
+		fixtureDef.shape = box;
+		greatPlatform = new GameEntity ( bodyDef , world , new Vector2 ( 160 , 160 ) , sb , "platform2" );
+		greatPlatform.getBody().createFixture(fixtureDef).setUserData("platform");
+		greatPlatform.update(Manic.STEP);
+		
+		box.setAsBox(35/SCALE_PPM, 10/SCALE_PPM); //100x10
+		fixtureDef.shape = box;
+		conservativePlatform = new GameEntity ( bodyDef , world , new Vector2 ( 290 , 100 ) , sb , "platform" );
+		conservativePlatform.getBody().createFixture(fixtureDef).setUserData("platform");
+		conservativePlatform.update(Manic.STEP);
+		
+		
+		
+		/////////////////////////////////////////////////////////////////////////////////////////////////
 		
 		bodyDef.position.set(0/PPM, 25/PPM);
 		body = world.createBody(bodyDef);
@@ -288,13 +298,19 @@ public class Start extends GameState {
 		//create player
 		sagat = new Character
 				( world , new Vector2 ( 200 , 200 ) , new Vector2 ( 44  , 104 ),
-				new SpriteBatch() , "sagat" , "c1" , hboxEntities );
+				sb , "sagat" , "c1" , hboxEntities );
 		sagat.set_is_flipped(true);
+		fluffy = new Character
+				( world , new Vector2 ( 100 , 200 ) , new Vector2 ( 44  , 104 ),
+				sb , "sagat" , "c2" , hboxEntities );
+		fluffy.set_is_flipped(false);
 		
 		//We need this assignment for input
 		playerBody = sagat.getBody();
+		player2Body = fluffy.getBody();
 		
 		sagat.setHealth(20f);
+		fluffy.setHealth(20f);
 		
 		
 		
@@ -371,6 +387,34 @@ public class Start extends GameState {
 				
 		}
 		
+		if (InputHandler.isPressed(InputHandler.KEY_UP))
+		{
+			if (contactListener.isOnGround()) {
+				//in newtons. player weighs 1kg, -9.78 gravity
+				//apply upward force when on the ground
+				player2Body.applyForceToCenter(0, JUMP_FORCE_NEWTONS, true);
+			}
+		}
+		
+		if (InputHandler.isPressed(InputHandler.KEY_DOWN))
+		{
+			if (!contactListener.isOnGround()) {
+				//apply downward force when airborne
+				player2Body.applyForceToCenter(0, -JUMP_FORCE_NEWTONS, true);
+			}
+		}
+		
+		if (InputHandler.isDown(InputHandler.KEY_RIGHT))
+		{
+			//playerBody.applyForce(new Vector2(3f, 0), playerBody.getPosition(), true);
+			player2Body.applyForceToCenter(MOVEMENT_SPEED_NEWTONS, 0, true);
+		}
+		
+		if (InputHandler.isDown(InputHandler.KEY_LEFT))
+		{
+			player2Body.applyForceToCenter(-MOVEMENT_SPEED_NEWTONS, 0, true);
+		}
+		
 		if (InputHandler.isDown(InputHandler.KEY_A))
 		{
 			
@@ -436,10 +480,14 @@ public class Start extends GameState {
 		handleInput();
 		
 		//Update hitbox entities
-		TreeSet < String > keys = new TreeSet < String > ();
+		/*TreeSet < String > keys = new TreeSet < String > ();
         keys.addAll(hboxEntities.keySet());
 		for ( Iterator<String> itr = keys.iterator() ; itr.hasNext() ; )
 			hboxEntities.get(itr.next()).update(dt);
+		*/
+		sagat.update(dt);
+		fluffy.update(dt);
+		
 		
 		world.step(dt, 6, 2);
 		
@@ -474,12 +522,20 @@ public class Start extends GameState {
 		backgroundOfMeow.render();
 		stage.act();
         stage.draw();
+        greatPlatform.render();
+		liberalPlatform.render();
+		conservativePlatform.render();
+        
         
         //Render hitbox entities
-        TreeSet < String > keys = new TreeSet < String > ();
+        /*TreeSet < String > keys = new TreeSet < String > ();
         keys.addAll(hboxEntities.keySet());
         for ( Iterator <String> itr = keys.iterator() ; itr.hasNext() ; )
         	hboxEntities.get( itr.next() ).render();
+		*/
+		sagat.render();
+		fluffy.render();
+		
 		
 		debugRenderer.render(world, box2DCamera.combined);
 		handler.updateAndRender();

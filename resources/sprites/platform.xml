@@ -1,0 +1,15 @@
+<animation>
+
+
+	<path>..\\resources\\sprites\\platform.png</path>
+
+	<length>1</length>
+
+	<frames>0</frames>
+
+	<width>70</width>
+
+	<height>24</height>
+
+
+</animation>
