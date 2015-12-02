@@ -67,13 +67,12 @@ public class MyContactListener implements ContactListener {
 		if ( fixtureA.getUserData() instanceof HitboxFixtureUserData 
 				&& fixtureB.getUserData() instanceof HitboxFixtureUserData)
 			handleHitboxCollision ( fixtureA , fixtureB );
-		else if ( fixtureA.getUserData() instanceof HitboxFixtureUserData
-				^ fixtureB.getUserData() instanceof HitboxFixtureUserData)
-			handleWallCollison ( fixtureA , fixtureB );
-		else
-			System.out.println(fixtureA.getUserData() + ", " + fixtureB.getUserData());
+		
+		System.out.println(fixtureA.getUserData() + ", " + fixtureB.getUserData());
+		
 	}
 	
+	/*
 	private void handleWallCollison(Fixture fixtureA, Fixture fixtureB) {
 		
 		Hitbox hbox;
@@ -105,11 +104,14 @@ public class MyContactListener implements ContactListener {
 		}
 		
 		if ( !(ent instanceof Character))
+		{
+			hbox.destroy(fixtureDestroyer);
 			bodyDestroyer.add(hboxFixture.getBody());
-		
+			
+		}
 		
 	}
-
+	*/
 
 	public void handleHitboxCollision(Fixture fixtureA , Fixture fixtureB)
 	{
@@ -180,7 +182,7 @@ public class MyContactListener implements ContactListener {
 			bodyDestroyer.add(entB.getBody());			
 		}
 		
-		;
+		
 		
 	}
 	

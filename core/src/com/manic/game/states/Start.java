@@ -146,9 +146,8 @@ public class Start extends GameState {
 		//Set fixture stuff
 		fixtureDef.shape = box;
 		fixtureDef.filter.categoryBits = Settings.BIT_PLATFORM;
-		fixtureDef.filter.maskBits = Settings.BIT_PLAYER | Settings.BIT_BALL
-									| Settings.BIT_HITBOX_DAMAGING; 
-									//it can collide with the player, ball, and damaging hitboxes 
+		fixtureDef.filter.maskBits = Settings.BIT_PLAYER | Settings.BIT_BALL; 
+									//it can collide with the player and ball
 		
 
 		
@@ -184,12 +183,22 @@ public class Start extends GameState {
 		box.setAsBox(2/PPM, 240/PPM); //100x10
 		body.createFixture(fixtureDef).setUserData("platform");
 		
+		//left side collector
+		bodyDef.type = BodyType.KinematicBody;
+		bodyDef.position.set( -10/PPM , (Manic.V_HEIGHT / 2)/PPM );
+		body = world.createBody(bodyDef);
+		box.setAsBox( -7f/PPM , (Manic.V_HEIGHT / 2)/PPM);
+		body.createFixture(fixtureDef).setUserData("obCollector");
+		
 		//right side plat
+		bodyDef.type = BodyType.StaticBody;
 		bodyDef.position.set(320/PPM, 0/PPM);
 		body = world.createBody(bodyDef);
 		box.setAsBox(2/PPM, 240/PPM); //100x10
 		body.createFixture(fixtureDef).setUserData("platform");
 		
+		
+		//up plat
 		bodyDef.position.set(0/PPM, 240/PPM);
 		body = world.createBody(bodyDef);
 		box.setAsBox(320/PPM, 2/PPM); //100x10
@@ -232,7 +241,7 @@ public class Start extends GameState {
 		bodyDef.type = BodyType.DynamicBody;
 		
 		
-		ball1 = new HitboxEntity ( bodyDef , world , new Vector2 ( 20 , 100 ) , sb ,
+		ball1 = new HitboxEntity ( bodyDef , world , new Vector2 ( 20 , 80 ) , sb ,
 									"" , "ball1" , hboxEntities );
 		
 		//Create physics fixture
@@ -242,7 +251,7 @@ public class Start extends GameState {
 								HitboxType.DAMAGING , "hbox" , 5 , 0 );
 		
 		
-		ball2 = new HitboxEntity ( bodyDef , world , new Vector2 ( 40  , 100 ) , sb , 
+		ball2 = new HitboxEntity ( bodyDef , world , new Vector2 ( 40  , 210 ) , sb , 
 									"" , "ball2" , hboxEntities );
 		
 		//Create physics fixture
