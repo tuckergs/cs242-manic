@@ -23,7 +23,15 @@ public class Victory extends GameState{
 
 	@Override
 	public void handleInput() {
-		
+		if (InputHandler.isPressed(InputHandler.KEY_SPACE)){
+			
+			System.out.println("SPACE");
+			
+			Manic.changeStateLock = true;
+			
+			gsm.setState(GameStateManager.State.PLAY);
+        
+		}
 	}
 
 	@Override
@@ -55,11 +63,11 @@ public class Victory extends GameState{
         
         
         //Create Start Button
-        TextButton startButton = new TextButton("Press Space to Start", skin);
+        TextButton startButton = new TextButton("Press Space to play again", skin);
         startButton.setPosition(Gdx.graphics.getWidth()/2 - Gdx.graphics.getWidth()/8 , Gdx.graphics.getHeight()/3);
         
         stage.addActor(title);
-        //stage.addActor(startButton); 
+        stage.addActor(startButton); 
         stage.act();
         stage.draw();
 	}
