@@ -22,12 +22,10 @@ public class MyContactListener implements ContactListener {
 	private FixtureDestroyer fixtureDestroyer;
 	
 	
-<<<<<<< HEAD
-	public void bindState ( GameState st ){
-=======
+
 	public void bindState ( Start st )
 	{
->>>>>>> origin/master
+
 		
 		state = st;
 		
