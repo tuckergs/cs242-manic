@@ -23,7 +23,15 @@ public class Victory extends GameState{
 
 	@Override
 	public void handleInput() {
-		
+		if (InputHandler.isPressed(InputHandler.KEY_SPACE)){
+			
+			System.out.println("SPACE");
+			
+			Manic.changeStateLock = true;
+			
+			gsm.setState(GameStateManager.State.PLAY);
+        
+		}
 	}
 
 	@Override
@@ -49,17 +57,19 @@ public class Victory extends GameState{
         }else{
         	charSeq="Player 2 is victorious!";
         }
+        Start.p1Wins=0;
+        Start.p2Wins=0;
         Label title = new Label(charSeq, skin);
         title.setPosition((float) (Gdx.graphics.getWidth()*.45 - Gdx.graphics.getWidth()*.125) , (float) (Gdx.graphics.getHeight()*.70));
         title.setFontScale(2);
         
         
         //Create Start Button
-        TextButton startButton = new TextButton("Press Space to Start", skin);
+        TextButton startButton = new TextButton("Press Space to play again", skin);
         startButton.setPosition(Gdx.graphics.getWidth()/2 - Gdx.graphics.getWidth()/8 , Gdx.graphics.getHeight()/3);
         
         stage.addActor(title);
-        //stage.addActor(startButton); 
+        stage.addActor(startButton); 
         stage.act();
         stage.draw();
 	}
