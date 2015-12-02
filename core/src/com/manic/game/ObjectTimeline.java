@@ -167,11 +167,11 @@ public class ObjectTimeline<T> implements Cloneable{
 		//Also, the calling function wouldn't have 
 		//to check this condition every time
 		
-		if ( total_length != 0 
-				&& ( get_on_no_keyframe || cur_frame == cur_obj ) )
-			return objs.get( cur_obj ) ;
-		else
-			return null;
+		if ( total_length == 0 ) return null; 
+		if ( !get_on_no_keyframe && cur_frame != cur_obj )  return null;
+			
+		return objs.get( cur_obj ) ;
+		
 		
 	}
 	
@@ -273,7 +273,7 @@ public class ObjectTimeline<T> implements Cloneable{
 	//Cloner
 	public ObjectTimeline<T> clone(){
 		
-		ObjectTimeline<T> cl = new ObjectTimeline<T>( objs , total_length , delay);
+		ObjectTimeline<T> cl = new ObjectTimeline<T>( objs , total_length , delay , is_looping , get_on_no_keyframe );
 		
 		return cl;
 		

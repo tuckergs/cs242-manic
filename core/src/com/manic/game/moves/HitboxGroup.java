@@ -5,6 +5,10 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Set;
 
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Body;
+import com.manic.game.FixtureDestroyer;
+
 
 
 public class HitboxGroup {
@@ -20,15 +24,24 @@ public class HitboxGroup {
 	}
 	
 	
-	
-
-
-	public void add ( String k , Hitbox h )
+	public void add ( Hitbox hbox )
 	{
 		
-		hitboxes.put( k , h );
+		hitboxes.put( hbox.getHitboxID(), hbox );
 		
 	}
+
+	/*
+	 * This is commented out as it can cause some problems with bodies
+	public void add ( Body body , Vector2 coordinates , Vector2 dimensions , HitboxType type , 
+						String hboxUserData , float damage , float hitstun )
+	{
+		
+		hitboxes.put( hboxUserData , new Hitbox ( body , coordinates , dimensions , type ,
+													hboxUserData , damage , hitstun));
+		
+	}
+	*/
 	
 	public Hitbox get( String k )
 	{
@@ -36,7 +49,7 @@ public class HitboxGroup {
 	}
 	
 	
-	public void removeAllHitboxes ()
+	public void removeAllHitboxes ( FixtureDestroyer fd )
 	{
 		
 		Set<String> keys = hitboxes.keySet();
@@ -46,17 +59,17 @@ public class HitboxGroup {
 			
 			String k = itr.next();
 			
-			removeHitbox ( k );
+			removeHitbox ( k , fd);
 			
 		}
 		
 	}
 	
 	
-	public void removeHitbox ( String k )
+	public void removeHitbox ( String k , FixtureDestroyer fd )
 	{
 		
-		hitboxes.get(k).destroy();
+		hitboxes.get(k).destroy( fd );
 		
 	}
 	

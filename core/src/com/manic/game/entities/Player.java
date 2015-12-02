@@ -8,6 +8,8 @@ package com.manic.game.entities;
 
 import static com.manic.game.Settings.PPM;
 
+import java.util.HashMap;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -55,9 +57,12 @@ public class Player extends Character {
 	 * @param w etc
 	 */
 	
-	public Player( BodyDef bdef , World world , Vector2 coordinates, Vector2 dimensions, SpriteBatch batch, String spriteID , int playerID )
+	public Player( World world , Vector2 coordinates, Vector2 dimensions, 
+			SpriteBatch batch, String charID , String entityID ,
+			HashMap < String , HitboxEntity > hsh )
 	{
-		super( world , coordinates, dimensions ,  batch, spriteID , playerID);
+		
+		super( world , coordinates, dimensions ,  batch, charID , entityID , hsh );
 		
 		FixtureDef fixtureDef = new FixtureDef();
 		

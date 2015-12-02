@@ -57,6 +57,8 @@ public class Entity {
     	
     	//TODO: Add disposing code
     	
+    	anim = null;
+    	
     }
     
     public Vector2 getCoordinates(){

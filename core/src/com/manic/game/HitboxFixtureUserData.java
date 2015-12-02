@@ -5,34 +5,29 @@ import java.util.HashMap;
 import com.manic.game.moves.Hitbox;
 import com.manic.game.moves.HitboxGroup;
 import com.manic.game.entities.Character;
+import com.manic.game.entities.HitboxEntity;
 
 public class HitboxFixtureUserData {
 
-	private String charID;
-	
-	private boolean is_attack;
+	private String entityID;
 	
 	private String hboxID;
 	
 	
-	public HitboxFixtureUserData ( String cID , boolean is_attack , String hID ){
+	public HitboxFixtureUserData ( String eID , String hID ){
 		
-		setCharID (cID);
+		setEntityID (eID);
 		
 		setHboxID (hID);
 		
 	}
 	
 	
-	public void setCharID ( String bID )
+	public void setEntityID ( String eID )
 	{
-		charID = bID;
+		entityID = eID;
 	}
 	
-	public void setIsAttack ( boolean is_att )
-	{
-		is_attack = is_att;
-	}
 	
 	public void setHboxID ( String hID )
 	{
@@ -41,25 +36,22 @@ public class HitboxFixtureUserData {
 	
 
 	//This takes the "global" hashmap of all characters and uses it to get the hitbox
-	public Hitbox getHitbox( HashMap < String , Character> hsh )
+	public Hitbox getHitbox( HashMap < String , HitboxEntity > hsh )
 	{
 		
-		Character ch = hsh.get(charID);
-		
-		Hitbox h;
-		
-		HitboxGroup group;
-		
-		group = ch.getHitboxes();
+		HitboxEntity ch = hsh.get( entityID );
 		
 		
-		h = group.get(hboxID);
-		
-		
-		return h;
+		return ch.getHitboxes().get(hboxID);
 		
 	}
 	
+	public HitboxEntity getEntity ( HashMap < String , HitboxEntity > hsh )
+	{
+		
+		return hsh.get( entityID );
+		
+	}
 	
 	
 }
