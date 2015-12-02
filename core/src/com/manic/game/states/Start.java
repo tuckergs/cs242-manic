@@ -46,6 +46,8 @@ import static com.manic.game.Settings.PPM;
 import static com.manic.game.Settings.SCALE_PPM;
 
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.TreeSet;
 
 public class Start extends GameState {
 	private World world;
@@ -70,6 +72,8 @@ public class Start extends GameState {
 	private static Skin skin;
 	private Stage stage = new Stage();
 	private Entity backgroundOfMeow;
+	
+	
 	private Player p;
 	private Character sagat;
 	private static int maxHealth=20;
@@ -107,6 +111,7 @@ public class Start extends GameState {
 		backgroundOfMeow.update(Manic.STEP);
 		
 		
+		
 		//Create body destroyer and fixture destroyer
 		bodyDestroyer = new BodyDestroyer();
 		fixtureDestroyer = new FixtureDestroyer();
@@ -129,21 +134,22 @@ public class Start extends GameState {
 		BodyDef bodyDef= new BodyDef();
 		FixtureDef fixtureDef = new FixtureDef();
 		
-		//create platform
-		bodyDef.position.set(160/PPM, 20/PPM);
+		
 		bodyDef.type = BodyType.StaticBody; //unaffected by gravity
-		Body body = world.createBody(bodyDef);
+		Body body;
 
 		
 		PolygonShape box = new PolygonShape();
-		box.setAsBox(50/PPM, 5/PPM);
 		
 		
 		
+		//Set fixture stuff
 		fixtureDef.shape = box;
 		fixtureDef.filter.categoryBits = Settings.BIT_PLATFORM;
-		fixtureDef.filter.maskBits = Settings.BIT_PLAYER | Settings.BIT_BALL; //it can collide with both the player and ball
-		body.createFixture(fixtureDef).setUserData("platform");
+		fixtureDef.filter.maskBits = Settings.BIT_PLAYER | Settings.BIT_BALL
+									| Settings.BIT_HITBOX_DAMAGING; 
+									//it can collide with the player, ball, and damaging hitboxes 
+		
 
 		
 		
@@ -226,7 +232,7 @@ public class Start extends GameState {
 		bodyDef.type = BodyType.DynamicBody;
 		
 		
-		ball1 = new HitboxEntity ( bodyDef , world , new Vector2 ( 20 / PPM , 100 / PPM ) , sb ,
+		ball1 = new HitboxEntity ( bodyDef , world , new Vector2 ( 20 , 100 ) , sb ,
 									"" , "ball1" , hboxEntities );
 		
 		//Create physics fixture
@@ -236,7 +242,7 @@ public class Start extends GameState {
 								HitboxType.DAMAGING , "hbox" , 5 , 0 );
 		
 		
-		ball2 = new HitboxEntity ( bodyDef , world , new Vector2 ( 40 / PPM , 100 / PPM ) , sb , 
+		ball2 = new HitboxEntity ( bodyDef , world , new Vector2 ( 40  , 100 ) , sb , 
 									"" , "ball2" , hboxEntities );
 		
 		//Create physics fixture
@@ -292,20 +298,20 @@ public class Start extends GameState {
 		handler.setCombinedMatrix(camera.combined);
 		handler.setShadows(true);
 		
-		/*
+		
 		PointLight light = new PointLight(handler, 200, Color.BLACK, 175f, -5, 225);
 		PointLight light2 = new PointLight(handler, 200, Color.BLACK, 100f, 160, 245);
 		PointLight light3 = new PointLight(handler, 200, Color.BLACK, 175f, 320, 210);
 		PointLight light6 = new PointLight(handler, 200, Color.SALMON, 175f, -5, 0);
 		PointLight light4 = new PointLight(handler, 200, Color.LIME, 50f, 197/2, 155);
 		PointLight light5 = new PointLight(handler, 200, Color.LIME, 50f, 324/2, 156);
-		*/
 		
-		/*
+		
+		
 		light.setSoftnessLength(100f);
 		light2.setSoftnessLength(100f);
 		light3.setSoftnessLength(100f);
-		*/
+		
 	}
 	
 	public void handleInput()
@@ -319,6 +325,18 @@ public class Start extends GameState {
 				playerBody.applyForceToCenter(0, JUMP_FORCE_NEWTONS, true);
 			}
 			//sagat.getHealth()--;
+		}
+		
+		//boy, can't sagat shoot things! :3
+		if ( InputHandler.isPressed( InputHandler.KEY_B ))
+		{
+			
+			if (contactListener.isOnGround()) {
+				
+				sagat.setMove("sagattigershot");
+				
+			}
+			
 		}
 		
 		if (InputHandler.isPressed(InputHandler.KEY_S))
@@ -408,7 +426,11 @@ public class Start extends GameState {
 	{
 		handleInput();
 		
-		sagat.update(dt);
+		//Update hitbox entities
+		TreeSet < String > keys = new TreeSet < String > ();
+        keys.addAll(hboxEntities.keySet());
+		for ( Iterator<String> itr = keys.iterator() ; itr.hasNext() ; )
+			hboxEntities.get(itr.next()).update(dt);
 		
 		world.step(dt, 6, 2);
 		
@@ -444,8 +466,11 @@ public class Start extends GameState {
 		stage.act();
         stage.draw();
         
-        //Render character
-		sagat.render();
+        //Render hitbox entities
+        TreeSet < String > keys = new TreeSet < String > ();
+        keys.addAll(hboxEntities.keySet());
+        for ( Iterator <String> itr = keys.iterator() ; itr.hasNext() ; )
+        	hboxEntities.get( itr.next() ).render();
 		
 		debugRenderer.render(world, box2DCamera.combined);
 		handler.updateAndRender();

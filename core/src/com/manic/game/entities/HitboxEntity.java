@@ -42,6 +42,17 @@ public class HitboxEntity extends GameEntity {
 		
 	}
 
+	
+	
+	//Setters
+	public void set_is_flipped ( boolean flipX )
+	{
+		
+		is_flipped = flipX;
+		
+	}
+	
+	
 	//Getters
 	/*
 	public HitboxGroup getHitboxes()
@@ -112,19 +123,30 @@ public class HitboxEntity extends GameEntity {
 
 		TextureRegion currentFrame = anim.getCurrentObj();
 		
-		currentFrame.flip(is_flipped, false);
-
+		
 		if ( currentFrame == null )
 			return;
+		
+		
+		currentFrame.flip(is_flipped, false);
+
+		
 
 		batch.begin();
 
-		batch.draw( currentFrame ,
-				body.getPosition().x * Settings.SCALE_PPM  
-				- (currentFrame.getRegionWidth() / 2) ,
-				body.getPosition().y * Settings.SCALE_PPM  
-				- (currentFrame.getRegionHeight() / 2) );
-
+		if ( renderLocation == null )
+    		batch.draw( currentFrame ,
+    				body.getPosition().x * Settings.SCALE_PPM  
+    						- (currentFrame.getRegionWidth() / 2) ,
+    				body.getPosition().y * Settings.SCALE_PPM  
+    						- (currentFrame.getRegionHeight() / 2) );
+    	else
+    		batch.draw( currentFrame , 
+    				body.getPosition().x * Settings.SCALE_PPM
+    					+ renderLocation.x, 
+    				body.getPosition().y * Settings.SCALE_PPM
+    					+ renderLocation.y);
+		
 		batch.end();
 		
 		currentFrame.flip(is_flipped , false);

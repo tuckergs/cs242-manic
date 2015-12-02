@@ -5,14 +5,20 @@ import java.util.HashMap;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
+import com.badlogic.gdx.physics.box2d.Fixture;
+import com.badlogic.gdx.physics.box2d.World;
 import com.manic.game.Manic;
 import com.manic.game.ObjectTimeline;
+import com.manic.game.Settings;
 import com.manic.game.moves.CodeSnippet;
 import com.manic.game.moves.Hitbox;
 import com.manic.game.moves.HitboxGroup;
 import com.manic.game.moves.HitboxType;
 import com.manic.game.moves.Move;
 import com.manic.game.entities.Character;
+import com.manic.game.entities.HitboxEntity;
 
 /**
  * 
@@ -45,6 +51,12 @@ public class Moves {
 		return moves.get(name);
 
 	}
+	
+	
+	
+	
+	
+	
 
 	public void init()
 	{
@@ -52,10 +64,20 @@ public class Moves {
 		moves = new HashMap < String , Move >();
 
 		createSagatStand();
+		
+		createTigerShotMove();
 
 	}
 
 
+	
+	
+	
+	
+	
+	
+	
+	
 
 
 	//Creators
@@ -100,6 +122,8 @@ public class Moves {
 
 				//Set the animations
 				createAnimationSagatStand ( ch );
+				
+				createRenderLocationSagatStand ( ch );
 
 
 				//Create hitboxes
@@ -160,6 +184,13 @@ public class Moves {
 		ch.setAnimation( a );
 
 	}
+	
+	private void createRenderLocationSagatStand ( Character ch )
+	{
+		
+		ch.setRenderLocation( -22 , -52 );
+		
+	}
 
 	private void createHitboxesSagatStand ( Character ch )
 	{
@@ -171,7 +202,7 @@ public class Moves {
 
 
 
-		/*
+		
 		//Create big hitbox
 		ch.addHitbox ( 
 						new Vector2 ( 0f , 0f ) ,
@@ -180,12 +211,12 @@ public class Moves {
 						"hurtbox" , 
 						0 , 0
 					);
-		 */
+		 
 
 
 
 
-
+		/*
 		float flipX = ch.getFlipFactor();
 
 		//Create top box
@@ -196,6 +227,8 @@ public class Moves {
 				"top" , 
 				0 , 0 
 				);
+		
+		
 
 		//Create hip box
 		ch.addHitbox (
@@ -214,14 +247,305 @@ public class Moves {
 				"leg" ,
 				0 , 0
 				);
+		 */
+
 
 	}
 
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
-	public void createHighTigerShotMove ()
+	public void createTigerShotMove ()
 	{
 
 		//TODO: Do stuff
+		
+		HashMap < Integer , CodeSnippet > hsh
+			= new HashMap < Integer , CodeSnippet >();
+		
+		int length = 40;
+		float delay = Manic.STEP;
+		boolean loop = false;
+		boolean get_on_no_keyframe = false;
+		
+		
+		hsh.put( 0 , new CodeSnippet(){
+			
+			public void run ( Character ch )
+			{
+				
+				createAnimation ( ch );
+				
+				updateRenderLocation ( ch );
+				
+				createHitboxes ( ch );
+				
+			}
+			
+			private void createAnimation ( Character ch )
+			{
+				
+				ObjectTimeline < TextureRegion > a
+					= Manic.res_animations.get("sagattigershot");
+				
+				ch.setAnimation(a);
+				
+			}
+			
+			private void updateRenderLocation( Character ch )
+			{
+				
+				if ( ch.is_flipped() )
+					ch.setRenderLocation( -62 , -52 );
+				else
+					ch.setRenderLocation( -29, -52 ); //The foot is seven pixels away from the edge
+				
+			}
+			
+			
+			private void createHitboxes ( Character ch )
+			{
+				
+				ch.removeAllHitboxes(null);
+				
+				//For now, keep it simple
+				ch.addHitbox( 
+						new Vector2 ( 0 , 0 ), 
+						new Vector2 ( 44 , 108 ), 
+						HitboxType.CHARACTER, 
+						"body" , 
+						0 , 0 
+						);
+				
+			}
+			
+			
+		});
+		
+		hsh.put( 4 , new CodeSnippet(){
+
+			
+			public void run(Character ch) {
+				
+				updateRenderLocation ( ch );
+				
+				createHitboxes ( ch );
+				
+			}
+			
+			private void updateRenderLocation ( Character ch )
+			{
+				
+				if ( ch.is_flipped() )
+					ch.setRenderLocation( -69 , -52 );
+				else
+					ch.setRenderLocation( -22 , -52 );
+				
+			}
+			
+			private void createHitboxes ( Character ch )
+			{
+				
+				ch.removeAllHitboxes(null);
+				
+				float flipX = ch.getFlipFactor();
+				
+				//We can't go simple here
+				//Body box
+				ch.addHitbox(
+						new Vector2 ( 12.5f * flipX , 8.5f ), 
+						new Vector2 ( 31 , 45 ), 
+						HitboxType.CHARACTER,
+						"body", 
+						0 , 0
+						);
+				//Right leg
+				ch.addHitbox(
+						new Vector2 ( 12f * flipX , -33f ) ,
+						new Vector2 ( 12f , 34f ) ,
+						HitboxType.CHARACTER,
+						"rightleg",
+						0 , 0
+						);
+				//Left leg bottom
+				ch.addHitbox(
+						new Vector2 ( -17f * flipX , -43f ) ,
+						new Vector2 ( 10f , 18f ) ,
+						HitboxType.CHARACTER,
+						"leftlegD",
+						0 , 0
+						);
+				//Left leg top
+				ch.addHitbox(
+						new Vector2 ( -5.5f * flipX , 35f ) ,
+						new Vector2 ( 11f , 16f ) ,
+						HitboxType.CHARACTER,
+						"leftlegU",
+						0 , 0
+						);
+				
+				
+			}
+			
+		});
+		
+		hsh.put( 8 , new CodeSnippet(){
+			
+			public void run( Character ch )
+			{
+				
+				createCharacterHitboxes ( ch );
+				
+			}
+			
+			private void createCharacterHitboxes ( Character ch )
+			{
+				
+				ch.removeAllHitboxes(null);
+				
+				float flipX = ch.getFlipFactor();
+				
+				//More fun
+				
+				//Top hitbox
+				ch.addHitbox(
+						new Vector2 ( 41f * flipX , 18f ) ,
+						new Vector2 ( 54f , 12f ) ,
+						HitboxType.CHARACTER ,
+						"top" ,
+						0 , 0
+						);
+				//Mid hitbox
+				ch.addHitbox(
+						new Vector2 ( 7f * flipX , -5f ) ,
+						new Vector2 ( 20f , 28f ) ,
+						HitboxType.CHARACTER,
+						"mid" ,
+						0 , 0
+						);
+				//Right leg
+				ch.addHitbox(
+						new Vector2 ( 23f * flipX , -31f ),
+						new Vector2 ( 10f  , 42f ),
+						HitboxType.CHARACTER,
+						"rightleg",
+						0 , 0
+						);
+				//TODO: Left leg
+			
+				
+				
+			}			
+			
+		});
+		
+		
+		//This snippet creates the tiger shot
+		hsh.put( 10 , new CodeSnippet(){
+			
+			public void run ( Character ch )
+			{
+				
+				createTigerShot ( ch );
+				
+			}
+			
+			private void createTigerShot ( Character ch )
+			{
+				
+				boolean ch_is_flipped = ch.is_flipped();
+				
+				float flipX = ch.getFlipFactor();
+								
+				Body chBody = ch.getBody();
+				
+				World w = ch.getWorld();
+				
+				HashMap < String , HitboxEntity > hboxEntityMap
+							= ch.getHboxEntityMap();
+				
+				BodyDef bodyDef = new BodyDef();
+				
+				bodyDef.type = BodyType.KinematicBody;
+				
+				
+				
+				String entityID = "ts" + (Manic.counter++);
+				
+				
+				//Create hitbox entity
+				HitboxEntity tigershot = new HitboxEntity (
+						bodyDef , w ,
+						new Vector2 ( chBody.getPosition().x * Settings.PPM 
+											+ ( 76f / Manic.SCALE * flipX ), 
+									 chBody.getPosition().y * Settings.PPM 
+									 + ( 15 / Manic.SCALE ) ) ,
+						
+						//new Vector2 ( 15 , chBody.getPosition().y * Settings.PPM ) ,
+						ch.getSpriteBatch() , 
+						"tigershot" , 
+						entityID ,
+						hboxEntityMap 
+						);
+				
+//				//Set platform bit on all HitboxEntity fixtures
+//				for ( Fixture f : tigershot.getBody().getFixtureList())
+//					f.getFilterData().maskBits |= Settings.BIT_PLATFORM;
+				
+				
+				
+				//Set orientation
+				tigershot.set_is_flipped( ch_is_flipped );
+				tigershot.setRenderLocation(-11, -14);
+				
+				//Create hitbox
+				tigershot.addHitbox(
+						new Vector2 ( 7.5f * flipX , 0f ) ,
+						new Vector2 ( 5f , 14f ) ,
+						HitboxType.DAMAGING ,
+						"hitbox" ,
+						5f , 15f 
+						);
+				
+				//Set linear velocity
+				tigershot.getBody().setLinearVelocity( 300 * flipX / Settings.PPM , 0 );
+						
+				
+				
+			}
+			
+		});
+		
+		
+		hsh.put( 40 , new CodeSnippet(){
+			
+			public void run( Character ch )
+			{
+				
+				ch.setMove("sagatstand");
+				
+			}
+			
+		});
+		
+		
+		ObjectTimeline< CodeSnippet > code
+			= new ObjectTimeline< CodeSnippet >(
+					hsh , length , delay , loop , get_on_no_keyframe );
+		
+		Move move = new Move ( code );
+		
+		moves.put( "sagattigershot", move );
+		
+		
 
 	}
 

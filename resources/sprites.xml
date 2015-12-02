@@ -24,4 +24,20 @@
         
     </ref>
     
+    <ref>
+        
+        <name>sagattigershot</name>
+        
+        <path>../resources/sprites/sagattigershot.xml</path>
+        
+    </ref>
+    
+    <ref>
+        
+        <name>tigershot</name>
+        
+        <path>../resources/sprites/tigershot.xml</path>
+        
+    </ref>
+    
 </animations>

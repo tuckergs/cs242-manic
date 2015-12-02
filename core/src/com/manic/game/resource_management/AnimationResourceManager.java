@@ -45,7 +45,8 @@ public class AnimationResourceManager extends ResourceManager{
 		
 		ObjectTimeline <TextureRegion> anim =
 				new ObjectTimeline <TextureRegion> (
-						p.get_data() , p.get_length() , Manic.STEP );
+						p.get_data() , p.get_length() , Manic.STEP ,
+						p.is_looping() , p.is_get_on_no_keyframe());
 		
 		
 		animations.put( name , anim );

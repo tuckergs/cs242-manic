@@ -41,6 +41,12 @@ public class Character extends HitboxEntity
 	private Fixture physicsBox;
 	private Fixture footBox;
 	
+	
+	private boolean move_changed;
+	
+	private HashMap < String , HitboxEntity > boundHboxEntityMap;
+	
+	
 
 	/* this class will give player all the information about their character */
 
@@ -63,7 +69,7 @@ public class Character extends HitboxEntity
 		FixtureDef fixtureDef = new FixtureDef();
 		
 		//create player
-		bodyDef.position.set(coordinates.scl( 1f/SCALE_PPM ));
+		bodyDef.position.set(coordinates);
 		bodyDef.type = BodyType.DynamicBody;
 		bodyDef.fixedRotation = true;
 		
@@ -103,8 +109,11 @@ public class Character extends HitboxEntity
 		currentMove = Manic.res_moves.get( characterName + "stand" );
 		
 		
+		//Bind hitbox entity map
+		boundHboxEntityMap = hsh;
+		
 		//Put body user data to entity table
-		putToEntityTable ( hsh );
+		putToEntityTable ( boundHboxEntityMap );
 		
 
 	}
@@ -114,25 +123,29 @@ public class Character extends HitboxEntity
 	public void update ( float dt )
 	{
 		
-		currentMove.update( dt );
-		currentMove.execute(this);
+		//This loop exists so that when the move is changed,
+		//It goes straight to the first frame of stuff
+		//This is because I plan to put move changing code 
+		//directly after the last frame
+		do {
+			
+			move_changed = false;
+			currentMove.update( dt );
+			currentMove.execute(this);
+		
+		} while ( move_changed );
 		anim.update(dt);
 		
 	}
 	
 	
-	//Setters
-	public void set_is_flipped ( boolean flipX )
-	{
-		
-		is_flipped = flipX;
-		
-	}
 	
+	
+	//Setters
 	public void setAnimation ( ObjectTimeline<TextureRegion> anim )
 	{
 
-		this.anim = anim;
+		this.anim = anim.clone();
 
 	}
 
@@ -140,6 +153,7 @@ public class Character extends HitboxEntity
 	{
 
 		currentMove = Manic.res_moves.get(moveID).clone();
+		move_changed = true;
 
 	}
 	
@@ -161,10 +175,17 @@ public class Character extends HitboxEntity
 		
 	}
 	
+	
+	
 	//Getters
 	public float getHealth ()
 	{
 		return health;
+	}
+	
+	public HashMap < String , HitboxEntity > getHboxEntityMap()
+	{
+		return boundHboxEntityMap;
 	}
 	
 	

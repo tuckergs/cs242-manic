@@ -1,0 +1,15 @@
+
+
+<animation>
+    
+    <path>../resources/sprites/tigershot.png</path>
+    
+    <length>6</length>
+    
+    <frames>0 2 4</frames>
+    
+    <width>22</width>
+    
+    <height>28</height>
+    
+</animation>

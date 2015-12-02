@@ -21,6 +21,10 @@ public class GameEntity extends Entity {
     
     protected Body body;
     protected World world;
+    
+    
+    protected Vector2 renderLocation;
+    
 	
     
     //the coordinates variable here is basically unused
@@ -30,7 +34,7 @@ public class GameEntity extends Entity {
     	
     	super(coordinates, batch , spriteID); 
     	
-    	bdef.position.set(coordinates);
+    	bdef.position.set(coordinates.scl(1/Settings.PPM));
     	
     	this.world = world;
     	body = world.createBody(bdef);
@@ -48,11 +52,18 @@ public class GameEntity extends Entity {
     	
     	batch.begin();
     	
-    	batch.draw( currentFrame ,
+    	if ( renderLocation == null )
+    		batch.draw( currentFrame ,
     				body.getPosition().x * Settings.SCALE_PPM  
     						- (currentFrame.getRegionWidth() / 2) ,
     				body.getPosition().y * Settings.SCALE_PPM  
     						- (currentFrame.getRegionHeight() / 2) );
+    	else
+    		batch.draw( currentFrame , 
+    				body.getPosition().x * Settings.SCALE_PPM
+    					+ renderLocation.x, 
+    				body.getPosition().y * Settings.SCALE_PPM
+    					+ renderLocation.y);
     	
     	batch.end();
     	
@@ -67,8 +78,32 @@ public class GameEntity extends Entity {
     	return world;
     }
     
+    public Vector2 getRenderLocation ()
+    {
+    	
+    	if ( renderLocation == null ) 
+    		return null;
+    	else
+    		return new Vector2 ( renderLocation.x , 
+    							renderLocation.y );
+    	
+    }
+    
+    //Setters
+    public void setRenderLocation( float rX , float rY )
+    {
+    	
+    	if ( renderLocation == null )
+    		renderLocation = new Vector2();
+    	
+    	renderLocation.x = rX;
+    	renderLocation.y = rY;
+    	
+    }
     
     
+    
+    //Dispose
     public void dispose( BodyDestroyer bd )
     {
     	

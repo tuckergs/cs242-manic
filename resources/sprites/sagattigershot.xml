@@ -1,0 +1,20 @@
+
+
+<animation>
+    
+    <path>../resources/sprites/sagattigershot.png</path>
+    
+    <length>40</length>
+    
+    <frames>0 3 6</frames>
+    
+    <width>91</width>
+    
+    <height>108</height>
+    
+    
+    <loop>false</loop>
+    
+    <get_on_no_keyframe>true</get_on_no_keyframe>
+    
+</animation>

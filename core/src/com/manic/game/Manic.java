@@ -39,6 +39,9 @@ public class Manic implements ApplicationListener
 	
 	public static boolean changeStateLock = false;
 	
+	//This counter is used to give unique identification numbers
+	public static int counter = 0;
+	
 	
 	
 	public static SpriteBatch getSpriteBatch()

@@ -62,12 +62,53 @@ public class MyContactListener implements ContactListener {
 
 		
 		//Handle hitbox collision
-		if ( fixtureA.getUserData() instanceof HitboxFixtureUserData )
+		if ( fixtureA.getUserData() instanceof HitboxFixtureUserData 
+				&& fixtureB.getUserData() instanceof HitboxFixtureUserData)
 			handleHitboxCollision ( fixtureA , fixtureB );
-		
-		System.out.println(fixtureA.getUserData() + ", " + fixtureB.getUserData());
+		else if ( fixtureA.getUserData() instanceof HitboxFixtureUserData
+				^ fixtureB.getUserData() instanceof HitboxFixtureUserData)
+			handleWallCollison ( fixtureA , fixtureB );
+		else
+			System.out.println(fixtureA.getUserData() + ", " + fixtureB.getUserData());
 	}
 	
+	private void handleWallCollison(Fixture fixtureA, Fixture fixtureB) {
+		
+		Hitbox hbox;
+		HitboxEntity ent;
+		
+		Fixture hboxFixture;
+		
+		if ( fixtureA.getUserData() instanceof HitboxFixtureUserData )
+		{
+			
+			HitboxFixtureUserData udA = (HitboxFixtureUserData) fixtureA.getUserData();
+			
+			hbox = udA.getHitbox(state.hboxEntities);
+			ent = udA.getEntity(state.hboxEntities);
+			
+			hboxFixture = fixtureA;
+			
+		}
+		else
+		{
+			
+			HitboxFixtureUserData udB = (HitboxFixtureUserData) fixtureB.getUserData();
+			
+			hbox = udB.getHitbox(state.hboxEntities);
+			ent = udB.getEntity(state.hboxEntities);
+			
+			hboxFixture = fixtureB;
+			
+		}
+		
+		if ( !(ent instanceof Character))
+			bodyDestroyer.add(hboxFixture.getBody());
+		
+		
+	}
+
+
 	public void handleHitboxCollision(Fixture fixtureA , Fixture fixtureB)
 	{
 		
@@ -76,6 +117,8 @@ public class MyContactListener implements ContactListener {
 		//Get the hitboxes
 		Hitbox hboxA = ((HitboxFixtureUserData) fixtureA.getUserData() ).getHitbox(state.hboxEntities);
 		Hitbox hboxB = ((HitboxFixtureUserData) fixtureB.getUserData() ).getHitbox(state.hboxEntities);
+		
+		if ( hboxA.is_destroyed() || hboxB.is_destroyed() ) return;
 		
 		//Get the entities
 		HitboxEntity entA = ((HitboxFixtureUserData) fixtureA.getUserData() ).getEntity(state.hboxEntities);
@@ -135,7 +178,7 @@ public class MyContactListener implements ContactListener {
 			bodyDestroyer.add(entB.getBody());			
 		}
 		
-		
+		;
 		
 	}
 	

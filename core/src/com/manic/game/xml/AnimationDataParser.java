@@ -19,6 +19,9 @@ public class AnimationDataParser extends XMLParser{
 	
 	private int animation_length;
 	
+	private boolean loop;
+	private boolean get_on_no_keyframe;
+	
 	
 	
 	@Override
@@ -93,6 +96,28 @@ public class AnimationDataParser extends XMLParser{
 		}
 		
 		
+		//Now see if "loop" and "get_on_no_keyframe" exist
+		loop = true;
+		get_on_no_keyframe = true;
+		
+		Element loopChild = cur.getChildByName("loop");
+		Element getOnNoKeyframeChild = cur.getChildByName("get_on_no_keyframe");
+		
+		
+		//Set these booleans if these tags are found
+		if ( loopChild != null )
+			loop = Boolean.parseBoolean(loopChild.getText());
+		
+		if ( getOnNoKeyframeChild != null )
+			get_on_no_keyframe = Boolean.parseBoolean(getOnNoKeyframeChild.getText());
+				
+		
+		
+		
+		
+		
+		
+		
 		//Break up frame_string
 		StringTokenizer tokizer = new StringTokenizer ( frame_string , " ");
 		LinkedList<Integer> lstFrameIndices = new LinkedList<Integer>();
@@ -150,7 +175,15 @@ public class AnimationDataParser extends XMLParser{
 		
 	}
 
+	public boolean is_looping()
+	{
+		return loop;
+	}
 	
+	public boolean is_get_on_no_keyframe()
+	{
+		return get_on_no_keyframe;
+	}
 	
 	
 	

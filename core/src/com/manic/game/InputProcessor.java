@@ -26,6 +26,8 @@ public class InputProcessor extends InputAdapter
 		
 		if (key == Keys.P){InputHandler.setKey(InputHandler.KEY_P, true);}
 		
+		if (key == Keys.B){ InputHandler.setKey(InputHandler.KEY_B, true); }
+		
 		return true;
 	}
 	
@@ -48,6 +50,8 @@ public class InputProcessor extends InputAdapter
 		if (key == Keys.DOWN) {InputHandler.setKey(InputHandler.KEY_DOWN, false);}
 		
 		if (key == Keys.P) {InputHandler.setKey(InputHandler.KEY_P, false);}
+		
+		if (key == Keys.B){InputHandler.setKey(InputHandler.KEY_B, false);}
 		
 		return true;
 	}

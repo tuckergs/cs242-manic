@@ -67,6 +67,13 @@ public class Entity {
     	
     }
     
+    public SpriteBatch getSpriteBatch()
+    {
+    	
+    	return batch;
+    	
+    }
+    
     public void setCoordinates( Vector2 c )
     {
     	

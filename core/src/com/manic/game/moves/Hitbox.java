@@ -27,6 +27,8 @@ public class Hitbox {
 	
 	private float hitstun;
 	
+	private boolean is_destroyed;
+	
 	
 	//Constructor
 	public Hitbox ( Body body , Vector2 coordinates , Vector2 dimensions , HitboxType type , 
@@ -46,7 +48,8 @@ public class Hitbox {
 		{
 			
 			fdef.filter.categoryBits = Settings.BIT_HITBOX_DAMAGING;
-			fdef.filter.maskBits = Settings.BIT_HITBOX_CHARACTER;
+			fdef.filter.maskBits = Settings.BIT_HITBOX_CHARACTER /*| Settings.BIT_PLATFORM*/;
+			//The collision with BIT_PLATFORM is a bit of a workaround
 
 		}
 		else 
@@ -78,6 +81,8 @@ public class Hitbox {
 		
 		this.hitstun = hitstun;		
 		
+		is_destroyed = false;
+		
 	}
 	
 	
@@ -102,6 +107,8 @@ public class Hitbox {
 			fd.add(hboxFixture);
 		else
 			hboxFixture.getBody().destroyFixture(hboxFixture);
+		
+		is_destroyed = true;
 		
 	}
 	
@@ -129,6 +136,11 @@ public class Hitbox {
 	public float getHitstun()
 	{
 		return hitstun;
+	}
+	
+	public boolean is_destroyed()
+	{
+		return is_destroyed;
 	}
 	
 	
