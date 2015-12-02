@@ -57,6 +57,8 @@ public class Victory extends GameState{
         }else{
         	charSeq="Player 2 is victorious!";
         }
+        Start.p1Wins=0;
+        Start.p2Wins=0;
         Label title = new Label(charSeq, skin);
         title.setPosition((float) (Gdx.graphics.getWidth()*.45 - Gdx.graphics.getWidth()*.125) , (float) (Gdx.graphics.getHeight()*.70));
         title.setFontScale(2);
