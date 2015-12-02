@@ -360,7 +360,7 @@ public class Start extends GameState {
 		if ( InputHandler.isPressed( InputHandler.KEY_B ))
 		{
 			
-			if (contactListener.isOnGround()) {
+			if (sagat.isOnGround() && sagat.canInput()) {
 				
 				sagat.setMove("sagattigershot");
 				
@@ -370,18 +370,16 @@ public class Start extends GameState {
 		
 		if (InputHandler.isPressed(InputHandler.KEY_S))
 		{
-			if (!contactListener.isOnGround()) {
-				//apply downward force when airborne
-				playerBody.applyForceToCenter(0, -JUMP_FORCE_NEWTONS, true);
-			}
+
+			handleDownInput ( sagat );
+			
 		}
 		
 		if (InputHandler.isPressed(InputHandler.KEY_DOWN))
 		{
-			if (!contactListener.isOnGround()) {
-				//apply downward force when airborne
-				player2Body.applyForceToCenter(0, -JUMP_FORCE_NEWTONS, true);
-			}
+
+			handleDownInput ( fluffy );
+			
 		}
 		
 		if (InputHandler.isDown(InputHandler.KEY_D))
@@ -497,7 +495,7 @@ public class Start extends GameState {
 		
 		if ( !ch.isOnGround() && ch.canInput() ) {
 			//apply downward force when airborne
-			playerBody.applyForceToCenter(0, -JUMP_FORCE_NEWTONS, true);
+			ch.getBody().applyForceToCenter(0, -JUMP_FORCE_NEWTONS, true);
 		}
 		
 	}
