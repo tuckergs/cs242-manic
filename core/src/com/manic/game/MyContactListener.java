@@ -17,8 +17,7 @@ public class MyContactListener implements ContactListener {
 	
 	
 	
-	public void bindState ( GameState st )
-	{
+	public void bindState ( GameState st ){
 		
 		state = st;
 		
