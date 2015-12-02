@@ -26,176 +26,203 @@ import com.manic.game.entities.Character;
 public class Moves {
 
 	private HashMap < String , Move > moves;
-	
-	
-	
+
+
+	private static final String SAGATSTAND = "sagatstand";
+
+
 	public Moves()
 	{
-		
+
 		moves = new HashMap < String , Move >();
-		
+
 	}
-	
-	
+
+
 	public Move get ( String name )
 	{
-		
+
 		return moves.get(name);
-		
+
 	}
-	
+
 	public void init()
 	{
-		
+
 		moves = new HashMap < String , Move >();
-		
+
 		createSagatStand();
-		
+
 	}
-	
-	
-	
-	
+
+
+
+
 	//Creators
 	private void createNothing()
 	{
-		
+
 		HashMap < Integer , CodeSnippet > hsh 
-				= new HashMap < Integer , CodeSnippet >();
-		
+		= new HashMap < Integer , CodeSnippet >();
+
 		int length = 0;
 		float delay = Manic.STEP;
-		
-		
+
+
 		ObjectTimeline< CodeSnippet > code
-				= new ObjectTimeline< CodeSnippet > (
-						hsh , length , delay );
-		
+		= new ObjectTimeline< CodeSnippet > (
+				hsh , length , delay );
+
 		Move move = new Move ( code );
-		
+
 		moves.put ( "nothing" , move );
-		
-		
+
+
 	}
-	
+
 	private void createSagatStand( )
 	{
-		
-		final String SAGATSTAND = "sagatstand";
-		
+
 		HashMap < Integer , CodeSnippet > hsh 
-				= new HashMap< Integer , CodeSnippet >();
-		
+		= new HashMap< Integer , CodeSnippet >();
+
 		int length = 8;
 		float delay = Manic.STEP;
 		boolean loop = false;
 		boolean get_on_no_keyframe = false;
-		
-		
+
+
+		//Create normal stand move
 		hsh.put( 0 , new CodeSnippet(){
-			
+
 			public void run( Character ch )
 			{
-				
+
 				//Set the animations
-				createAnimation ( ch );
-			
-				
+				createAnimationSagatStand ( ch );
+
+
 				//Create hitboxes
-				createHitboxes ( ch );
-				
-				
+				createHitboxesSagatStand ( ch );
+
+
 			}
-			
-			
-			public void createAnimation( Character ch )
-			{
-				
-				ObjectTimeline<TextureRegion> a
-						= Manic.res_animations.get( SAGATSTAND );
-		
-				ch.setAnimation( a );
-				
-			}
-			
-			public void createHitboxes( Character ch )
-			{
-				
-				Body body = ch.getBody();
-				
-				
-				
-				
-				
-				/*
-				//Create big hitbox
-				group.add( "hi", 
-						new Hitbox (
-								body ,
-								new Vector2 ( 0f , 0f ) ,
-								new Vector2 ( 44f , 104f ) ,
-								HitboxType.CHARACTER ,
-								"hurtbox" , 
-								0 , 0
-								));
-				*/
-				
-				
-				
-				
-				
-				//Create top box
-				ch.addHitbox (
-								new Vector2 ( 3f , 31.5f ) ,
-								new Vector2 ( 34f , 23f ) ,
-								HitboxType.CHARACTER ,
-								"hurtbox" , 
-								0 , 0 
-							);
-				
-				//Create hip box
-				ch.addHitbox (
-								new Vector2 ( -2 , -2 ) ,
-								new Vector2 ( 28 , 34) ,
-								HitboxType.CHARACTER ,
-								"hurtbox" ,
-								0 , 0
-							);
-				
-				//Create leg box
-				ch.addHitbox (
-								new Vector2 ( -4 , -35.5f ) ,
-								new Vector2 ( 34 , 29 ) ,
-								HitboxType.CHARACTER ,
-								"hurtbox" ,
-								0 , 0
-							);
-							
-				
-				
-				
-			}
-			
-			
+
 		});
-		
-		
+
+
 		ObjectTimeline< CodeSnippet > code
-				= new ObjectTimeline < CodeSnippet >(
-						hsh , length , delay , loop , get_on_no_keyframe );
-		
+		= new ObjectTimeline < CodeSnippet >(
+				hsh , length , delay , loop , get_on_no_keyframe );
+
 		Move move = new Move ( code );
-		
+
 		moves.put( SAGATSTAND , move );
-		
+
+
+
+
+
+
+
+		//Create the turn portion, which just flips the hitboxes
+		hsh = new HashMap < Integer , CodeSnippet >();
+		hsh.put( 0 , new CodeSnippet(){
+
+			public void run( Character ch )
+			{
+
+				//Create hitboxes
+				createHitboxesSagatStand ( ch );
+
+
+			}
+
+
+		});
+
+
+		code = new ObjectTimeline < CodeSnippet >(
+				hsh , length , delay , loop , get_on_no_keyframe );
+
+		move = new Move ( code );
+
+		moves.put( SAGATSTAND + "turn" , move );
+
 	}
-	
-	
+
+	private void createAnimationSagatStand( Character ch )
+	{
+
+		ObjectTimeline<TextureRegion> a
+		= Manic.res_animations.get( SAGATSTAND );
+
+		ch.setAnimation( a );
+
+	}
+
+	private void createHitboxesSagatStand ( Character ch )
+	{
+
+		Body body = ch.getBody();
+
+
+		ch.removeAllHitboxes(null);
+
+
+
+		/*
+		//Create big hitbox
+		ch.addHitbox ( 
+						new Vector2 ( 0f , 0f ) ,
+						new Vector2 ( 44f , 104f ) ,
+						HitboxType.CHARACTER ,
+						"hurtbox" , 
+						0 , 0
+					);
+		 */
+
+
+
+
+
+		float flipX = ch.getFlipFactor();
+
+		//Create top box
+		ch.addHitbox (
+				new Vector2 ( 3f * flipX , 31.5f ) ,
+				new Vector2 ( 34f , 23f ) ,
+				HitboxType.CHARACTER ,
+				"top" , 
+				0 , 0 
+				);
+
+		//Create hip box
+		ch.addHitbox (
+				new Vector2 ( -2 * flipX , -2 ) ,
+				new Vector2 ( 28 , 34 ) ,
+				HitboxType.CHARACTER ,
+				"hip" ,
+				0 , 0
+				);
+
+		//Create leg box
+		ch.addHitbox (
+				new Vector2 ( -4 * flipX , -35.5f ) ,
+				new Vector2 ( 34 , 29 ) ,
+				HitboxType.CHARACTER ,
+				"leg" ,
+				0 , 0
+				);
+
+	}
+
+
 	public void createHighTigerShotMove ()
 	{
-		
+
 		//TODO: Do stuff
-		
+
 	}
-	
+
 }

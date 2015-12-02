@@ -136,6 +136,7 @@ public class Start extends GameState {
 
 		
 		PolygonShape box = new PolygonShape();
+		box.setAsBox(50/PPM, 5/PPM);
 		
 		
 		
@@ -273,6 +274,7 @@ public class Start extends GameState {
 		sagat = new Character
 				( world , new Vector2 ( 200 , 200 ) , new Vector2 ( 44  , 104 ),
 				new SpriteBatch() , "sagat" , "c1" , hboxEntities );
+		sagat.set_is_flipped(true);
 		
 		//We need this assignment for input
 		playerBody = sagat.getBody();
@@ -331,11 +333,30 @@ public class Start extends GameState {
 		{
 			//playerBody.applyForce(new Vector2(3f, 0), playerBody.getPosition(), true);
 			playerBody.applyForceToCenter(MOVEMENT_SPEED_NEWTONS, 0, true);
+			
+			if ( sagat.is_flipped() )
+			{
+				
+				sagat.set_is_flipped ( false );
+				sagat.setMove( "sagatstandturn" );
+				
+			}
+				
 		}
 		
 		if (InputHandler.isDown(InputHandler.KEY_A))
 		{
+			
 			playerBody.applyForceToCenter(-MOVEMENT_SPEED_NEWTONS, 0, true);
+			if ( !sagat.is_flipped() )
+			{
+				
+				sagat.set_is_flipped ( true );
+				sagat.setMove( "sagatstandturn" );
+				
+			}
+		
+			
 		}
 		if(InputHandler.isPressed(InputHandler.KEY_P)){
 			System.out.println("PAUSE");
@@ -422,7 +443,10 @@ public class Start extends GameState {
 		backgroundOfMeow.render();
 		stage.act();
         stage.draw();
+        
+        //Render character
 		sagat.render();
+		
 		debugRenderer.render(world, box2DCamera.combined);
 		handler.updateAndRender();
 	}

@@ -94,10 +94,14 @@ public class Hitbox {
 	}
 	*/
 	
+	//This function gives you the option of not queuing a FixtureDestroyer
 	public void destroy ( FixtureDestroyer fd )
 	{
 		
-		fd.add(hboxFixture);
+		if ( fd != null )
+			fd.add(hboxFixture);
+		else
+			hboxFixture.getBody().destroyFixture(hboxFixture);
 		
 	}
 	

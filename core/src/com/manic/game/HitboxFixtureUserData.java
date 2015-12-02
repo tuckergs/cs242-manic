@@ -42,7 +42,7 @@ public class HitboxFixtureUserData {
 		HitboxEntity ch = hsh.get( entityID );
 		
 		
-		return ch.getHitboxes().get(hboxID);
+		return ch.getHitbox(hboxID);
 		
 	}
 	
