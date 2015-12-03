@@ -3,7 +3,7 @@
 
 package com.manic.game.entities;
 
-import static com.manic.game.Settings.PPM;
+//import static com.manic.game.Settings.PPM;
 import static com.manic.game.Settings.SCALE_PPM;
 
 import java.util.HashMap;
@@ -17,24 +17,24 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
-import com.badlogic.gdx.utils.Array;
+//import com.badlogic.gdx.utils.Array;
 import com.manic.game.Manic;
 import com.manic.game.ObjectTimeline;
 import com.manic.game.Settings;
-import com.manic.game.moves.Hitbox;
-import com.manic.game.moves.HitboxGroup;
+//import com.manic.game.moves.Hitbox;
+//import com.manic.game.moves.HitboxGroup;
 import com.manic.game.moves.Move;
-import com.manic.game.resource_management.Moves;
+//import com.manic.game.resource_management.Moves;
 
 public class Character extends HitboxEntity 
 {
 
 	private String characterName;
-	private float movementSpeed;
+//	private float movementSpeed;
 	private float health;
-	private String placeholderPath;
+//	private String placeholderPath;
 
-	private int playerID;
+//	private int playerID;
 
 	private Move currentMove;
 

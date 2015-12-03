@@ -11,6 +11,7 @@ public abstract class GameState {
 	protected OrthographicCamera camera;
 	protected OrthographicCamera hudCamera;
 
+	@SuppressWarnings("static-access")
 	protected GameState(GameStateManager gsm) 
 	{
 		this.gsm = gsm;

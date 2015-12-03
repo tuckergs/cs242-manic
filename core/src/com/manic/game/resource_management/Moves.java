@@ -7,14 +7,14 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
-import com.badlogic.gdx.physics.box2d.Fixture;
+//import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.World;
 import com.manic.game.Manic;
 import com.manic.game.ObjectTimeline;
 import com.manic.game.Settings;
 import com.manic.game.moves.CodeSnippet;
-import com.manic.game.moves.Hitbox;
-import com.manic.game.moves.HitboxGroup;
+//import com.manic.game.moves.Hitbox;
+//import com.manic.game.moves.HitboxGroup;
 import com.manic.game.moves.HitboxType;
 import com.manic.game.moves.Move;
 import com.manic.game.entities.Character;
@@ -81,6 +81,7 @@ public class Moves {
 
 
 	//Creators
+	@SuppressWarnings("unused")
 	private void createNothing()
 	{
 
@@ -195,7 +196,7 @@ public class Moves {
 	private void createHitboxesSagatStand ( Character ch )
 	{
 
-		Body body = ch.getBody();
+//		Body body = ch.getBody();
 
 
 		ch.removeAllHitboxes(null);
@@ -566,6 +567,7 @@ public class Moves {
 	
 	
 	
+	@SuppressWarnings("unused") //He'll get to it later I believe
 	private void createSagatAerial()
 	{
 		

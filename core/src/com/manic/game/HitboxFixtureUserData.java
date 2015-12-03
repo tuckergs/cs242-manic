@@ -3,8 +3,8 @@ package com.manic.game;
 import java.util.HashMap;
 
 import com.manic.game.moves.Hitbox;
-import com.manic.game.moves.HitboxGroup;
-import com.manic.game.entities.Character;
+//import com.manic.game.moves.HitboxGroup;
+//import com.manic.game.entities.Character;
 import com.manic.game.entities.HitboxEntity;
 
 public class HitboxFixtureUserData {

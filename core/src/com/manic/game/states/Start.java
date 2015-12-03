@@ -6,16 +6,16 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.Texture.TextureFilter;
+//import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+//import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
-import com.badlogic.gdx.physics.box2d.CircleShape;
-import com.badlogic.gdx.physics.box2d.Shape;
-import com.badlogic.gdx.physics.box2d.Fixture;
+//import com.badlogic.gdx.physics.box2d.CircleShape;
+//import com.badlogic.gdx.physics.box2d.Shape;
+//import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
@@ -31,9 +31,9 @@ import com.manic.game.Settings;
 import com.manic.game.entities.Entity;
 import com.manic.game.entities.GameEntity;
 import com.manic.game.entities.HitboxEntity;
-import com.manic.game.entities.Player;
-import com.manic.game.moves.Hitbox;
-import com.manic.game.moves.HitboxType;
+//import com.manic.game.entities.Player;
+//import com.manic.game.moves.Hitbox;
+//import com.manic.game.moves.HitboxType;
 import com.manic.game.entities.Character;
 
 import box2dLight.PointLight;
@@ -60,7 +60,9 @@ public class Start extends GameState {
 	private Box2DDebugRenderer debugRenderer;
 	private OrthographicCamera box2DCamera;
 	private MyContactListener contactListener;
+	@SuppressWarnings("unused")//It's used
 	private Body playerBody;
+	@SuppressWarnings("unused")//It's used
 	private Body player2Body;
 
 
@@ -97,6 +99,7 @@ public class Start extends GameState {
 
 
 
+	@SuppressWarnings("deprecation")
 	public Start(GameStateManager gsm) {
 		super(gsm);
 
@@ -248,8 +251,11 @@ public class Start extends GameState {
 		PointLight light = new PointLight(handler, 200, Color.BLACK, 175f, -5, 225);
 		PointLight light2 = new PointLight(handler, 200, Color.BLACK, 100f, 160, 245);
 		PointLight light3 = new PointLight(handler, 200, Color.BLACK, 175f, 320, 210);
+		@SuppressWarnings("unused")//It's used
 		PointLight light6 = new PointLight(handler, 200, Color.SALMON, 175f, -5, 0);
+		@SuppressWarnings("unused")//It's used
 		PointLight light4 = new PointLight(handler, 200, Color.LIME, 50f, 197/2, 155);
+		@SuppressWarnings("unused")//It's used
 		PointLight light5 = new PointLight(handler, 200, Color.LIME, 50f, 324/2, 156);
 
 
@@ -443,17 +449,17 @@ public class Start extends GameState {
 		//Player 1 health
 		p1HealthCharSeq = "Health: "+ sagat.getHealth();
 		p1Health = new Label(p1HealthCharSeq, skin);
-		p1Health.setPosition((float) (Gdx.graphics.getWidth()*.25 - Gdx.graphics.getWidth()*.125) , (float) (Gdx.graphics.getHeight()*.90));
+		p1Health.setPosition((float) (Gdx.graphics.getWidth()*.85 - Gdx.graphics.getWidth()*.12) , (float) (Gdx.graphics.getHeight()*.90));
 		stage.addActor(p1Health);
 
 		//Player 2 health
 		p2HealthCharSeq = "Health: "+ fluffy.getHealth();
 		p2Health = new Label(p2HealthCharSeq, skin);
-		p2Health.setPosition((float) (Gdx.graphics.getWidth()*.85 - Gdx.graphics.getWidth()*.12) , (float) (Gdx.graphics.getHeight()*.90));
+		p2Health.setPosition((float) (Gdx.graphics.getWidth()*.25 - Gdx.graphics.getWidth()*.125) , (float) (Gdx.graphics.getHeight()*.90));
 		stage.addActor(p2Health);
 
 		//Round score
-		roundChars = p1Wins + " : " + p2Wins;
+		roundChars = p2Wins + " : " + p1Wins;
 		roundWins = new Label(roundChars, skin);
 		roundWins.setPosition((float) (Gdx.graphics.getWidth()*.5 - Gdx.graphics.getWidth()*.04) , (float) (Gdx.graphics.getHeight()*.90));
 		stage.addActor(roundWins);

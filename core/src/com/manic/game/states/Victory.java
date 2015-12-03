@@ -10,7 +10,6 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.manic.game.InputHandler;
 import com.manic.game.Manic;
@@ -19,9 +18,18 @@ public class Victory extends GameState{
 	
 	protected static Skin skin = new Skin();
 	private Stage stage;
+	private CharSequence charSeq;
 	
 	protected Victory(GameStateManager gsm) {
 		super(gsm);
+		//Decide who the winner is based on who has more wins
+				if(Start.p1Wins > Start.p2Wins){
+					charSeq = "Player 1 is victorious!";
+				}else if (Start.p2Wins > Start.p1Wins){
+					charSeq="Player 2 is victorious!";
+				}else{
+					charSeq="Error";
+				}
 	}
 
 	@Override
@@ -35,6 +43,7 @@ public class Victory extends GameState{
 			gsm.setState(GameStateManager.State.PLAY);
 
 		}
+		
 	}
 
 	@Override
@@ -56,12 +65,6 @@ public class Victory extends GameState{
 		createSkin();
 
 		//Create Title
-		CharSequence charSeq;
-		if(Start.p1Wins>Start.p2Wins){
-			charSeq = "Player 1 is victorious!";
-		}else{
-			charSeq="Player 2 is victorious!";
-		}
 		
 		//Reset the wins
 		Start.p1Wins=0;

@@ -21,12 +21,11 @@ public class MyTest {
 		}
 		
 		
-		ObjectTimeline<String> objs
-			= new ObjectTimeline<String> ( hsh , 841 , 0 );
+//		ObjectTimeline<String> objs	= new ObjectTimeline<String> ( hsh , 841 , 0 );
 		
 		
 		int printme = 0;
-		//printme = objs.test(50);
+//		printme = objs.test(50);
 		
 		
 		System.out.println ( printme );

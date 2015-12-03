@@ -6,18 +6,18 @@ package com.manic.game.entities;
 
 //doxygen example
 
-import static com.manic.game.Settings.PPM;
+//import static com.manic.game.Settings.PPM;
 
 import java.util.HashMap;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
+//import com.badlogic.gdx.Gdx;
+//import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
+//import com.badlogic.gdx.physics.box2d.BodyDef;
+//import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
-import com.badlogic.gdx.physics.box2d.PolygonShape;
+//import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.manic.game.Settings;
 
