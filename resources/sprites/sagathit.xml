@@ -1,0 +1,17 @@
+
+
+<animation>
+    
+    <path>../resources/sprites/sagathit.png</path>
+    
+    <length>1</length>
+    
+    <frames>0</frames>
+    
+    <width>53</width>
+    
+    <height>96</height>
+    
+    <loop>true</loop>
+    
+</animation>

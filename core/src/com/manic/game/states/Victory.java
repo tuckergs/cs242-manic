@@ -1,6 +1,7 @@
 package com.manic.game.states;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Pixmap;
@@ -22,14 +23,20 @@ public class Victory extends GameState{
 	
 	protected Victory(GameStateManager gsm) {
 		super(gsm);
+		
+		//Play sound
+		Sound victorySound = Gdx.audio.newSound(Gdx.files.internal("../resources/sounds/victory.wav"));
+		
+		victorySound.play();
+		
 		//Decide who the winner is based on who has more wins
-				if(Start.p1Wins > Start.p2Wins){
-					charSeq = "Player 1 is victorious!";
-				}else if (Start.p2Wins > Start.p1Wins){
-					charSeq="Player 2 is victorious!";
-				}else{
-					charSeq="Error";
-				}
+		if(Start.p1Wins > Start.p2Wins){
+			charSeq = "Player 1 is victorious!";
+		}else if (Start.p2Wins > Start.p1Wins){
+			charSeq="Player 2 is victorious!";
+		}else{
+			charSeq="Error";
+		}
 	}
 
 	@Override

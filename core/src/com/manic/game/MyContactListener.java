@@ -1,5 +1,7 @@
 package com.manic.game;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
@@ -124,7 +126,15 @@ public class MyContactListener implements ContactListener {
 			if ( entB_is_character )
 			{
 				
+				Sound hitSound = Gdx.audio.newSound ( Gdx.files.internal("../resources/sounds/hit.wav"));
+				
+				hitSound.play();
+				
 				((Character) entB).addHealth ( -hboxA.getDamage() );
+				
+				((Character) entB).setHitstun( hboxA.getHitstun());
+				
+				((Character) entB).setMove("sagathit");
 				
 				
 				
@@ -141,7 +151,16 @@ public class MyContactListener implements ContactListener {
 			if ( entA_is_character )
 			{
 				
+				Sound hitSound = Gdx.audio.newSound ( Gdx.files.internal("../resources/sounds/hit.wav"));
+				
+				hitSound.play();
+				
 				((Character) entA).addHealth ( -hboxB.getDamage() );
+				
+				
+				((Character) entA).setHitstun( hboxB.getHitstun());
+				
+				((Character) entA).setMove("sagathit");
 				
 				
 				

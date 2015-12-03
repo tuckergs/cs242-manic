@@ -1,6 +1,7 @@
 package com.manic.game.states;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -82,7 +83,7 @@ public class Start extends GameState {
 	private Character sagat;
 	private Character fluffy;
 
-	private static float maxHealth=20f;
+	private static float maxHealth=40f;
 	//	private static float healthPoints1 = maxHealth;
 	//	private static float healthPoints2 = maxHealth;
 	private CharSequence p1HealthCharSeq;
@@ -103,6 +104,11 @@ public class Start extends GameState {
 	public Start(GameStateManager gsm) {
 		super(gsm);
 
+		
+		//Play sound
+		Sound victorySound = Gdx.audio.newSound(Gdx.files.internal("../resources/sounds/new-round.wav"));
+				
+		victorySound.play();
 
 		hboxEntities = new HashMap < String , HitboxEntity >();
 
@@ -397,7 +403,8 @@ public class Start extends GameState {
 			
 			if ( !ch.isOnGround() )
 				ch.setMove("sagatairkick");
-			//Add else
+			else
+				ch.setMove("sagatgroundkick");
 			
 		}
 		
@@ -517,7 +524,7 @@ public class Start extends GameState {
 		fluffy.render();
 
 
-		debugRenderer.render(world, box2DCamera.combined);
+		//debugRenderer.render(world, box2DCamera.combined);
 		handler.updateAndRender();
 	}
 	

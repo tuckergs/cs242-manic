@@ -1,0 +1,17 @@
+
+
+<animation>
+    
+    <path>../resources/sprites/sagatkick.png</path>
+    
+    <length>36</length>
+    
+    <frames>0 6 12 24 30</frames>
+    
+    <width>80</width>
+    
+    <height>74</height>
+    
+    <loop>false</loop>
+    
+</animation>

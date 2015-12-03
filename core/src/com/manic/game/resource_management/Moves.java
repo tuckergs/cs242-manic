@@ -2,6 +2,8 @@ package com.manic.game.resource_management;
 
 import java.util.HashMap;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -68,6 +70,10 @@ public class Moves {
 		createTigerShotMove();
 		
 		createSagatAerial();
+		
+		createSagatGroundKick();
+		
+		createSagatHitstun();
 
 	}
 
@@ -286,6 +292,8 @@ public class Moves {
 			{
 				
 				createAnimation ( ch );
+				
+				playAttackSound();
 				
 				updateRenderLocation ( ch );
 				
@@ -516,7 +524,7 @@ public class Moves {
 						new Vector2 ( 5f , 14f ) ,
 						HitboxType.DAMAGING ,
 						"hitbox" ,
-						5f , 12f 
+						5f , 24 
 						);
 				
 				//Set linear velocity
@@ -589,7 +597,9 @@ public class Moves {
 				
 				createAnimation ( ch );
 				
-				updateRenderLocation ( ch );
+				playAttackSound();
+				
+				updateRenderLocationSagatKick ( ch );
 				
 				createHitboxesSagatKick1 ( ch );
 				
@@ -605,16 +615,6 @@ public class Moves {
 				
 				ch.setAnimation(a);
 				
-				
-			}
-			
-			private void updateRenderLocation ( Character ch )
-			{
-				
-				if ( !ch.is_flipped())
-					ch.setRenderLocation(  -28f , -68f );
-				else
-					ch.setRenderLocation(-52f, -68f);
 				
 			}
 			
@@ -638,7 +638,7 @@ public class Moves {
 			public void run ( Character ch )
 			{
 				
-				createHitboxesSagatKick3 ( ch , 7f , 12f);
+				createHitboxesSagatKick3 ( ch , 7f , 30);
 				
 			}
 			
@@ -691,6 +691,128 @@ public class Moves {
 		
 	}
 	
+	private void createSagatGroundKick ()
+	{
+		
+		HashMap < Integer , CodeSnippet > hsh
+			= new HashMap < Integer , CodeSnippet >();
+		
+		int length = 36;
+		float delay = Manic.STEP;
+		
+		boolean loop = false;
+		boolean get_on_no_keyframe = false;
+		
+		
+		hsh.put( 0 , new CodeSnippet(){
+			
+			public void run ( Character ch )
+			{
+			
+				createAnimation ( ch );
+				
+				playAttackSound ();
+				
+				updateRenderLocationSagatKick ( ch );
+				
+				createHitboxesSagatKick1 ( ch );
+				
+				ch.denyInput();
+				
+			}
+			
+			private void createAnimation ( Character ch )
+			{
+				
+				ObjectTimeline < TextureRegion > a
+					= Manic.res_animations.get( "sagatgroundkick" );
+				
+				ch.setAnimation(a);
+				
+			}
+			
+			
+			
+		});
+		
+		hsh.put ( 6 , new CodeSnippet(){
+			
+			public void run ( Character ch )
+			{
+				
+				createHitboxesSagatKick2 ( ch );
+				
+			}
+			
+		});
+		
+		hsh.put( 12 , new CodeSnippet(){
+			
+			public void run ( Character ch )
+			{
+				
+				createHitboxesSagatKick3 ( ch , 10f , 45 );
+				
+			}
+			
+		});
+		
+		hsh.put( 24 , new CodeSnippet(){
+			
+			public void run ( Character ch )
+			{
+				
+				createHitboxesSagatKick2 ( ch );
+				
+			}
+			
+		});
+		
+		hsh.put( 30 , new CodeSnippet(){
+			
+			public void run ( Character ch )
+			{
+				
+				createHitboxesSagatKick1 ( ch );
+				
+			}
+			
+		});
+		
+		hsh.put( 36 , new CodeSnippet(){
+			
+			public void run ( Character ch )
+			{
+				
+				ch.acceptInput();
+				
+				ch.setMove("sagatstand");
+				
+			}
+			
+		});
+		
+		ObjectTimeline < CodeSnippet > code
+			= new ObjectTimeline < CodeSnippet > (
+					hsh , length ,  delay , loop , get_on_no_keyframe 
+					);
+		
+		Move move = new Move ( code );
+		
+		moves.put( "sagatgroundkick" , move  );
+		
+	}
+	
+	private void updateRenderLocationSagatKick( Character ch )
+	{
+		
+		if ( !ch.is_flipped())
+			ch.setRenderLocation(  -28f , -68f );
+		else
+			ch.setRenderLocation(-52f, -68f);
+		
+	}
+	
 	private void createHitboxesSagatKick1 ( Character ch )
 	{
 		
@@ -734,7 +856,7 @@ public class Moves {
 	}
 	
 	//This creates the hitbox of the attack
-	private void createHitboxesSagatKick3 ( Character ch , float damage , float hitstun )
+	private void createHitboxesSagatKick3 ( Character ch , float damage , int hitstun )
 	{
 		
 		float flipX = ch.getFlipFactor();
@@ -761,5 +883,126 @@ public class Moves {
 				
 		
 	}
-
+	
+	private void playAttackSound()
+	{
+		
+		Sound attackSound = Gdx.audio.newSound( Gdx.files.internal("../resources/sounds/attack.wav"));
+		
+		attackSound.play();
+		
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	public void createSagatHitstun ()
+	{
+	
+		HashMap < Integer , CodeSnippet > hsh
+			= new HashMap < Integer , CodeSnippet >();
+		
+		int length = 1;
+		float delay = Manic.STEP;
+		
+		boolean loop = false;
+		boolean get_on_no_keyframe = false;
+		
+		hsh.put( 0 , new CodeSnippet(){
+			
+			public void run ( Character ch )
+			{
+			
+				createAnimation ( ch );
+			
+				updateRenderLocation ( ch );
+			
+				createHitboxes ( ch );
+			
+				ch.denyInput();
+				
+			}
+			
+			private void createAnimation ( Character ch )
+			{
+				
+				ObjectTimeline < TextureRegion > a 
+					= Manic.res_animations.get("sagathit");
+				
+				ch.setAnimation(a);
+				
+			}
+			
+			private void updateRenderLocation ( Character ch )
+			{
+				if ( ch.is_flipped() )
+				{
+					ch.setRenderLocation( -28f , -52f );
+				}
+				else
+				{
+					ch.setRenderLocation ( -22f , -52f );
+				}
+			}
+			
+			private void createHitboxes ( Character ch )
+			{
+				
+				ch.removeAllHitboxes( null );
+				
+				ch.addHitbox(
+						new Vector2 ( 0 , 0 ) ,
+						new Vector2 ( 44 , 104 ) ,
+						HitboxType.CHARACTER , 
+						"hurtbox" ,
+						0 , 0
+						);
+				
+			}
+			
+		});
+		
+		hsh.put( 1 , new CodeSnippet(){
+			
+			public void run ( Character ch )
+			{
+				
+				ch.incrementHitstun();
+				
+				if ( ch.outOfHitstun() )
+				{
+					//TODO: Do stuff
+					
+					ch.acceptInput();
+					
+					ch.setMove("sagatstand");
+					
+				}
+				
+			}
+			
+		});
+		
+		ObjectTimeline < CodeSnippet > code 
+			= new ObjectTimeline < CodeSnippet >(
+					hsh , length , delay , loop , get_on_no_keyframe 
+					);
+		
+		Move move = new Move ( code );
+		
+		moves.put("sagathit", move);
+		
+		
+	}	
+	
+	
+	
 }

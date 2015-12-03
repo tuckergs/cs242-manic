@@ -33,6 +33,9 @@ public class Character extends HitboxEntity
 //	private float movementSpeed;
 	private float health;
 //	private String placeholderPath;
+	
+	private int currentHitstunFrame;
+	private int lastHitstunFrame;
 
 //	private int playerID;
 
@@ -223,7 +226,29 @@ public class Character extends HitboxEntity
 	{
 		return isOnGround;
 	}
+	
+	//Hitstun stuff
+	
+	public void setHitstun ( int totalHitstun )
+	{
+		
+		currentHitstunFrame = 0;
+		lastHitstunFrame = totalHitstun;
+		
+	}
 
+	public void incrementHitstun ()
+	{
+		
+		++currentHitstunFrame;
+		
+	}
+	
+	public boolean outOfHitstun ()
+	{
+		return ( currentHitstunFrame >= lastHitstunFrame );
+	}
+	
 
 	//ABLE TO CREATE SENSOR
 

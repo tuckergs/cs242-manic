@@ -64,4 +64,21 @@
         
     </ref>
     
+    <ref>
+        
+        <name>sagatgroundkick</name>
+        
+        <path>../resources/sprites/sagatgroundkick.xml</path>
+        
+    </ref>
+    
+    <ref>
+        
+        <name>sagathit</name>
+    
+    	<path>../resources/sprites/sagathit.xml</path>
+    
+    </ref>
+    
+    
 </animations>

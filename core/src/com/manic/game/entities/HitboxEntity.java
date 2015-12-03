@@ -85,7 +85,7 @@ public class HitboxEntity extends GameEntity {
 	}
 	
 	public void addHitbox ( Vector2 coordinates , Vector2 dimensions , HitboxType type , 
-					String hboxUserData , float damage , float hitstun )
+					String hboxUserData , float damage , int hitstun )
 	{
 		
 		hboxes.add ( new Hitbox ( body , coordinates , dimensions , 

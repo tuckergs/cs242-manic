@@ -25,14 +25,14 @@ public class Hitbox {
 	
 	private float damage;
 	
-	private float hitstun;
+	private int hitstun;
 	
 	private boolean is_destroyed;
 	
 	
 	//Constructor
 	public Hitbox ( Body body , Vector2 coordinates , Vector2 dimensions , HitboxType type , 
-					String hboxUserData , float damage , float hitstun ){
+					String hboxUserData , float damage , int hitstun ){
 		
 		//Create fixture
 		FixtureDef fdef = new FixtureDef();
@@ -137,7 +137,7 @@ public class Hitbox {
 		return damage;
 	}
 	
-	public float getHitstun()
+	public int getHitstun()
 	{
 		return hitstun;
 	}
