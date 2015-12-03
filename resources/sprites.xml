@@ -31,6 +31,14 @@
         <path>..\\resources\\sprites\\platform.xml</path>
 
     </ref>
+
+    <ref>
+
+        <name>platform2</name>
+
+        <path>..\\resources\\sprites\\platform2.xml</path>
+
+    </ref>
     
     <ref>
         
@@ -47,13 +55,13 @@
         <path>../resources/sprites/sagattigershot.xml</path>
         
     </ref>
-
+    
     <ref>
-
-        <name>platform2</name>
-
-        <path>..\\resources\\sprites\\platform2.xml</path>
-
+        
+        <name>sagatairkick</name>
+        
+        <path>../resources/sprites/sagatairkick.xml</path>
+        
     </ref>
     
 </animations>

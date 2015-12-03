@@ -271,7 +271,7 @@ public class Moves {
 		HashMap < Integer , CodeSnippet > hsh
 			= new HashMap < Integer , CodeSnippet >();
 		
-		int length = 40;
+		int length = 50;
 		float delay = Manic.STEP;
 		boolean loop = false;
 		boolean get_on_no_keyframe = false;
@@ -287,6 +287,8 @@ public class Moves {
 				updateRenderLocation ( ch );
 				
 				createHitboxes ( ch );
+				
+				ch.denyInput();
 				
 			}
 			
@@ -478,6 +480,7 @@ public class Moves {
 				
 				
 				
+				
 				String entityID = "ts" + (Manic.counter++);
 				
 				
@@ -488,8 +491,6 @@ public class Moves {
 											+ ( 76f / Manic.SCALE * flipX ), 
 									 chBody.getPosition().y * Settings.PPM 
 									 + ( 15 / Manic.SCALE ) ) ,
-						
-						//new Vector2 ( 15 , chBody.getPosition().y * Settings.PPM ) ,
 						ch.getSpriteBatch() , 
 						"tigershot" , 
 						entityID ,
@@ -512,7 +513,7 @@ public class Moves {
 						new Vector2 ( 5f , 14f ) ,
 						HitboxType.DAMAGING ,
 						"hitbox" ,
-						5f , 15f 
+						5f , 12f 
 						);
 				
 				//Set linear velocity
@@ -525,10 +526,12 @@ public class Moves {
 		});
 		
 		
-		hsh.put( 40 , new CodeSnippet(){
+		hsh.put( 50 , new CodeSnippet(){
 			
 			public void run( Character ch )
 			{
+				
+				ch.acceptInput();
 				
 				ch.setMove("sagatstand");
 				
@@ -549,9 +552,208 @@ public class Moves {
 
 	}
 	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	private void createSagatAerial()
 	{
-		//TODO;
+		
+		HashMap < Integer , CodeSnippet > hsh
+			= new HashMap < Integer , CodeSnippet >();
+		
+		int length = 24;
+		float delay = Manic.STEP;
+		boolean loop = false;
+		boolean get_on_no_keyframe = false;
+		
+		
+		hsh.put( 0 , new CodeSnippet(){
+			
+			public void run ( Character ch )
+			{
+				
+				createAnimation ( ch );
+				
+				updateRenderLocation ( ch );
+				
+				createHitboxesSagatKick1 ( ch );
+				
+				ch.denyInput();
+				
+			}
+			
+			private void createAnimation ( Character ch )
+			{
+				
+				ObjectTimeline <TextureRegion> a
+					= Manic.res_animations.get("sagatkick");
+				
+				
+			}
+			
+			private void updateRenderLocation ( Character ch )
+			{
+				
+				if ( !ch.is_flipped())
+					ch.setRenderLocation(  -28f , -68f );
+				else
+					ch.setRenderLocation(-52f, -68f);
+				
+			}
+			
+		});
+		
+		hsh.put( 4 , new CodeSnippet(){
+			
+			public void run ( Character ch )
+			{
+				
+				createHitboxesSagatKick2 ( ch );
+				
+			}
+			
+			
+			
+		});
+		
+		hsh.put( 8 , new CodeSnippet(){
+			
+			public void run ( Character ch )
+			{
+				
+				createHitboxesSagatKick3 ( ch , 7f , 12f);
+				
+			}
+			
+		});
+		
+		hsh.put( 16 , new CodeSnippet(){
+			
+			public void run ( Character ch )
+			{
+				
+				createHitboxesSagatKick2 ( ch );
+				
+			}
+			
+		});
+		
+		hsh.put( 20 , new CodeSnippet(){
+			
+			public void run ( Character ch )
+			{
+				
+				createHitboxesSagatKick1 ( ch );
+				
+			}
+			
+		});
+		
+		hsh.put(  24 ,  new CodeSnippet(){
+			
+			public void run ( Character ch )
+			{
+				
+				ch.acceptInput();
+				
+				ch.setMove("sagatstand");
+				
+			}
+			
+		});
+		
+		ObjectTimeline < CodeSnippet > code
+			= new ObjectTimeline < CodeSnippet > (
+					hsh , length , delay , loop , get_on_no_keyframe );
+		
+		Move move = new Move ( code );
+		
+		moves.put( "sagatairkick" ,  move );
+		
+		
+		
+	}
+	
+	private void createHitboxesSagatKick1 ( Character ch )
+	{
+		
+		float flipX = ch.getFlipFactor();
+		
+		ch.removeAllHitboxes(null);
+		
+		ch.addHitbox (
+				new Vector2 ( -2.5f * flipX , -25f ) ,
+				new Vector2 ( 27f , 60f ) ,
+				HitboxType.CHARACTER ,
+				"hurtbox" ,
+				0 , 0
+				);
+		
+	}
+	
+	private void createHitboxesSagatKick2 ( Character ch )
+	{
+		
+		float flipX = ch.getFlipFactor();
+		
+		ch.removeAllHitboxes ( null );
+		
+		ch.addHitbox(
+				new Vector2 ( -4f * flipX , -18f ) ,
+				new Vector2 ( 26f , 46f) ,
+				HitboxType.CHARACTER,
+				"top" ,
+				0 , 0 
+				);
+		
+		ch.addHitbox(
+				new Vector2 ( 15.5f * flipX , -47.5f) ,
+				new Vector2 ( 11f , 37f ) ,
+				HitboxType.CHARACTER,
+				"rightLeg" ,
+				0 , 0
+				);
+		
+	}
+	
+	//This creates the hitbox of the attack
+	private void createHitboxesSagatKick3 ( Character ch , float damage , float hitstun )
+	{
+		
+		float flipX = ch.getFlipFactor();
+		
+		ch.removeAllHitboxes(null);
+		
+		//Create hurtbox
+		ch.addHitbox( 
+				new Vector2 ( -4f * flipX , -19.5f ) ,
+				new Vector2 ( 28 , 35 ) ,
+				HitboxType.CHARACTER ,
+				"top" ,
+				0 , 0
+				);
+		
+		//Create hitbox
+		ch.addHitbox(
+				new Vector2 (  33f * flipX , -46f ) ,
+				new Vector2 (  32f , 22f ) ,
+				HitboxType.DAMAGING ,
+				"leg" ,
+				damage , hitstun
+				);
+				
+		
 	}
 
 }
