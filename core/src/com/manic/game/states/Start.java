@@ -279,9 +279,15 @@ public class Start extends GameState {
 		}
 		
 		//boy, can't sagat shoot things! :3
-		if ( InputHandler.isPressed( InputHandler.KEY_B )){
+		if ( InputHandler.isPressed( InputHandler.KEY_Q )){
 			if (sagat.isOnGround() && sagat.canInput()) {
 				sagat.setMove("sagattigershot");
+			}
+		}
+		//Fluffy shooting
+		if ( InputHandler.isPressed( InputHandler.KEY_U )){
+			if (fluffy.isOnGround() && fluffy.canInput()) {
+				fluffy.setMove("sagattigershot");
 			}
 		}
 		
