@@ -339,11 +339,11 @@ public class Start extends GameState {
 			//playerBody.applyForce(new Vector2(3f, 0), playerBody.getPosition(), true);
 			ch.getBody().applyForceToCenter(MOVEMENT_SPEED_NEWTONS, 0, true);
 
-			if ( sagat.is_flipped() )
+			if ( ch.is_flipped() )
 			{
 
-				sagat.set_is_flipped ( false );
-				sagat.setMove( "sagatstandturn" );
+				ch.set_is_flipped ( false );
+				ch.setMove( "sagatstandturn" );
 
 			}
 
@@ -358,11 +358,11 @@ public class Start extends GameState {
 		if ( ch.canInput() )
 		{
 			ch.getBody().applyForceToCenter(-MOVEMENT_SPEED_NEWTONS, 0, true);
-			if ( !sagat.is_flipped() )
+			if ( !ch.is_flipped() )
 			{
 
-				sagat.set_is_flipped ( true );
-				sagat.setMove( "sagatstandturn" );
+				ch.set_is_flipped ( true );
+				ch.setMove( "sagatstandturn" );
 
 			}
 		}
@@ -392,6 +392,7 @@ public class Start extends GameState {
 		}
 
 	}
+	
 	/**The skin is a libgdx tool that stores information about stage objects, and can store all your information or just specific actors,
 	such as buttons or labels.*/
 	public void createSkin(){
