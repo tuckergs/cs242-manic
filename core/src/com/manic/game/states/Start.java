@@ -226,11 +226,11 @@ public class Start extends GameState {
 		
 		//create player
 		sagat = new Character
-				( world , new Vector2 ( 200 , 200 ) , new Vector2 ( 44  , 104 ),
+				( world , new Vector2 ( 275 , 200 ) , new Vector2 ( 44  , 104 ),
 				sb , "sagat" , "c1" , hboxEntities );
 		sagat.set_is_flipped(true);
 		fluffy = new Character
-				( world , new Vector2 ( 100 , 200 ) , new Vector2 ( 44  , 104 ),
+				( world , new Vector2 ( 25 , 200 ) , new Vector2 ( 44  , 104 ),
 				sb , "sagat" , "c2" , hboxEntities );
 		fluffy.set_is_flipped(false);
 		
@@ -325,12 +325,16 @@ public class Start extends GameState {
 			p2Wins++;
 			sagat.setHealth(maxHealth);
 			fluffy.setHealth(maxHealth);
+			Manic.changeStateLock=true;
+			gsm.setState(GameStateManager.State.RESTART);
 		}
 		
 		if (fluffy.getHealth()==0){
 			p1Wins++;
 			sagat.setHealth(maxHealth);
 			fluffy.setHealth(maxHealth);
+			Manic.changeStateLock=true;
+			gsm.setState(GameStateManager.State.RESTART);
 		}
 		
 		if (p1Wins==2 || p2Wins==2){
