@@ -67,24 +67,22 @@ public class Start extends GameState {
 	private BodyDestroyer bodyDestroyer;
 	private FixtureDestroyer fixtureDestroyer;
 	
-	private GameEntity greatPlatform;
+	private GameEntity moderatePlatform;
 	private GameEntity liberalPlatform;
 	private GameEntity conservativePlatform;
 	
 	private RayHandler handler;
 	private static Skin skin;
 	private Stage stage = new Stage();
-	private Entity backgroundOfMeow;
 	
+	private Entity backgroundOfMeow;
 	
 	private Character sagat;
 	private Character fluffy;
-	private static int maxHealth=20;
 	
-	//This is replaced by sagat's health
-	//private static int healthPoints1 = maxHealth;
-	private static int healthPoints2 = maxHealth;
-	
+	private static float maxHealth=20f;
+//	private static float healthPoints1 = maxHealth;
+//	private static float healthPoints2 = maxHealth;
 	private CharSequence p1HealthCharSeq;
 	private CharSequence p2HealthCharSeq;
 	private Label p1Health;
@@ -149,17 +147,7 @@ public class Start extends GameState {
 		//Set fixture stuff
 		fixtureDef.shape = box;
 		fixtureDef.filter.categoryBits = Settings.BIT_PLATFORM;
-		fixtureDef.filter.maskBits = Settings.BIT_PLAYER | Settings.BIT_BALL; 
-									//it can collide with the player and ball
-		
-
-		
-		
-		////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-		//test platforms
-		//USES DIMENSIONS OF V_WIDTH, V_HEIGHT
-		//bottom plat
-		
+		fixtureDef.filter.maskBits = Settings.BIT_PLAYER | Settings.BIT_BALL;//it can collide with the player and ball
 		
 		box.setAsBox(35/SCALE_PPM, 10/SCALE_PPM);
 		liberalPlatform = new GameEntity ( bodyDef , world , new Vector2 ( 30 , 100 ) , sb , "platform" );
@@ -168,9 +156,9 @@ public class Start extends GameState {
 		
 		box.setAsBox(58/SCALE_PPM, 10/SCALE_PPM); //100x10
 		fixtureDef.shape = box;
-		greatPlatform = new GameEntity ( bodyDef , world , new Vector2 ( 160 , 160 ) , sb , "platform2" );
-		greatPlatform.getBody().createFixture(fixtureDef).setUserData("platform");
-		greatPlatform.update(Manic.STEP);
+		moderatePlatform = new GameEntity ( bodyDef , world , new Vector2 ( 160 , 160 ) , sb , "platform2" );
+		moderatePlatform.getBody().createFixture(fixtureDef).setUserData("platform");
+		moderatePlatform.update(Manic.STEP);
 		
 		box.setAsBox(35/SCALE_PPM, 10/SCALE_PPM); //100x10
 		fixtureDef.shape = box;
@@ -178,9 +166,6 @@ public class Start extends GameState {
 		conservativePlatform.getBody().createFixture(fixtureDef).setUserData("platform");
 		conservativePlatform.update(Manic.STEP);
 		
-		
-		
-		/////////////////////////////////////////////////////////////////////////////////////////////////
 		
 		bodyDef.position.set(0/PPM, 25/PPM);
 		body = world.createBody(bodyDef);
@@ -215,19 +200,6 @@ public class Start extends GameState {
 		body.createFixture(fixtureDef).setUserData("platform");
 		
 		
-		
-		//loads of balls
-		
-		HitboxEntity ball1 , ball2;
-		
-		CircleShape circle = new CircleShape();
-		circle.setRadius(10/SCALE_PPM);
-		fixtureDef.shape = circle;
-		fixtureDef.density = 75.0f;
-		fixtureDef.restitution = 1.0f; //max bounce
-		fixtureDef.filter.categoryBits = Settings.BIT_BALL; //it is a type ball
-		fixtureDef.filter.maskBits = Settings.BIT_PLATFORM | Settings.BIT_BALL; //can collide with ground
-		
 		/*
 		bodyDef.position.set(153/PPM, 220/PPM);
 		bodyDef.type = BodyType.DynamicBody;
@@ -251,49 +223,6 @@ public class Start extends GameState {
 		bodyDef.type = BodyType.DynamicBody;
 		
 		
-		ball1 = new HitboxEntity ( bodyDef , world , new Vector2 ( 20 , 80 ) , sb ,
-									"" , "ball1" , hboxEntities );
-		
-		//Create physics fixture
-		ball1.getBody().createFixture(fixtureDef).setUserData("ball");
-		//Create hitbox
-		ball1.addHitbox( coordinates , dimensions , 
-								HitboxType.DAMAGING , "hbox" , 5 , 0 );
-		
-		
-		ball2 = new HitboxEntity ( bodyDef , world , new Vector2 ( 40  , 210 ) , sb , 
-									"" , "ball2" , hboxEntities );
-		
-		//Create physics fixture
-		ball2.getBody().createFixture(fixtureDef).setUserData("ball");
-		ball2.addHitbox( coordinates, dimensions, 
-								HitboxType.DAMAGING, "hbox", 5 , 0);
-		
-		
-		/*
-		bodyDef.position.set(60/PPM, 100/PPM);
-		body = world.createBody(bodyDef);
-		body.createFixture(fixtureDef).setUserData("ball");
-		new Hitbox ( body , coordinates , dimensions , HitboxType.DAMAGING , "ballHbox" , 5 , 0 );
-		*/
-		
-		///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-		
-		
-		/*
-		//create ball guy
-		bodyDef.position.set(153/PPM, 220/PPM);
-		bodyDef.type = BodyType.DynamicBody;
-		body = world.createBody(bodyDef);
-		
-		//CircleShape circle = new CircleShape();
-		circle.setRadius(30/SCALE_PPM);
-		fixtureDef.shape = circle;
-		fixtureDef.restitution = 1.0f; //max bounce
-		fixtureDef.filter.categoryBits = Settings.BIT_BALL; //it is a type ball
-		fixtureDef.filter.maskBits = Settings.BIT_PLATFORM | Settings.BIT_PLAYER | Settings.BIT_BALL; //can collide with ground*/
-		//body.createFixture(fixtureDef).setUserData("ball");
-		
 		
 		//create player
 		sagat = new Character
@@ -309,8 +238,8 @@ public class Start extends GameState {
 		playerBody = sagat.getBody();
 		player2Body = fluffy.getBody();
 		
-		sagat.setHealth(20f);
-		fluffy.setHealth(20f);
+		sagat.setHealth(maxHealth);
+		fluffy.setHealth(maxHealth);
 		
 		
 		
@@ -339,101 +268,73 @@ public class Start extends GameState {
 		
 	}
 	
-	public void handleInput()
-	{
+	public void handleInput(){
 		//player can jump
-		if (InputHandler.isPressed(InputHandler.KEY_SPACE))
-		{
-
+		if (InputHandler.isPressed(InputHandler.KEY_SPACE)){
 			handleUpInput ( sagat );
-			
 		}
 		
-		if (InputHandler.isPressed(InputHandler.KEY_UP))
-		{
-			
+		if (InputHandler.isPressed(InputHandler.KEY_UP)){
 			handleUpInput ( fluffy );
-			
 		}
 		
 		//boy, can't sagat shoot things! :3
-		if ( InputHandler.isPressed( InputHandler.KEY_B ))
-		{
-			
+		if ( InputHandler.isPressed( InputHandler.KEY_Q )){
 			if (sagat.isOnGround() && sagat.canInput()) {
-				
 				sagat.setMove("sagattigershot");
-				
 			}
-			
+		}
+		//Fluffy shooting
+		if ( InputHandler.isPressed( InputHandler.KEY_U )){
+			if (fluffy.isOnGround() && fluffy.canInput()) {
+				fluffy.setMove("sagattigershot");
+			}
 		}
 		
-		if (InputHandler.isPressed(InputHandler.KEY_S))
-		{
-
+		if (InputHandler.isPressed(InputHandler.KEY_S)){
 			handleDownInput ( sagat );
-			
 		}
 		
-		if (InputHandler.isPressed(InputHandler.KEY_DOWN))
-		{
-
+		if (InputHandler.isPressed(InputHandler.KEY_DOWN)){
 			handleDownInput ( fluffy );
-			
 		}
 		
-		if (InputHandler.isDown(InputHandler.KEY_D))
-		{
-			
+		if (InputHandler.isDown(InputHandler.KEY_D)){
 			handleRightInput ( sagat );
-							
 		}
 		
-	
-		
-	
-		
-		if (InputHandler.isDown(InputHandler.KEY_RIGHT))
-		{
-			
+		if (InputHandler.isDown(InputHandler.KEY_RIGHT)){
 			 handleRightInput ( fluffy );
-		
 		}
 		
-		if (InputHandler.isDown(InputHandler.KEY_LEFT))
-		{
-
+		if (InputHandler.isDown(InputHandler.KEY_LEFT)){
 			handleLeftInput ( fluffy );
-			
 		}
 		
-		if (InputHandler.isDown(InputHandler.KEY_A))
-		{
-			
+		if (InputHandler.isDown(InputHandler.KEY_A)){
 			handleLeftInput ( sagat );
-			
 		}
+		
 		if(InputHandler.isPressed(InputHandler.KEY_P)){
-			System.out.println("PAUSE");
-			
+			System.out.println("RESTART");	
 			Manic.changeStateLock = true;
-			
 			gsm.setState(GameStateManager.State.RESTART);        
 		}
+		
 		if (sagat.getHealth()==0){
 			p2Wins++;
 			sagat.setHealth(maxHealth);
-			healthPoints2=maxHealth;
-			
+			fluffy.setHealth(maxHealth);
 		}
-		if (healthPoints2==0){
+		
+		if (fluffy.getHealth()==0){
 			p1Wins++;
 			sagat.setHealth(maxHealth);
-			healthPoints2=maxHealth;
+			fluffy.setHealth(maxHealth);
 		}
+		
 		if (p1Wins==2 || p2Wins==2){
-			gsm.setState(GameStateManager.State.VICTORY);
-			
+			gsm.setState(GameStateManager.State.VICTORY);	
 		}
 	
 	}
@@ -541,35 +442,39 @@ public class Start extends GameState {
 		
 	}
 	public void render() {
+		
 		//clear
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		stage.clear();
+		
 		//Create Skin
 		createSkin();
-		//Player 1 health
 		
+		//Player 1 health
 		p1HealthCharSeq = "Health: "+ sagat.getHealth();
 		p1Health = new Label(p1HealthCharSeq, skin);
         p1Health.setPosition((float) (Gdx.graphics.getWidth()*.25 - Gdx.graphics.getWidth()*.125) , (float) (Gdx.graphics.getHeight()*.90));
 		stage.addActor(p1Health);
+		
 		//Player 2 health
-		p2HealthCharSeq = "Health: "+ healthPoints2;
+		p2HealthCharSeq = "Health: "+ fluffy.getHealth();
         p2Health = new Label(p2HealthCharSeq, skin);
         p2Health.setPosition((float) (Gdx.graphics.getWidth()*.85 - Gdx.graphics.getWidth()*.12) , (float) (Gdx.graphics.getHeight()*.90));
 		stage.addActor(p2Health);
+		
 		//Round score
 		roundChars = p1Wins + " : " + p2Wins;
 		roundWins = new Label(roundChars, skin);
 		roundWins.setPosition((float) (Gdx.graphics.getWidth()*.5 - Gdx.graphics.getWidth()*.04) , (float) (Gdx.graphics.getHeight()*.90));
 		stage.addActor(roundWins);
+		
 		//Draw
 		backgroundOfMeow.render();
 		stage.act();
         stage.draw();
-        greatPlatform.render();
+        moderatePlatform.render();
 		liberalPlatform.render();
 		conservativePlatform.render();
-        
         
         //Render hitbox entities
         TreeSet < String > keys = new TreeSet < String > ();
