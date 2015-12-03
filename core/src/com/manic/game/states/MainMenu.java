@@ -86,7 +86,7 @@ public class MainMenu extends GameState{
  
 		//Create a texture
 		Pixmap pixmap = new Pixmap((int)Gdx.graphics.getWidth()/4,(int)Gdx.graphics.getHeight()/10, Pixmap.Format.RGB888);
-		pixmap.setColor(Color.LIME);
+		pixmap.setColor(Color.RED);
 		pixmap.fill();
 		skin.add("background",new Texture(pixmap));
  
