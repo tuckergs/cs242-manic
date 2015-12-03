@@ -269,52 +269,59 @@ public class Start extends GameState {
 	}
 	
 	public void handleInput(){
+		
 		//player can jump
 		if (InputHandler.isPressed(InputHandler.KEY_SPACE)){
 			handleUpInput ( sagat );
 		}
-		
 		if (InputHandler.isPressed(InputHandler.KEY_UP)){
 			handleUpInput ( fluffy );
 		}
 		
 		//boy, can't sagat shoot things! :3
 		if ( InputHandler.isPressed( InputHandler.KEY_Q )){
-			if (sagat.isOnGround() && sagat.canInput()) {
-				sagat.setMove("sagattigershot");
-			}
+			handleTigerShotInput ( sagat );
 		}
 		//Fluffy shooting
 		if ( InputHandler.isPressed( InputHandler.KEY_U )){
-			if (fluffy.isOnGround() && fluffy.canInput()) {
-				fluffy.setMove("sagattigershot");
-			}
+			handleTigerShotInput ( fluffy );
 		}
 		
+		if( InputHandler.isPressed( InputHandler.KEY_E))
+		{
+			handleKickInput ( sagat );
+		}
+		if( InputHandler.isPressed( InputHandler.KEY_O))
+		{
+			handleKickInput ( fluffy );
+		}
+		
+		
+		//Fast fall
 		if (InputHandler.isPressed(InputHandler.KEY_S)){
 			handleDownInput ( sagat );
 		}
-		
 		if (InputHandler.isPressed(InputHandler.KEY_DOWN)){
 			handleDownInput ( fluffy );
 		}
 		
+		//Right
 		if (InputHandler.isDown(InputHandler.KEY_D)){
 			handleRightInput ( sagat );
 		}
-		
 		if (InputHandler.isDown(InputHandler.KEY_RIGHT)){
 			 handleRightInput ( fluffy );
 		}
 		
+		//Left
 		if (InputHandler.isDown(InputHandler.KEY_LEFT)){
 			handleLeftInput ( fluffy );
 		}
-		
 		if (InputHandler.isDown(InputHandler.KEY_A)){
 			handleLeftInput ( sagat );
 		}
 		
+		//Pause
 		if(InputHandler.isPressed(InputHandler.KEY_P)){
 			System.out.println("RESTART");	
 			Manic.changeStateLock = true;
@@ -373,6 +380,29 @@ public class Start extends GameState {
 				sagat.setMove( "sagatstandturn" );
 
 			}
+		}
+		
+	}
+	
+	private void handleTigerShotInput ( Character ch )
+	{
+		
+		if ( ch.isOnGround() && ch.canInput()) {
+			ch.setMove("sagattigershot");
+		}
+		
+	}
+	
+	private void handleKickInput ( Character ch )
+	{
+		
+		if ( ch.canInput() )
+		{
+			
+			if ( !ch.isOnGround() )
+				ch.setMove("sagatairkick");
+			//Add else
+			
 		}
 		
 	}

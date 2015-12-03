@@ -66,6 +66,8 @@ public class Moves {
 		createSagatStand();
 		
 		createTigerShotMove();
+		
+		createSagatAerial();
 
 	}
 
@@ -597,7 +599,9 @@ public class Moves {
 			{
 				
 				ObjectTimeline <TextureRegion> a
-					= Manic.res_animations.get("sagatkick");
+					= Manic.res_animations.get("sagatairkick");
+				
+				ch.setAnimation(a);
 				
 				
 			}

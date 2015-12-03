@@ -103,11 +103,15 @@ public class Hitbox {
 	public void destroy ( FixtureDestroyer fd )
 	{
 		
-		if ( fd != null )
+		if ( fd != null ) 
+		{
 			fd.add(hboxFixture);
+		}
 		else
+		{
 			hboxFixture.getBody().destroyFixture(hboxFixture);
-		
+		}
+			
 		is_destroyed = true;
 		
 	}

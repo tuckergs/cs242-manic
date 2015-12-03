@@ -93,10 +93,13 @@ public class MyContactListener implements ContactListener {
 	{
 		
 		
+		HitboxFixtureUserData userdataA = (HitboxFixtureUserData) fixtureA.getUserData();
+		HitboxFixtureUserData userdataB = (HitboxFixtureUserData) fixtureB.getUserData();
+		
 		
 		//Get the hitboxes
-		Hitbox hboxA = ((HitboxFixtureUserData) fixtureA.getUserData() ).getHitbox(state.hboxEntities);
-		Hitbox hboxB = ((HitboxFixtureUserData) fixtureB.getUserData() ).getHitbox(state.hboxEntities);
+		Hitbox hboxA = userdataA.getHitbox(state.hboxEntities);
+		Hitbox hboxB = userdataB.getHitbox(state.hboxEntities);
 		
 		if ( hboxA.is_destroyed() || hboxB.is_destroyed() ) return;
 		
@@ -127,7 +130,8 @@ public class MyContactListener implements ContactListener {
 				
 			}
 			
-			hboxA.destroy( fixtureDestroyer );
+			
+			entA.removeHitbox(userdataA.getHitboxID(), fixtureDestroyer);
 			
 		}
 		
@@ -143,7 +147,7 @@ public class MyContactListener implements ContactListener {
 				
 			}
 			
-			hboxB.destroy( fixtureDestroyer );
+			entB.removeHitbox(userdataB.getHitboxID(), fixtureDestroyer);
 			
 		}
 		
@@ -151,11 +155,13 @@ public class MyContactListener implements ContactListener {
 		if ( !entA_is_character )
 		{
 			bodyDestroyer.add(entA.getBody());
+			state.hboxEntities.remove(entA);
 			//Add destroy functions to entities
 		}
 		if ( !entB_is_character )
 		{
-			bodyDestroyer.add(entB.getBody());			
+			bodyDestroyer.add(entB.getBody());
+			state.hboxEntities.remove(entB);
 		}
 		
 		

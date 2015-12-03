@@ -35,6 +35,22 @@ public class HitboxFixtureUserData {
 	}
 	
 
+	public String getEntityID ()
+	{
+		
+		return entityID;
+		
+	}
+	
+	
+	public String getHitboxID ()
+	{
+		
+		return hboxID;
+		
+	}
+	
+	
 	//This takes the "global" hashmap of all characters and uses it to get the hitbox
 	public Hitbox getHitbox( HashMap < String , HitboxEntity > hsh )
 	{
