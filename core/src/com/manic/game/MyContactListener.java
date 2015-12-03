@@ -9,7 +9,7 @@ import com.manic.game.entities.HitboxEntity;
 import com.manic.game.entities.Character;
 import com.manic.game.moves.Hitbox;
 import com.manic.game.moves.HitboxType;
-import com.manic.game.states.GameState;
+//import com.manic.game.states.GameState;
 import com.manic.game.states.Start;
 
 

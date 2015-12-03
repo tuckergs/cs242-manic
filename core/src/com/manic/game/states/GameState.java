@@ -10,7 +10,8 @@ public abstract class GameState {
 	protected SpriteBatch sb;
 	protected OrthographicCamera camera;
 	protected OrthographicCamera hudCamera;
-	
+
+	@SuppressWarnings("static-access")
 	protected GameState(GameStateManager gsm) 
 	{
 		this.gsm = gsm;
@@ -19,7 +20,7 @@ public abstract class GameState {
 		camera = manic.getCamera();
 		hudCamera = manic.getHUDCamera();
 	}
-	
+
 	public abstract void handleInput();
 	public abstract void update(float dt);
 	public abstract void render();

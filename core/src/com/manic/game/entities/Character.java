@@ -3,7 +3,7 @@
 
 package com.manic.game.entities;
 
-import static com.manic.game.Settings.PPM;
+//import static com.manic.game.Settings.PPM;
 import static com.manic.game.Settings.SCALE_PPM;
 
 import java.util.HashMap;
@@ -17,72 +17,72 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
-import com.badlogic.gdx.utils.Array;
+//import com.badlogic.gdx.utils.Array;
 import com.manic.game.Manic;
 import com.manic.game.ObjectTimeline;
 import com.manic.game.Settings;
-import com.manic.game.moves.Hitbox;
-import com.manic.game.moves.HitboxGroup;
+//import com.manic.game.moves.Hitbox;
+//import com.manic.game.moves.HitboxGroup;
 import com.manic.game.moves.Move;
-import com.manic.game.resource_management.Moves;
+//import com.manic.game.resource_management.Moves;
 
 public class Character extends HitboxEntity 
 {
-	
+
 	private String characterName;
-	private float movementSpeed;
+//	private float movementSpeed;
 	private float health;
-	private String placeholderPath;
-	
-	private int playerID;
+//	private String placeholderPath;
+
+//	private int playerID;
 
 	private Move currentMove;
-	
+
 	private Fixture physicsBox;
 	private Fixture footBox;
-	
+
 	private boolean canInput;
 	private boolean isOnGround;
-	
-	
+
+
 	private boolean move_changed;
-	
+
 	private HashMap < String , HitboxEntity > boundHboxEntityMap;
-	
-	
+
+
 
 	/* this class will give player all the information about their character */
 
 	//The constructor
 	public Character( World world , Vector2 coordinates, Vector2 dimensions , 
-						SpriteBatch batch, String charID , String entityID ,
-						HashMap < String , HitboxEntity> hsh )
+			SpriteBatch batch, String charID , String entityID ,
+			HashMap < String , HitboxEntity> hsh )
 	{
 
 		super ( new BodyDef() , world , coordinates , batch , "" , entityID , hsh );
-		
+
 		//Now get rid of that body that we just created... -_-
 		//And all its connections
 		world.destroyBody(body);
 		hsh.remove(entityID);
-		
-		
-		
+
+
+
 		BodyDef bodyDef = new BodyDef();
 		FixtureDef fixtureDef = new FixtureDef();
-		
+
 		//create player
 		bodyDef.position.set(coordinates);
 		bodyDef.type = BodyType.DynamicBody;
 		bodyDef.fixedRotation = true;
-		
-		
+
+
 		body = world.createBody(bodyDef);
 		body.setUserData( entityID );
-		
-		
-		
-		
+
+
+
+
 		PolygonShape box = new PolygonShape();
 		box.setAsBox(dimensions.x /2 /SCALE_PPM, dimensions.y /2 /SCALE_PPM); //10x10
 		fixtureDef.shape = box;
@@ -103,24 +103,24 @@ public class Character extends HitboxEntity
 		fixtureDef.isSensor = true;
 		footBox = body.createFixture(fixtureDef);
 		footBox.setUserData("player foot");
-		
-		
+
+
 		//Character can use input
 		canInput = true;
-		
+
 		//Set characterName
 		characterName = charID;
-		
+
 		//Init move
 		setMove ( characterName + "stand" );
-		
-		
+
+
 		//Bind hitbox entity map
 		boundHboxEntityMap = hsh;
-		
+
 		//Put body user data to entity table
 		putToEntityTable ( boundHboxEntityMap );
-		
+
 
 	}
 
@@ -128,25 +128,25 @@ public class Character extends HitboxEntity
 	@Override
 	public void update ( float dt )
 	{
-		
+
 		//This loop exists so that when the move is changed,
 		//It goes straight to the first frame of stuff
 		//This is because I plan to put move changing code 
 		//directly after the last frame
 		do {
-			
+
 			move_changed = false;
 			currentMove.update( dt );
 			currentMove.execute(this);
-		
+
 		} while ( move_changed );
 		anim.update(dt);
-		
+
 	}
-	
-	
-	
-	
+
+
+
+
 	//Setters
 	public void setAnimation ( ObjectTimeline<TextureRegion> anim )
 	{
@@ -162,68 +162,68 @@ public class Character extends HitboxEntity
 		move_changed = true;
 
 	}
-	
+
 	public void setHealth ( float h )
 	{
-		
+
 		health = h;
-		
+
 		System.out.println ( characterName + ": " + health );
-		
+
 	}
-	
+
 	public void addHealth ( float r )
 	{
-		
+
 		health += r;
-		
+
 		System.out.println( characterName + ": " + health );
-		
+
 	}
-	
+
 	public void acceptInput()
 	{
 		canInput = true;
 	}
-	
+
 	public void denyInput()
 	{
 		canInput = false;
 	}
-	
+
 	public void onGround()
 	{
 		isOnGround = true;
 	}
-	
+
 	public void offGround()
 	{
 		isOnGround = false;
 	}
-	
-	
-	
+
+
+
 	//Getters
 	public float getHealth ()
 	{
 		return health;
 	}
-	
+
 	public HashMap < String , HitboxEntity > getHboxEntityMap()
 	{
 		return boundHboxEntityMap;
 	}
-	
+
 	public boolean canInput()
 	{
 		return canInput;
 	}
-	
+
 	public boolean isOnGround()
 	{
 		return isOnGround;
 	}
-	
+
 
 	//ABLE TO CREATE SENSOR
 

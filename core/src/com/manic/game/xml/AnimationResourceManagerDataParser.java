@@ -2,11 +2,11 @@ package com.manic.game.xml;
 
 import java.io.IOException;
 
-import com.badlogic.gdx.utils.XmlReader;
+//import com.badlogic.gdx.utils.XmlReader;
 import com.badlogic.gdx.utils.XmlReader.Element;
 import com.manic.game.Manic;
 import com.manic.game.exceptions.InvalidXMLException;
-import com.manic.game.helper.FileStuff;
+//simport com.manic.game.helper.FileStuff;
 import com.manic.game.resource_management.AnimationResourceManager;
 
 public class AnimationResourceManagerDataParser extends XMLParser{
