@@ -211,7 +211,7 @@ public class Moves {
 
 
 
-		
+		/*
 		//Create big hitbox
 		ch.addHitbox ( 
 						new Vector2 ( 0f , 0f ) ,
@@ -220,12 +220,12 @@ public class Moves {
 						"hurtbox" , 
 						0 , 0
 					);
-		 
+		 */
 
 
 
 
-		/*
+		
 		float flipX = ch.getFlipFactor();
 
 		//Create top box
@@ -256,8 +256,7 @@ public class Moves {
 				"leg" ,
 				0 , 0
 				);
-		 */
-
+ 
 
 	}
 
@@ -521,7 +520,7 @@ public class Moves {
 				//Create hitbox
 				tigershot.addHitbox(
 						new Vector2 ( 7.5f * flipX , 0f ) ,
-						new Vector2 ( 5f , 14f ) ,
+						new Vector2 ( 5f , 20f ) ,
 						HitboxType.DAMAGING ,
 						"hitbox" ,
 						5f , 24 
@@ -638,7 +637,7 @@ public class Moves {
 			public void run ( Character ch )
 			{
 				
-				createHitboxesSagatKick3 ( ch , 7f , 30);
+				createHitboxesSagatKick3 ( ch , 7f , 20);
 				
 			}
 			
@@ -751,7 +750,7 @@ public class Moves {
 			public void run ( Character ch )
 			{
 				
-				createHitboxesSagatKick3 ( ch , 10f , 45 );
+				createHitboxesSagatKick3 ( ch , 12f , 32 );
 				
 			}
 			
@@ -979,7 +978,6 @@ public class Moves {
 				
 				if ( ch.outOfHitstun() )
 				{
-					//TODO: Do stuff
 					
 					ch.acceptInput();
 					

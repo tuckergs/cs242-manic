@@ -93,7 +93,7 @@ public class Character extends HitboxEntity
 		System.out.println("1.0f" + body.getMass());
 		fixtureDef.restitution = 0f;
 		fixtureDef.filter.categoryBits = Settings.BIT_PLAYER;
-		fixtureDef.filter.maskBits = Settings.BIT_PLATFORM | Settings.BIT_BALL | Settings.BIT_PLAYER;
+		fixtureDef.filter.maskBits = Settings.BIT_PLATFORM | Settings.BIT_BALL;
 		physicsBox = body.createFixture(fixtureDef);
 		physicsBox.setUserData("player");
 

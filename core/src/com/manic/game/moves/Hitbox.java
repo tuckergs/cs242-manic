@@ -48,8 +48,8 @@ public class Hitbox {
 		{
 			
 			fdef.filter.categoryBits = Settings.BIT_HITBOX_DAMAGING;
-			fdef.filter.maskBits = Settings.BIT_HITBOX_CHARACTER;
-			//The collision with BIT_PLATFORM is a bit of a workaround
+			fdef.filter.maskBits = Settings.BIT_HITBOX_CHARACTER | Settings.BIT_HITBOX_DAMAGING;
+			
 
 		}
 		else 

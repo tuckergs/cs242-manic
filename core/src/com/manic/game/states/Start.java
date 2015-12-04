@@ -267,7 +267,7 @@ public class Start extends GameState {
 
 		//Set some of the lights 
 		light.setSoftnessLength(100f);
-		light2.setSoftnessLength(100f);
+		light2.setSoftnessLength(10+0f);
 		light3.setSoftnessLength(100f);
 	}
 

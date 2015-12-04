@@ -55,6 +55,7 @@ public class MyContactListener implements ContactListener {
 		Fixture fixtureB = c.getFixtureB();
 		
 		HitboxEntity entA = null , entB = null;
+
 		
 		if ( fixtureA.getBody().getUserData() != null )
 			entA = state.hboxEntities.get
@@ -99,10 +100,13 @@ public class MyContactListener implements ContactListener {
 		HitboxFixtureUserData userdataB = (HitboxFixtureUserData) fixtureB.getUserData();
 		
 		
+		
+		
 		//Get the hitboxes
 		Hitbox hboxA = userdataA.getHitbox(state.hboxEntities);
 		Hitbox hboxB = userdataB.getHitbox(state.hboxEntities);
 		
+		if ( hboxA == null || hboxB == null ) return;
 		if ( hboxA.is_destroyed() || hboxB.is_destroyed() ) return;
 		
 		//Get the entities
