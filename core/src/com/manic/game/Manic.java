@@ -2,13 +2,14 @@ package com.manic.game;
 
 import java.awt.Font;
 import java.io.IOException;
+import java.util.HashMap;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.manic.game.entities.Player;
 import com.manic.game.exceptions.InvalidXMLException;
 import com.manic.game.helper.FileStuff;
 import com.manic.game.resource_management.AnimationResourceManager;
@@ -18,8 +19,8 @@ import com.manic.game.xml.AnimationResourceManagerDataParser;
 
 public class Manic implements ApplicationListener
 {
+	
 	Texture img;
-	Player playerOne;
 	public static final String TITLE = "Manic";
 	public static final int V_WIDTH = 320;
 	public static final int V_HEIGHT = 240;
@@ -35,6 +36,10 @@ public class Manic implements ApplicationListener
 	
 	public static AnimationResourceManager res_animations;
 	public static Moves res_moves;
+	
+	
+	//Makeshift sound manager
+	public static HashMap < String , Sound > res_sounds;
 	
 	
 	public static boolean changeStateLock = false;
@@ -72,6 +77,7 @@ public class Manic implements ApplicationListener
 			res_animations = new AnimationResourceManager();
 			
 			
+			
 			AnimationResourceManagerDataParser p 
 						= new AnimationResourceManagerDataParser(
 								res_animations);
@@ -80,6 +86,11 @@ public class Manic implements ApplicationListener
 						"..\\resources\\sprites.xml");
 			
 			p.parse(xml); //This fills the res_animations
+			
+			
+			//Load sounds
+			res_sounds = new HashMap < String , Sound >();
+			loadSounds();
 			
 			
 			//Load moves
@@ -114,6 +125,15 @@ public class Manic implements ApplicationListener
 		}
 
 		
+		
+	}
+
+	private void loadSounds() {
+		
+		res_sounds.put ( "attack" , Gdx.audio.newSound(Gdx.files.internal("../resources/sounds/attack.wav")));
+		res_sounds.put ( "hit" , Gdx.audio.newSound(Gdx.files.internal("../resources/sounds/hit.wav")));
+		res_sounds.put ( "new-round" , Gdx.audio.newSound(Gdx.files.internal("../resources/sounds/new-round.wav")));
+		res_sounds.put ( "victory" , Gdx.audio.newSound(Gdx.files.internal("../resources/sounds/victory.wav")));
 		
 	}
 

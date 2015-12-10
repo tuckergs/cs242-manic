@@ -45,6 +45,7 @@ public class FileStuff {
 	}
 	
 	
+	/*
 	public static String fixPathCharacters ( String filename )
 	{
 		
@@ -61,5 +62,6 @@ public class FileStuff {
 		
 	}
 	
+	*/
 
 }

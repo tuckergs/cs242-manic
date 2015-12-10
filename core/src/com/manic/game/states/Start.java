@@ -106,9 +106,7 @@ public class Start extends GameState {
 
 		
 		//Play sound
-		Sound victorySound = Gdx.audio.newSound(Gdx.files.internal("../resources/sounds/new-round.wav"));
-				
-		victorySound.play();
+		Manic.res_sounds.get("new-round").play();
 
 		hboxEntities = new HashMap < String , HitboxEntity >();
 
@@ -453,8 +451,8 @@ public class Start extends GameState {
 		skin.add("background",new Texture(pixmap));
 		Label.LabelStyle labelStyle = new Label.LabelStyle();
 		//label text color
-		labelStyle.fontColor = Color.RED;
-		Pixmap titlePixmap = new Pixmap((int)Gdx.graphics.getWidth()/4,(int)Gdx.graphics.getHeight()/10, Pixmap.Format.RGB888);
+		labelStyle.fontColor = Color.CYAN;
+		Pixmap titlePixmap = new Pixmap((int)Gdx.graphics.getWidth()/2,(int)Gdx.graphics.getHeight()/5, Pixmap.Format.RGB888);
 		//label background color
 		titlePixmap.setColor(Color.CLEAR);
 		titlePixmap.fill();
@@ -524,7 +522,7 @@ public class Start extends GameState {
 		fluffy.render();
 
 
-		//debugRenderer.render(world, box2DCamera.combined);
+		//sa debugRenderer.render(world, box2DCamera.combined);
 		handler.updateAndRender();
 	}
 	

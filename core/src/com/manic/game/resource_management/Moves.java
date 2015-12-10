@@ -37,6 +37,17 @@ public class Moves {
 
 
 	private static final String SAGATSTAND = "sagatstand";
+	
+	
+	private static float SAGAT_TIGERSHOT_DAMAGE = 5;  
+	private static float SAGAT_AIR_KICK_DAMAGE = 7;
+	private static float SAGAT_GROUND_KICK_DAMAGE = 10;
+	
+	private static int SAGAT_TIGERSHOT_HITSTUN = 24;
+	private static int SAGAT_AIR_KICK_HITSTUN = 20;
+	private static int SAGAT_GROUND_KICK_HITSTUN = 32;
+	
+	
 
 
 	public Moves()
@@ -523,7 +534,7 @@ public class Moves {
 						new Vector2 ( 5f , 20f ) ,
 						HitboxType.DAMAGING ,
 						"hitbox" ,
-						5f , 24 
+						SAGAT_TIGERSHOT_DAMAGE , SAGAT_TIGERSHOT_HITSTUN 
 						);
 				
 				//Set linear velocity
@@ -536,7 +547,7 @@ public class Moves {
 		});
 		
 		
-		hsh.put( 50 , new CodeSnippet(){
+		hsh.put( 35 , new CodeSnippet(){
 			
 			public void run( Character ch )
 			{
@@ -637,7 +648,7 @@ public class Moves {
 			public void run ( Character ch )
 			{
 				
-				createHitboxesSagatKick3 ( ch , 7f , 20);
+				createHitboxesSagatKick3 ( ch , SAGAT_AIR_KICK_DAMAGE , SAGAT_AIR_KICK_HITSTUN );
 				
 			}
 			
@@ -750,7 +761,7 @@ public class Moves {
 			public void run ( Character ch )
 			{
 				
-				createHitboxesSagatKick3 ( ch , 12f , 32 );
+				createHitboxesSagatKick3 ( ch , SAGAT_GROUND_KICK_DAMAGE , SAGAT_GROUND_KICK_HITSTUN );
 				
 			}
 			
@@ -886,9 +897,7 @@ public class Moves {
 	private void playAttackSound()
 	{
 		
-		Sound attackSound = Gdx.audio.newSound( Gdx.files.internal("../resources/sounds/attack.wav"));
-		
-		attackSound.play();
+		Manic.res_sounds.get("attack").play();
 		
 	}
 	

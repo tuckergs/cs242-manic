@@ -130,9 +130,7 @@ public class MyContactListener implements ContactListener {
 			if ( entB_is_character )
 			{
 				
-				Sound hitSound = Gdx.audio.newSound ( Gdx.files.internal("../resources/sounds/hit.wav"));
-				
-				hitSound.play();
+				Manic.res_sounds.get("hit").play();
 				
 				((Character) entB).addHealth ( -hboxA.getDamage() );
 				
@@ -155,9 +153,7 @@ public class MyContactListener implements ContactListener {
 			if ( entA_is_character )
 			{
 				
-				Sound hitSound = Gdx.audio.newSound ( Gdx.files.internal("../resources/sounds/hit.wav"));
-				
-				hitSound.play();
+				Manic.res_sounds.get("hit").play();
 				
 				((Character) entA).addHealth ( -hboxB.getDamage() );
 				

@@ -25,9 +25,7 @@ public class Victory extends GameState{
 		super(gsm);
 		
 		//Play sound
-		Sound victorySound = Gdx.audio.newSound(Gdx.files.internal("../resources/sounds/victory.wav"));
-		
-		victorySound.play();
+		Manic.res_sounds.get("victory").play();
 		
 		//Decide who the winner is based on who has more wins
 		if(Start.p1Wins > Start.p2Wins){
@@ -94,7 +92,11 @@ public class Victory extends GameState{
 	}
 
 	@Override
-	public void dispose() { stage.dispose(); System.gc(); }
+	public void dispose() { 
+		if ( stage != null )
+			stage.dispose(); 
+		System.gc(); 
+	}
 
 	//Remade from Main Menu to add additional customization
 	public static void createSkin(){
