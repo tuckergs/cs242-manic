@@ -10,10 +10,21 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-//import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
+///import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.manic.game.InputHandler;
 import com.manic.game.Manic;
+
+/**
+ * @class MainMenu
+ *
+ * @author Dylan Robinson
+ * @brief The starting screen that leads into the main game.
+ * 
+ * @version 1.0
+ * @contact robinsdj@clarkson.edu
+ *
+*/
 
 public class MainMenu extends GameState{
 	
@@ -45,16 +56,17 @@ public class MainMenu extends GameState{
 
 	@Override
 	public void render() {
+		///Clear everything first
 		Gdx.gl.glClearColor(1, 1, 1, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
     	gsm=super.gsm;
         Stage stage = new Stage();
 
-        //Create Skin
+        ///Create Skin
         createSkin();
         
-        //Create Title
+        ///Create Title
         CharSequence charSeq;
         charSeq = "MANIC";
         Label title = new Label(charSeq, skin);
@@ -62,10 +74,11 @@ public class MainMenu extends GameState{
         title.setFontScale(4);
         
         
-        //Create Start Button
+        ///Create Start Button
         TextButton startButton = new TextButton("Press Space to Start", skin);
         startButton.setPosition(Gdx.graphics.getWidth()/2 - Gdx.graphics.getWidth()/8 , Gdx.graphics.getHeight()/3);
         
+        ///Add and draw
         stage.addActor(title);
         stage.addActor(startButton); 
         stage.act();
@@ -79,18 +92,18 @@ public class MainMenu extends GameState{
 	}
 
 	public static void createSkin(){
-		//Create a font
+		///Create a font
 		BitmapFont font = new BitmapFont();
 		skin = new Skin();
 		skin.add("default", font);
  
-		//Create a texture
+		///Create a texture
 		Pixmap pixmap = new Pixmap((int)Gdx.graphics.getWidth()/4,(int)Gdx.graphics.getHeight()/10, Pixmap.Format.RGB888);
 		pixmap.setColor(Color.RED);
 		pixmap.fill();
 		skin.add("background",new Texture(pixmap));
  
-		//Create a button style
+		///Create a button style
 		TextButton.TextButtonStyle textButtonStyle = new TextButton.TextButtonStyle();
   		textButtonStyle.up = skin.newDrawable("background", Color.GRAY);
   		textButtonStyle.down = skin.newDrawable("background", Color.DARK_GRAY);
@@ -99,7 +112,7 @@ public class MainMenu extends GameState{
   		textButtonStyle.font = skin.getFont("default");
   		skin.add("default", textButtonStyle);
   		
-  		//Create Title Style
+  		///Create Title Style
   		Label.LabelStyle labelStyle = new Label.LabelStyle();
   		labelStyle.fontColor = Color.RED;
   		Pixmap titlePixmap = new Pixmap((int)Gdx.graphics.getWidth()/4,(int)Gdx.graphics.getHeight()/10, Pixmap.Format.RGB888);

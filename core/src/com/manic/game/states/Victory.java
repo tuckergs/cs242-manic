@@ -15,6 +15,17 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.manic.game.InputHandler;
 import com.manic.game.Manic;
 
+/**
+ * @class Victory
+ *
+ * @author Dylan Robinson
+ * @brief Is the ending screen that allows replaying.
+ * 
+ * @version 1.0
+ * @contact robinsdj@clarkson.edu
+ *
+*/
+
 public class Victory extends GameState{
 	
 	protected static Skin skin = new Skin();
@@ -40,15 +51,10 @@ public class Victory extends GameState{
 	@Override
 	public void handleInput() {
 		if (InputHandler.isPressed(InputHandler.KEY_SPACE)){
-
 			System.out.println("SPACE");
-
 			Manic.changeStateLock = true;
-
 			gsm.setState(GameStateManager.State.PLAY);
-
 		}
-		
 	}
 
 	@Override
@@ -63,14 +69,11 @@ public class Victory extends GameState{
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
 		gsm=super.gsm;
-		
 		stage = new Stage();
 
 		///Create Skin
 		createSkin();
 
-		///Create Title
-		
 		///Reset the wins
 		Start.p1Wins=0;
 		Start.p2Wins=0;
@@ -92,9 +95,10 @@ public class Victory extends GameState{
 	}
 
 	@Override
-	public void dispose() { 
-		if ( stage != null )
-			stage.dispose(); 
+	public void dispose(){ 
+		if (stage != null){
+			stage.dispose();
+		}
 		System.gc(); 
 	}
 
