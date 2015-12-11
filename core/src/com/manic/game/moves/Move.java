@@ -6,7 +6,17 @@ import com.manic.game.entities.Character;
 
 /**
  * 
+ * @class Move
+ * 
+ * @brief This represents an action a Character can do
+ * 
+ * This contains an ObjectTimeline of CodeSnippets,
+ * so the timeline returns code based on what the current frame
+ * of the move is.
+ * 
  * @author gabe
+ * 
+ * @contact gst06@roadrunner.com
  *
  */
 public class Move implements Cloneable{

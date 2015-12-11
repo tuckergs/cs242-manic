@@ -9,6 +9,21 @@ import com.manic.game.exceptions.InvalidXMLException;
 //simport com.manic.game.helper.FileStuff;
 import com.manic.game.resource_management.AnimationResourceManager;
 
+
+/**
+ * 
+ * @class AnimationResourceManagerDataParser
+ * 
+ * @brief A parser that loads data into an AnimationResourceManager
+ * 
+ * This takes an XML file and then works in conjunction with the
+ * AnimationDataParser to load animations into a AnimationResourceManager
+ * 
+ * @author Gabe Tucker
+ * 
+ * @contact gst06@roadrunner.com
+ *
+ */
 public class AnimationResourceManagerDataParser extends XMLParser{
 
 	

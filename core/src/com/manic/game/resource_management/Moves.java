@@ -2,21 +2,17 @@ package com.manic.game.resource_management;
 
 import java.util.HashMap;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.audio.Sound;
+
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
-//import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.World;
 import com.manic.game.Manic;
 import com.manic.game.ObjectTimeline;
 import com.manic.game.Settings;
 import com.manic.game.moves.CodeSnippet;
-//import com.manic.game.moves.Hitbox;
-//import com.manic.game.moves.HitboxGroup;
 import com.manic.game.moves.HitboxType;
 import com.manic.game.moves.Move;
 import com.manic.game.entities.Character;
@@ -24,11 +20,17 @@ import com.manic.game.entities.HitboxEntity;
 
 /**
  * 
- * @author gabe
- *
+ * @class Moves
+ * 
+ * @brief This is the "resource manager" for every Move
+ *  
  * All of the moves are hardcoded for now
  * Later, we'll read moves from XML :)
  * and we'll make this class extend ResourceManager
+ * 
+ * @author Gabe Tucker
+ * 
+ * @contact gst06@roadrunner.com 
  *
  */
 public class Moves {
@@ -54,7 +56,7 @@ public class Moves {
 	{
 
 		moves = new HashMap < String , Move >();
-
+		
 	}
 
 
@@ -69,9 +71,8 @@ public class Moves {
 	
 	
 	
-	
-
-	public void init()
+	/// This loads all the moves into the map of moves 
+	public void load()
 	{
 
 		moves = new HashMap < String , Move >();
@@ -99,7 +100,7 @@ public class Moves {
 	
 
 
-	//Creators
+	///Creators
 	@SuppressWarnings("unused")
 	private void createNothing()
 	{
@@ -134,19 +135,19 @@ public class Moves {
 		boolean get_on_no_keyframe = false;
 
 
-		//Create normal stand move
+		///Create normal stand move
 		hsh.put( 0 , new CodeSnippet(){
 
 			public void run( Character ch )
 			{
 
-				//Set the animations
+				///Set the animations
 				createAnimationSagatStand ( ch );
 				
 				createRenderLocationSagatStand ( ch );
 
 
-				//Create hitboxes
+				///Create hitboxes
 				createHitboxesSagatStand ( ch );
 
 
@@ -169,14 +170,14 @@ public class Moves {
 
 
 
-		//Create the turn portion, which just flips the hitboxes
+		///Create the turn portion, which just flips the hitboxes
 		hsh = new HashMap < Integer , CodeSnippet >();
 		hsh.put( 0 , new CodeSnippet(){
 
 			public void run( Character ch )
 			{
 
-				//Create hitboxes
+				///Create hitboxes
 				createHitboxesSagatStand ( ch );
 
 
@@ -215,7 +216,7 @@ public class Moves {
 	private void createHitboxesSagatStand ( Character ch )
 	{
 
-//		Body body = ch.getBody();
+///		Body body = ch.getBody();
 
 
 		ch.removeAllHitboxes(null);
@@ -223,7 +224,7 @@ public class Moves {
 
 
 		/*
-		//Create big hitbox
+		///Create big hitbox
 		ch.addHitbox ( 
 						new Vector2 ( 0f , 0f ) ,
 						new Vector2 ( 44f , 104f ) ,
@@ -239,7 +240,7 @@ public class Moves {
 		
 		float flipX = ch.getFlipFactor();
 
-		//Create top box
+		///Create top box
 		ch.addHitbox (
 				new Vector2 ( 3f * flipX , 31.5f ) ,
 				new Vector2 ( 34f , 23f ) ,
@@ -250,7 +251,7 @@ public class Moves {
 		
 		
 
-		//Create hip box
+		///Create hip box
 		ch.addHitbox (
 				new Vector2 ( -2 * flipX , -2 ) ,
 				new Vector2 ( 28 , 34 ) ,
@@ -259,7 +260,7 @@ public class Moves {
 				0 , 0
 				);
 
-		//Create leg box
+		///Create leg box
 		ch.addHitbox (
 				new Vector2 ( -4 * flipX , -35.5f ) ,
 				new Vector2 ( 34 , 29 ) ,
@@ -285,7 +286,7 @@ public class Moves {
 	public void createTigerShotMove ()
 	{
 
-		//TODO: Do stuff
+		///TODO: Do stuff
 		
 		HashMap < Integer , CodeSnippet > hsh
 			= new HashMap < Integer , CodeSnippet >();
@@ -329,7 +330,7 @@ public class Moves {
 				if ( ch.is_flipped() )
 					ch.setRenderLocation( -62 , -52 );
 				else
-					ch.setRenderLocation( -29, -52 ); //The foot is seven pixels away from the edge
+					ch.setRenderLocation( -29, -52 ); ///The foot is seven pixels away from the edge
 				
 			}
 			
@@ -339,7 +340,7 @@ public class Moves {
 				
 				ch.removeAllHitboxes(null);
 				
-				//For now, keep it simple
+				///For now, keep it simple
 				ch.addHitbox( 
 						new Vector2 ( 0 , 0 ), 
 						new Vector2 ( 44 , 108 ), 
@@ -381,8 +382,8 @@ public class Moves {
 				
 				float flipX = ch.getFlipFactor();
 				
-				//We can't go simple here
-				//Body box
+				///We can't go simple here
+				///Body box
 				ch.addHitbox(
 						new Vector2 ( 12.5f * flipX , 8.5f ), 
 						new Vector2 ( 31 , 45 ), 
@@ -390,7 +391,7 @@ public class Moves {
 						"body", 
 						0 , 0
 						);
-				//Right leg
+				///Right leg
 				ch.addHitbox(
 						new Vector2 ( 12f * flipX , -33f ) ,
 						new Vector2 ( 12f , 34f ) ,
@@ -398,7 +399,7 @@ public class Moves {
 						"rightleg",
 						0 , 0
 						);
-				//Left leg bottom
+				///Left leg bottom
 				ch.addHitbox(
 						new Vector2 ( -17f * flipX , -43f ) ,
 						new Vector2 ( 10f , 18f ) ,
@@ -406,7 +407,7 @@ public class Moves {
 						"leftlegD",
 						0 , 0
 						);
-				//Left leg top
+				///Left leg top
 				ch.addHitbox(
 						new Vector2 ( -5.5f * flipX , 35f ) ,
 						new Vector2 ( 11f , 16f ) ,
@@ -436,9 +437,9 @@ public class Moves {
 				
 				float flipX = ch.getFlipFactor();
 				
-				//More fun
+				///More fun
 				
-				//Top hitbox
+				///Top hitbox
 				ch.addHitbox(
 						new Vector2 ( 41f * flipX , 18f ) ,
 						new Vector2 ( 54f , 12f ) ,
@@ -446,7 +447,7 @@ public class Moves {
 						"top" ,
 						0 , 0
 						);
-				//Mid hitbox
+				///Mid hitbox
 				ch.addHitbox(
 						new Vector2 ( 7f * flipX , -5f ) ,
 						new Vector2 ( 20f , 28f ) ,
@@ -454,7 +455,7 @@ public class Moves {
 						"mid" ,
 						0 , 0
 						);
-				//Right leg
+				///Right leg
 				ch.addHitbox(
 						new Vector2 ( 23f * flipX , -31f ),
 						new Vector2 ( 10f  , 42f ),
@@ -462,7 +463,7 @@ public class Moves {
 						"rightleg",
 						0 , 0
 						);
-				//TODO: Left leg
+				///TODO: Left leg
 			
 				
 				
@@ -471,7 +472,7 @@ public class Moves {
 		});
 		
 		
-		//This snippet creates the tiger shot
+		///This snippet creates the tiger shot
 		hsh.put( 10 , new CodeSnippet(){
 			
 			public void run ( Character ch )
@@ -505,7 +506,7 @@ public class Moves {
 				String entityID = "ts" + (Manic.counter++);
 				
 				
-				//Create hitbox entity
+				///Create hitbox entity
 				HitboxEntity tigershot = new HitboxEntity (
 						bodyDef , w ,
 						new Vector2 ( chBody.getPosition().x * Settings.PPM 
@@ -518,17 +519,17 @@ public class Moves {
 						hboxEntityMap 
 						);
 				
-//				//Set platform bit on all HitboxEntity fixtures
-//				for ( Fixture f : tigershot.getBody().getFixtureList())
-//					f.getFilterData().maskBits |= Settings.BIT_PLATFORM;
+///				///Set platform bit on all HitboxEntity fixtures
+///				for ( Fixture f : tigershot.getBody().getFixtureList())
+///					f.getFilterData().maskBits |= Settings.BIT_PLATFORM;
 				
 				
 				
-				//Set orientation
+				///Set orientation
 				tigershot.set_is_flipped( ch_is_flipped );
 				tigershot.setRenderLocation(-11, -14);
 				
-				//Create hitbox
+				///Create hitbox
 				tigershot.addHitbox(
 						new Vector2 ( 7.5f * flipX , 0f ) ,
 						new Vector2 ( 5f , 20f ) ,
@@ -537,7 +538,7 @@ public class Moves {
 						SAGAT_TIGERSHOT_DAMAGE , SAGAT_TIGERSHOT_HITSTUN 
 						);
 				
-				//Set linear velocity
+				///Set linear velocity
 				tigershot.getBody().setLinearVelocity( 300 * flipX / Settings.PPM , 0 );
 						
 				
@@ -587,7 +588,7 @@ public class Moves {
 	
 	
 	
-	@SuppressWarnings("unused") //He'll get to it later I believe
+	
 	private void createSagatAerial()
 	{
 		
@@ -823,6 +824,7 @@ public class Moves {
 		
 	}
 	
+	///First keyframe of sagat kick animation
 	private void createHitboxesSagatKick1 ( Character ch )
 	{
 		
@@ -840,6 +842,7 @@ public class Moves {
 		
 	}
 	
+	///Second keyframe of sagat kick
 	private void createHitboxesSagatKick2 ( Character ch )
 	{
 		
@@ -865,7 +868,8 @@ public class Moves {
 		
 	}
 	
-	//This creates the hitbox of the attack
+	///Third keyframe of sagat kick animation
+	///This creates the hitbox of the attack
 	private void createHitboxesSagatKick3 ( Character ch , float damage , int hitstun )
 	{
 		
@@ -873,7 +877,7 @@ public class Moves {
 		
 		ch.removeAllHitboxes(null);
 		
-		//Create hurtbox
+		///Create hurtbox
 		ch.addHitbox( 
 				new Vector2 ( -4f * flipX , -19.5f ) ,
 				new Vector2 ( 28 , 35 ) ,
@@ -882,7 +886,7 @@ public class Moves {
 				0 , 0
 				);
 		
-		//Create hitbox
+		///Create hitbox
 		ch.addHitbox(
 				new Vector2 (  33f * flipX , -46f ) ,
 				new Vector2 (  32f , 22f ) ,

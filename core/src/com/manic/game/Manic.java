@@ -17,6 +17,18 @@ import com.manic.game.resource_management.Moves;
 import com.manic.game.states.GameStateManager;
 import com.manic.game.xml.AnimationResourceManagerDataParser;
 
+/**
+ * 
+ * @brief This is the main core class
+ * 
+ * This is called by the respective launchers for PC, Android, and iOS.
+ * This basically initializes a bunch of stuff and continually updates/renders the states
+ * 
+ * @author Dylan Robinson, Gabe Tucker, Stephen Lorenz
+ * 
+ * @contact gst06@roadrunner.com
+ *
+ */
 public class Manic implements ApplicationListener
 {
 	
@@ -85,7 +97,7 @@ public class Manic implements ApplicationListener
 			String xml = FileStuff.fileToString(
 						"..\\resources\\sprites.xml");
 			
-			p.parse(xml); //This fills the res_animations
+			p.parse(xml); ///This fills the res_animations
 			
 			
 			//Load sounds
@@ -95,7 +107,7 @@ public class Manic implements ApplicationListener
 			
 			//Load moves
 			res_moves = new Moves();
-			res_moves.init();
+			res_moves.load();
 			
 			
 			Gdx.input.setInputProcessor(new InputProcessor());
@@ -108,11 +120,6 @@ public class Manic implements ApplicationListener
 			
 			gsm = new GameStateManager(this);
 			
-			
-			//Test resource manager
-			
-			
-		
 		}	
 		catch (InvalidXMLException e) {
 			

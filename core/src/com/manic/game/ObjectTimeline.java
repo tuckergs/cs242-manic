@@ -9,17 +9,25 @@ import java.util.HashMap;
  *
  * @author Gabe Tucker
  *
- * @brief This represents a "generic animation", which means
- *
- * When you ask for an object, it returns an object based on what 
- * the current in the object timeline is.
+ * @brief This represents a "generic animation".
+ * 
+ * A generic animation is a map of objects that can only return
+ * objects based on what the generic animation's current
+ * frame is.
+ * 
+ * It doesn't necessarily have an object mapped to every frame;
+ * rather, it has keyframes, which are frames which
+ * have objects attached to them.
+ * 
+ * You can tell it whether it returns the last object encountered
+ * or whether it returns null when the current frame is not
+ * a keyframe. 
  *
  * You can update it to change the current frame and to change 
  * what the current object is.
  *
  * You can specify if it loops after the end of the timeline has been
- * reached, and you can specify that when you ask for the current object,
- * it returns null if the current frame is not a keyframe.
+ * reached
  *
  * Look at Block Bunny's Animation (by Foreign Guy Mike) class for the 
  * basis of this code.
@@ -48,12 +56,12 @@ public class ObjectTimeline<T> implements Cloneable{
 	
 	
 	
-	@SuppressWarnings("unchecked")
+	
 	private void init ( HashMap < Integer , T > hsh , int len , float dly , 
 						boolean loop , boolean get_on_no_keyframe )
 	{
 		
-		objs = (HashMap<Integer, T>) hsh.clone();
+		objs = (HashMap<Integer, T>) hsh;
 
 		
 		total_length = len;
@@ -86,6 +94,7 @@ public class ObjectTimeline<T> implements Cloneable{
 							boolean loop)
 	{
 	
+		///Defaults to looping
 		init ( hsh , len , dly , loop , true );
 		
 	}
@@ -93,7 +102,7 @@ public class ObjectTimeline<T> implements Cloneable{
 	public ObjectTimeline ( HashMap < Integer , T > hsh , int len , float dly )
 	{
 		
-		///Defaults to looping
+		///Defaults to looping and returning the previous object on non-keyframes
 		init ( hsh , len , dly , true , true );
 		
 	}
@@ -121,7 +130,7 @@ public class ObjectTimeline<T> implements Cloneable{
 		
 	}
 	
-	
+	///An unused updater which also changes the current frame
 	public void update ( Float increment , int index )
 	{
 		
@@ -150,7 +159,7 @@ public class ObjectTimeline<T> implements Cloneable{
 		///is non-looping and if the current frame
 		///is the length
 		///We do this to give the object the ability to return
-		///a certain something if the "animation"
+		///a certain object if the "animation"
 		///is done
 		if ( is_looping || cur_frame != total_length )
 			++cur_frame;
@@ -162,7 +171,6 @@ public class ObjectTimeline<T> implements Cloneable{
 		
 		///Change the current object if the
 		///current frame is a keyframe
-		///A keyframe is a key in the hashmap
 		if ( objs.containsKey(cur_frame))
 			cur_obj = cur_frame;
 		
@@ -170,15 +178,12 @@ public class ObjectTimeline<T> implements Cloneable{
 	}
 	
 	
+	///This returns an object based on what the current frame is
 	public T getCurrentObj ()
 	{
 		
-		///The reason why I  check it here is because
-		///the calling function doesn't need to know what went "wrong"
-		///I use "wrong" in quotation marks because often,
-		///there's nothing wrong
-		///Also, the calling function wouldn't have 
-		///to check this condition every time
+		///We perform this check so that under certain conditions,
+		///it doesn't return an object
 		
 		if ( total_length == 0 ) return null; 
 		if ( !get_on_no_keyframe && cur_frame != cur_obj )  return null;
@@ -188,6 +193,7 @@ public class ObjectTimeline<T> implements Cloneable{
 		
 	}
 	
+	///This function is unused since it's used by the unused updater
 	private void setCurrentIndex ( int index )
 	{
 		
@@ -197,7 +203,7 @@ public class ObjectTimeline<T> implements Cloneable{
 		
 	}
 	
-	
+	///This function is unused since it's used by the unused updater
 	private void update_cur_obj ()
 	{
 		
@@ -229,6 +235,7 @@ public class ObjectTimeline<T> implements Cloneable{
 	///Searches for the numbers that is just 
 	///below the cur_frame
 	///I had to write my own algorithm
+	///This function is unused since it's used by the unused updater
 	private int searchForObjIndex ( int [] arr )
 	{
 		

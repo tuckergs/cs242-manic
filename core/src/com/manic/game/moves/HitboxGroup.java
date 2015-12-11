@@ -11,7 +11,20 @@ import java.util.TreeSet;
 import com.manic.game.FixtureDestroyer;
 
 
-
+/**
+ * 
+ * @class HitboxGroup
+ * 
+ * @brief A group of hitboxes
+ * 
+ * This encapsulates a map of hitboxes and
+ * it provides extra functionality like destroying hitboxes
+ * 
+ * @author Gabe Tucker
+ * 
+ * @contact gst06@roadrunner.com
+ *
+ */
 public class HitboxGroup {
 
 	private HashMap< String , Hitbox > hitboxes;
@@ -69,6 +82,7 @@ public class HitboxGroup {
 	}
 	
 	
+	///We need to destroy the hitbox here
 	public void removeHitbox ( String k , FixtureDestroyer fd )
 	{
 		

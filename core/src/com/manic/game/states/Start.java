@@ -51,16 +51,19 @@ import java.util.Iterator;
 import java.util.TreeSet;
 
 /**
-   @brief this mess was created by all of us
-
-   This class does way to much, originally it was supposed
-   to only house a bunch of classes but currently it is more
-   of a tester class that will eventually be migrated to other
-   classes.
-
-   @author Dylan Robinson, Gabe Tucker, Stephen Lorenz
-
-   @contact 911
+ * 
+ * @class Start
+ * 
+ * @brief this is the class that is where the fighting and stuff happens
+ * 
+ * This class does way too much.
+ * We will put functionality in more classes another time
+ *
+ *
+ * @author Dylan Robinson, Gabe Tucker, Stephen Lorenz
+ *
+ * @contact gst06@roadrunner.com
+ * 
  */
 
 public class Start extends GameState {
@@ -74,10 +77,7 @@ public class Start extends GameState {
 	private Box2DDebugRenderer debugRenderer;
 	private OrthographicCamera box2DCamera;
 	private MyContactListener contactListener;
-	@SuppressWarnings("unused")///It's used
-	private Body playerBody;
-	@SuppressWarnings("unused")///It's used
-	private Body player2Body;
+	
 
 
 	private BodyDestroyer bodyDestroyer;
@@ -246,10 +246,6 @@ public class Start extends GameState {
 		fluffy = new Character(world, new Vector2(25, 200), new Vector2(44, 104), sb, "sagat", "c2", hboxEntities);
 		fluffy.set_is_flipped(false);
 
-		///We need this assignment for input
-		playerBody = sagat.getBody();
-		player2Body = fluffy.getBody();
-
 		///set health to max, which is global
 		sagat.setHealth(maxHealth);
 		fluffy.setHealth(maxHealth);
@@ -350,6 +346,7 @@ public class Start extends GameState {
 			Manic.changeStateLock=true;
 			gsm.setState(GameStateManager.State.RESTART);
 		}
+		
 		///If anyone gets two points, go to victory screen
 		if (p1Wins==2 || p2Wins==2){
 			///Game win sound please 
@@ -535,7 +532,7 @@ public class Start extends GameState {
 		fluffy.render();
 
 
-		///sa debugRenderer.render(world, box2DCamera.combined);
+		///debugRenderer.render(world, box2DCamera.combined);
 		handler.updateAndRender();
 	}
 	

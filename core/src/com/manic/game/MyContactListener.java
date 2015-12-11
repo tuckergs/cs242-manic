@@ -1,7 +1,6 @@
 package com.manic.game;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.audio.Sound;
+
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
@@ -11,10 +10,23 @@ import com.manic.game.entities.HitboxEntity;
 import com.manic.game.entities.Character;
 import com.manic.game.moves.Hitbox;
 import com.manic.game.moves.HitboxType;
-//import com.manic.game.states.GameState;
 import com.manic.game.states.Start;
 
 
+/**
+ * 
+ * @class MyContactListener
+ * 
+ * @brief The collision listener used in our game
+ * 
+ * We do stuff in here such as hitbox collision and 
+ * figuring out when a Character could jump
+ * 
+ * @author Stephen Lorenz , Gabriel Tucker
+ * 
+ * @contact gst06@roadrunner.com
+ *
+ */
 public class MyContactListener implements ContactListener {
 	
 	private boolean isOnGround;

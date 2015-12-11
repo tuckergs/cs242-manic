@@ -4,7 +4,15 @@ import com.manic.game.entities.Character;
 
 /**
  * 
- * @author gabe
+ * @interface CodeSnippet
+ * 
+ * @brief A CodeSnippet with a function that takes a Character as argument
+ * 
+ * This allows you to hardcode moves in Moves 
+ * 
+ * @author Gabe Tucker
+ * 
+ * @contact gst06@roadrunner.com
  *
  */
 public interface CodeSnippet {

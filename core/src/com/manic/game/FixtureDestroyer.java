@@ -8,6 +8,20 @@ import java.util.LinkedList;
 import com.badlogic.gdx.physics.box2d.Fixture;
 //import com.badlogic.gdx.physics.box2d.World;
 
+
+/**
+ * 
+ * @class FixtureDestroyer
+ * 
+ * @brief An object that destroys a bunch of fixtures at a later time
+ * 
+ * This is basically BodyDestroyer, but it destroys fixtures instead of bodies
+ * 
+ * @author Gabe Tucker
+ * 
+ * @contact gst06@roadrunner.com
+ *
+ */
 public class FixtureDestroyer {
 
 	LinkedList<Fixture> fixtures;

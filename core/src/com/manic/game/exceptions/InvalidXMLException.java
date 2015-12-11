@@ -1,5 +1,21 @@
 package com.manic.game.exceptions;
 
+
+/**
+ * 
+ * @class InvalidXMLException
+ * 
+ * @brief An exception thrown by XML parsers
+ * 
+ * You set what went wrong with the setXXX functions
+ * in here; so this requires more than one line of code
+ * from initializing the exception to throwing it
+ * 
+ * @author Gabe Tucker
+ * 
+ * @contact gst06@roadrunner.com
+ * 
+ */
 @SuppressWarnings("serial")
 public class InvalidXMLException extends Exception{
 

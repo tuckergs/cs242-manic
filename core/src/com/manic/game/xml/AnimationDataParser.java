@@ -11,6 +11,20 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.XmlReader.Element;
 import com.manic.game.exceptions.InvalidXMLException;
 
+/**
+ * 
+ * @class AnimationDataParser
+ * 
+ * @brief A parser that parses data about animations
+ * 
+ * It takes an XML file and creates an ObjectTimeline of TextureRegions
+ * You can get the resulting timeline from a getter
+ * 
+ * @author Gabe Tucker
+ *
+ * @contact gst06@roadrunner.com
+ *
+ */
 public class AnimationDataParser extends XMLParser{
 
 
