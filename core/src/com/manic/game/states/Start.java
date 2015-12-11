@@ -59,7 +59,6 @@ import java.util.TreeSet;
  * This class does way too much.
  * We will put functionality in more classes another time
  *
- *
  * @author Dylan Robinson, Gabe Tucker, Stephen Lorenz
  *
  * @contact gst06@roadrunner.com
