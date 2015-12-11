@@ -19,9 +19,11 @@ import com.manic.game.Manic;
  * @class MainMenu
  *
  * @author Dylan Robinson
+ * 
  * @brief The starting screen that leads into the main game.
  * 
  * @version 1.0
+ * 
  * @contact robinsdj@clarkson.edu
  *
 */

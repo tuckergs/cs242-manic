@@ -5,11 +5,23 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.Box2D;
 import com.badlogic.gdx.physics.box2d.World;
 import com.manic.game.BodyDestroyer;
 //import com.manic.game.Manic;
 import com.manic.game.Settings;
 
+/**
+ * 
+ * @author Stephen Lorenz, Gabe Tucker
+ * 
+ * @brief Simplest form of any physics effected object in the game.
+ *
+ * Expands upon Entity, enabling it to experience physics within the 
+ * game world. This is done by giving it a reference to the gdx Body
+ * class. This class enforces that the moment any GameEntity is
+ * initialized, it must be attached to the world.
+ */
 
 //root of all game objects effected by physics
 public class GameEntity extends Entity {
@@ -37,7 +49,13 @@ public class GameEntity extends Entity {
     	
     }
     
-    
+    /**
+     * @brief Modify's Entity's coordinates to work with Box2D.
+     * 
+     * Because Box2D uses different dimension scale, it is 
+     * necessary to make GameEntity comply by using SCALE_PPM
+     * to adjust the size and location.
+     */
     @Override
     public void render(){
     	

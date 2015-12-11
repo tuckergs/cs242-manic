@@ -1,6 +1,9 @@
-/*
+/**
+ * @author Stephen Lorenz
  * 
+ * @brief Initializes the game for Desktop with the resolution variables set in the core Manic class.
  */
+
 
 package com.manic.game.desktop;
 

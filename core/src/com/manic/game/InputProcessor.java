@@ -3,6 +3,18 @@ package com.manic.game;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.Input.Keys;
 
+/**
+ * 
+ * @author Stephen Lorenz
+ * 
+ * @brief InputProcessor tells InputHandler if a key is activated.
+ * 
+ * Uses the pre-existing gdx input/key recognition to send boolean 
+ * information to the InputHandler's arrays. 
+ * 
+ */
+
+
 public class InputProcessor extends InputAdapter
 {
 	

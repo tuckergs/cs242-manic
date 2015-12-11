@@ -11,6 +11,7 @@ import com.manic.game.Manic;
  * @class Entity
  *
  * @author Stephen Lorenz, Gabe Tucker
+ * 
  * @brief Abstract outline of all objects within the game world.
  *
  * Stores location coordinates within the Vector2, has the ability
@@ -18,6 +19,7 @@ import com.manic.game.Manic;
  * the object timeline of texture regions.
  * 
  * @version 1.0
+ * 
  * @contact lorenzsj@clarkson.edu, tuckergs@clarkson.edu
  *
  */

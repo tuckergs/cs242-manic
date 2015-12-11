@@ -17,6 +17,7 @@ import com.manic.game.Settings;
  * @class HitboxEntity
  *
  * @author Gabe Tucker
+ * 
  * @brief GameEntity which has hitboxes.
  *
  * We need this because we need a polymorphism thing going
@@ -24,6 +25,7 @@ import com.manic.game.Settings;
  * because both of them have hitboxes.
  * 
  * @version 1.0
+ * 
  * @contact tuckergs@clarkson.edu
  *
  */

@@ -8,6 +8,7 @@ import com.manic.game.Manic;
  * @class GameStateManager
  *
  * @author Stephen Lorenz, Dylan Robinson
+ * 
  * @brief Handler for controlling the sequence of states.
  *
  * Creates a stack of states that allows you push/pop to 
@@ -15,6 +16,7 @@ import com.manic.game.Manic;
  * are represented by enums.
  * 
  * @version 1.0
+ * 
  * @contact lorenzsj@clarkson.edu, robinsdj@clarkson.edu
  *
  */

@@ -26,6 +26,7 @@ import com.badlogic.gdx.physics.box2d.World;
   * @class Character
   *
   * @author Stephen Lorenz, Gabe Tucker
+  * 
   * @brief Defines the playable character.
   *
   * @note It is possible to have NPC as Characters
@@ -34,6 +35,7 @@ import com.badlogic.gdx.physics.box2d.World;
   * hitbox. 
   * 
   * @version 1.0
+  * 
   * @contact lorenzsj@clarkson.edu, tuckergs@clarkson.edu
   *
  */

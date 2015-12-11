@@ -1,6 +1,14 @@
 
 
-//Definitely not done yet
+/**
+ * @author Gabe?
+ * 
+ * @brief Gives the game controller functionality.
+ * 
+ * @note It does not work as of now. However, the game can still
+ * be played with controllers by using joyToKey or Xpadder.
+ * 
+ */
 
 package com.manic.game;
 

@@ -8,6 +8,7 @@ import com.manic.game.Manic;
  * @class GameState
  *
  * @author Stephen Lorenz
+ * 
  * @brief The abstract outline of all states. 
  *
  * Has a reference to the GameStateManager, a spriteBatch, 
@@ -15,6 +16,7 @@ import com.manic.game.Manic;
  * occuring at a particular time.
  * 
  * @version 1.0
+ * 
  * @contact lorenzsj@clarkson.edu
  *
  */

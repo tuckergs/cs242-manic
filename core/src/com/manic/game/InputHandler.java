@@ -1,5 +1,18 @@
 package com.manic.game;
 
+/**
+ * 
+ * @author Stephen Lorenz
+ * 
+ * @brief Easy user input recognition through integers.
+ * 
+ * Keys are represented by integers. This class communicates
+ * with the InputProcesser that constantly sets the two boolean
+ * arrays keys and pressedKeys. Through these arrays, other classes
+ * are able to check whether or not the key was pressed per frame.
+ * 
+ */
+
 public class InputHandler
 {
 	public static boolean down;

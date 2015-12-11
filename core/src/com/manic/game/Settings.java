@@ -1,5 +1,9 @@
-/*
- * Description: Handles in-game settings
+
+/**
+ * @author Stephen Lorenz
+ * 
+ * @brief Essentially a struct that store all program data that is required statically throughout several classes.
+ * 
  */
 
 package com.manic.game;

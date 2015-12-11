@@ -19,9 +19,11 @@ import com.manic.game.Manic;
  * @class Victory
  *
  * @author Dylan Robinson
+ * 
  * @brief Is the ending screen that allows replaying.
  * 
  * @version 1.0
+ * 
  * @contact robinsdj@clarkson.edu
  *
 */
