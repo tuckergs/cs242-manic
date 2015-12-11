@@ -4,6 +4,21 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.manic.game.Manic;
 
+/**
+ * @class GameState
+ *
+ * @author Stephen Lorenz
+ * @brief The abstract outline of all states. 
+ *
+ * Has a reference to the GameStateManager, a spriteBatch, 
+ * and two cameras. A state is the definition of what is 
+ * occuring at a particular time.
+ * 
+ * @version 1.0
+ * @contact lorenzsj@clarkson.edu
+ *
+ */
+
 public abstract class GameState {
 	protected GameStateManager gsm;
 	protected Manic manic;
@@ -22,7 +37,14 @@ public abstract class GameState {
 	}
 
 	public abstract void handleInput();
-	public abstract void update(float dt);
+
+        /**
+	 * @brief Prepares what should be rendered in the next frame.
+	 *
+	 * @param dt Represents the change in time between frames.
+	 *
+	 */
+        public abstract void update(float dt);
 	public abstract void render();
 	public abstract void dispose();
 }

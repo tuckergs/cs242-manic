@@ -4,11 +4,26 @@ import java.util.Stack;
 
 import com.manic.game.Manic;
 
+/**
+ * @class GameStateManager
+ *
+ * @author Stephen Lorenz, Dylan Robinson
+ * @brief Handler for controlling the sequence of states.
+ *
+ * Creates a stack of states that allows you push/pop to 
+ * load the desired state into the game. State defintions
+ * are represented by enums.
+ * 
+ * @version 1.0
+ * @contact lorenzsj@clarkson.edu, robinsdj@clarkson.edu
+ *
+ */
+
 public class GameStateManager {
 	protected Manic manic;
 	protected Stack<GameState> gameStates;
 	protected enum State{ MAINMENU, PLAY, RESTART, VICTORY }
-	//Start in Main Menu
+	///Start in Main Menu
 	public GameStateManager(Manic manic){
 		this.manic = manic;
 		gameStates = new Stack<GameState>();
@@ -18,7 +33,7 @@ public class GameStateManager {
 	public Manic getManic(){
 		return manic;
 	}
-	//Switching between the states
+	///Switching between the states
 	protected GameState getState(State state){
 		if (state == State.PLAY){
 			return new Start(this);
@@ -32,19 +47,19 @@ public class GameStateManager {
 			return new Start(this);
 		}
 	}
-	//Change the state you're in
+	///Change the state you're in
 	public void setState(State state){
 		deleteState();
 		addState(state);
 
 	}
 
-	//add to top of stack
+	///add to top of stack
 	public void addState(State state){
 		gameStates.push(getState(state));
 	}
 
-	//remove top of stack
+	///remove top of stack
 	public void deleteState(){
 		GameState state = gameStates.pop();
 		state.dispose();

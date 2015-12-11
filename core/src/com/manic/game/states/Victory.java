@@ -24,10 +24,10 @@ public class Victory extends GameState{
 	protected Victory(GameStateManager gsm) {
 		super(gsm);
 		
-		//Play sound
+		///Play sound
 		Manic.res_sounds.get("victory").play();
 		
-		//Decide who the winner is based on who has more wins
+		///Decide who the winner is based on who has more wins
 		if(Start.p1Wins > Start.p2Wins){
 			charSeq = "Player 1 is victorious!";
 		}else if (Start.p2Wins > Start.p1Wins){
@@ -58,7 +58,7 @@ public class Victory extends GameState{
 
 	@Override
 	public void render() {
-		//Clear old canvas
+		///Clear old canvas
 		Gdx.gl.glClearColor(1, 1, 1, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
@@ -66,25 +66,25 @@ public class Victory extends GameState{
 		
 		stage = new Stage();
 
-		//Create Skin
+		///Create Skin
 		createSkin();
 
-		//Create Title
+		///Create Title
 		
-		//Reset the wins
+		///Reset the wins
 		Start.p1Wins=0;
 		Start.p2Wins=0;
 		
-		//Create victory message
+		///Create victory message
 		Label title = new Label(charSeq, skin);
 		title.setPosition((float) (Gdx.graphics.getWidth()*.45 - Gdx.graphics.getWidth()*.125) , (float) (Gdx.graphics.getHeight()*.70));
 		title.setFontScale(2);
 
-		//Create Start Button
+		///Create Start Button
 		TextButton startButton = new TextButton("Press Space to play again", skin);
 		startButton.setPosition(Gdx.graphics.getWidth()/2 - Gdx.graphics.getWidth()/8 , Gdx.graphics.getHeight()/3);
 		
-		//Add it all and draw
+		///Add it all and draw
 		stage.addActor(title);
 		stage.addActor(startButton); 
 		stage.act();
@@ -98,20 +98,20 @@ public class Victory extends GameState{
 		System.gc(); 
 	}
 
-	//Remade from Main Menu to add additional customization
+	///Remade from Main Menu to add additional customization
 	public static void createSkin(){
-		//Create a font
+		///Create a font
 		BitmapFont font = new BitmapFont();
 		skin = new Skin();
 		skin.add("default", font);
 
-		//Create a texture
+		///Create a texture
 		Pixmap pixmap = new Pixmap(Gdx.graphics.getWidth()/3,(int)Gdx.graphics.getHeight()/10, Pixmap.Format.RGB888);
 		pixmap.setColor(Color.RED);
 		pixmap.fill();
 		skin.add("background",new Texture(pixmap));
 
-		//Create a button style
+		///Create a button style
 		TextButton.TextButtonStyle textButtonStyle = new TextButton.TextButtonStyle();
 		textButtonStyle.up = skin.newDrawable("background", Color.GRAY);
 		textButtonStyle.down = skin.newDrawable("background", Color.DARK_GRAY);
@@ -120,7 +120,7 @@ public class Victory extends GameState{
 		textButtonStyle.font = skin.getFont("default");
 		skin.add("default", textButtonStyle);
 
-		//Create Title Style
+		///Create Title Style
 		Label.LabelStyle labelStyle = new Label.LabelStyle();
 		labelStyle.fontColor = Color.RED;
 		Pixmap titlePixmap = new Pixmap((int)Gdx.graphics.getWidth()/4,(int)Gdx.graphics.getHeight()/10, Pixmap.Format.RGB888);

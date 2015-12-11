@@ -5,16 +5,29 @@ import java.util.Arrays;
 import java.util.HashMap;
 
 /**
- * 
- * @author gabe
+ * @class ObjectTimeline
  *
- * @param <T>
- * 
- * What this does is makes a generic "animation"
- * so I could make a string of sprites and a string of hitboxes
- * 
- * 
- * 
+ * @author Gabe Tucker
+ *
+ * @brief This represents a "generic animation", which means
+ *
+ * When you ask for an object, it returns an object based on what 
+ * the current in the object timeline is.
+ *
+ * You can update it to change the current frame and to change 
+ * what the current object is.
+ *
+ * You can specify if it loops after the end of the timeline has been
+ * reached, and you can specify that when you ask for the current object,
+ * it returns null if the current frame is not a keyframe.
+ *
+ * Look at Block Bunny's Animation (by Foreign Guy Mike) class for the 
+ * basis of this code.
+ *
+ *
+ * @version 1.0
+ * @contact tuckergs@clarkson.edu
+ *
  */
 
 
@@ -46,7 +59,7 @@ public class ObjectTimeline<T> implements Cloneable{
 		total_length = len;
 		
 		
-		//This sets cur_obj to -1 because we assume update is called before getCurrentObj
+		///This sets cur_obj to -1 because we assume update is called before getCurrentObj
 		cur_obj = -1;
 		cur_frame = -1;
 		
@@ -80,7 +93,7 @@ public class ObjectTimeline<T> implements Cloneable{
 	public ObjectTimeline ( HashMap < Integer , T > hsh , int len , float dly )
 	{
 		
-		//Defaults to looping
+		///Defaults to looping
 		init ( hsh , len , dly , true , true );
 		
 	}
@@ -133,23 +146,23 @@ public class ObjectTimeline<T> implements Cloneable{
 	private void step ()
 	{
 		
-		//We don't want to increment if the object
-		//is non-looping and if the current frame
-		//is the length
-		//We do this to give the object the ability to return
-		//a certain something if the "animation"
-		//is done
+		///We don't want to increment if the object
+		///is non-looping and if the current frame
+		///is the length
+		///We do this to give the object the ability to return
+		///a certain something if the "animation"
+		///is done
 		if ( is_looping || cur_frame != total_length )
 			++cur_frame;
 	
-		//We don't want looping if we turned off looping
+		///We don't want looping if we turned off looping
 		if ( is_looping && cur_frame == total_length )
 			cur_frame = 0;
 		
 		
-		//Change the current object if the
-		//current frame is a keyframe
-		//A keyframe is a key in the hashmap
+		///Change the current object if the
+		///current frame is a keyframe
+		///A keyframe is a key in the hashmap
 		if ( objs.containsKey(cur_frame))
 			cur_obj = cur_frame;
 		
@@ -160,12 +173,12 @@ public class ObjectTimeline<T> implements Cloneable{
 	public T getCurrentObj ()
 	{
 		
-		//The reason why I  check it here is because
-		//the calling function doesn't need to know what went "wrong"
-		//I use "wrong" in quotation marks because often,
-		//there's nothing wrong
-		//Also, the calling function wouldn't have 
-		//to check this condition every time
+		///The reason why I  check it here is because
+		///the calling function doesn't need to know what went "wrong"
+		///I use "wrong" in quotation marks because often,
+		///there's nothing wrong
+		///Also, the calling function wouldn't have 
+		///to check this condition every time
 		
 		if ( total_length == 0 ) return null; 
 		if ( !get_on_no_keyframe && cur_frame != cur_obj )  return null;
@@ -213,9 +226,9 @@ public class ObjectTimeline<T> implements Cloneable{
 	}
 	
 	
-	//Searches for the numbers that is just 
-	//below the cur_frame
-	//I had to write my own algorithm
+	///Searches for the numbers that is just 
+	///below the cur_frame
+	///I had to write my own algorithm
 	private int searchForObjIndex ( int [] arr )
 	{
 		
@@ -251,7 +264,7 @@ public class ObjectTimeline<T> implements Cloneable{
 			
 			
 		}
-		else // >=
+		else /// >=
 		{
 			
 			r = new int [ arr.length - halfway ];
@@ -270,7 +283,7 @@ public class ObjectTimeline<T> implements Cloneable{
 	}
 
 	
-	//Cloner
+	///Cloner
 	public ObjectTimeline<T> clone(){
 		
 		ObjectTimeline<T> cl = new ObjectTimeline<T>( objs , total_length , delay , is_looping , get_on_no_keyframe );
