@@ -95,7 +95,7 @@ public class Manic implements ApplicationListener
 								res_animations);
 			
 			String xml = FileStuff.fileToString(
-						"..\\resources\\sprites.xml");
+						"../resources/sprites.xml");
 			
 			p.parse(xml); ///This fills the res_animations
 			
