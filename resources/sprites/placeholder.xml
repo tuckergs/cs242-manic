@@ -2,7 +2,7 @@
 
 <animation>
     
-    <path>..\\resources\\sprites\\SMB2-smiley.png</path>
+    <path>../resources/sprites/SMB2-smiley.png</path>
     
     <frames>0</frames>
     

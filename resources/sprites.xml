@@ -4,7 +4,7 @@
         
         <name>sagatstand</name>
         
-        <path>..\\resources\\sprites/sagatstand.xml</path>
+        <path>../resources/sprites/sagatstand.xml</path>
         
     </ref>
     
@@ -28,7 +28,7 @@
 
         <name>platform</name>
 
-        <path>..\\resources\\sprites\\platform.xml</path>
+        <path>../resources/sprites/platform.xml</path>
 
     </ref>
 
@@ -36,7 +36,7 @@
 
         <name>platform2</name>
 
-        <path>..\\resources\\sprites\\platform2.xml</path>
+        <path>../resources/sprites/platform2.xml</path>
 
     </ref>
     

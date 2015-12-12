@@ -1,7 +1,7 @@
 <animation>
 
 
-	<path>..\\resources\\sprites\\platform2.png</path>
+	<path>../resources/sprites/platform2.png</path>
 
 	<length>1</length>
 

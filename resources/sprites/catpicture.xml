@@ -2,7 +2,7 @@
 
 <animation>
     
-    <path>..\\resources\\sprites\\catpicture.png</path>
+    <path>../resources/sprites/catpicture.png</path>
     
     <frames>0</frames>
     
